@@ -12,7 +12,7 @@ const CharacterCard = ({ character }) => {
     return (
         <TouchableOpacity onPress={() => {
             dispatch(setSelectedCharacter(character));
-            router.push("/modal")
+            router.push("/characterInfo")
         }}>
             <View style={styles.card}>
                 <Image
