@@ -18,8 +18,11 @@ const styles = StyleSheet.create({
  header:{
     flexDirection:'row',
     justifyContent:'center',
-    marginVertical:5,
-    alignItems:'center'
+    paddingVertical:5,
+    alignItems:'center',
+    backgroundColor:'white',
+    borderBottomWidth:1,
+    borderBottomColor:'8b8b8b'
  },
  headerText:{
     fontSize:20,

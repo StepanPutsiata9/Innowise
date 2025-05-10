@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
 
 const CharacterCard = ({ character }) => {
   return (
@@ -21,7 +22,7 @@ const CharacterCard = ({ character }) => {
 const styles = StyleSheet.create({
   card: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
+    backgroundColor:'#fff',
     borderRadius: 16,
     marginBottom: 10,
     overflow: 'hidden',
