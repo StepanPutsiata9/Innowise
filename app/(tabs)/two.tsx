@@ -2,12 +2,14 @@ import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
-
+import ThemeSettingsScreen from "../../components/settingsScreen/themeSettings"
+import Header from "../../components/mainScreen/Header"
 export default function TabTwoScreen() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Settings</Text>
-    </View>
+    <>
+    <Header/>
+    <ThemeSettingsScreen/>
+    </>
   );
 }
 

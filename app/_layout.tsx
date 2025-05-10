@@ -5,6 +5,7 @@ import { Stack } from 'expo-router';
 import {store} from "../store/index"
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { loadTheme } from '@/store/slices/themeSlice';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/components/useColorScheme';
@@ -40,6 +41,9 @@ export default function RootLayout() {
     }
   }, [loaded]);
 
+useEffect(()=>{
+  loadTheme();
+  },[])
   if (!loaded) {
     return null;
   }
@@ -48,17 +52,16 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+  // const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    // <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Provider store={store}>
-      <Stack>
+      <Stack >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
       </Stack>
       </Provider>
-
-    </ThemeProvider>
+    // </ThemeProvider>
   );
 }
