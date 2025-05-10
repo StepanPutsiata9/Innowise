@@ -1,11 +1,14 @@
 import { StyleSheet } from 'react-native';
 import { View,Text,Image } from 'react-native';
+import useThemeStyles from '@/hooks/useThemeStyles';
 export default function Header(){
+        const styles=useThemeStyles();
+    
     return(
         <View style={styles.header}>
              <Image 
-                    source={require("../../assets/images/logo.png")} 
-                    style={styles.image} 
+                    source={require("../../assets/images/logo2.png")} 
+                    style={styles.logo} 
                   />
             <Text style={styles.headerText}>The Rick and Morty App</Text>
         </View>
@@ -14,21 +17,4 @@ export default function Header(){
 
 
 
-const styles = StyleSheet.create({
- header:{
-    flexDirection:'row',
-    justifyContent:'center',
-    paddingVertical:5,
-    alignItems:'center',
-    backgroundColor:'white',
-    borderBottomWidth:1,
-    borderBottomColor:'8b8b8b'
- },
- headerText:{
-    fontSize:20,
-    fontWeight:700,
-    marginLeft:10
-    // textAlign:'center',
 
- }
-});

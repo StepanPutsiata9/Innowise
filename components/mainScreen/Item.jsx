@@ -1,51 +1,51 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-import { useSelector } from 'react-redux';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'expo-router';
+import { setSelectedCharacter } from "../../store/slices/charactersSlice"
+import useThemeStyles from '@/hooks/useThemeStyles';
 
 const CharacterCard = ({ character }) => {
-  return (
-    <View style={styles.card}>
-      <Image 
-        source={{ uri: character.image }} 
-        style={styles.image} 
-      />
-      <View style={styles.info}>
-        <Text style={styles.name}>{character.name}</Text>
-        <Text>Status: {character.status}</Text>
-        <Text>Species: {character.species}</Text>
-        <Text>Location: {character.location.name}</Text>
-      </View>
-    </View>
-  );
+    const router = useRouter();
+    const dispatch = useDispatch();
+    const styles = useThemeStyles();
+    return (
+        <TouchableOpacity onPress={() => {
+            dispatch(setSelectedCharacter(character));
+            router.push("/modal")
+        }}>
+            <View style={styles.card}>
+                <Image
+                    source={{ uri: character.image }}
+                    style={styles.image}
+                />
+                <View style={styles.info}>
+
+                    <Text style={styles.name}>{character.name}</Text>
+                    <View style={styles.infoLine}>
+                        <Text style={styles.infoParams}>Status: </Text>
+                        <Text style={styles.infoText}>{character.status}</Text>
+                        <View style={(character.status=="Alive"&&styles.alive)||
+                            (character.status=="Dead"&&styles.dead)||
+                            (character.status=="unknown"&&styles.unknown)
+                        }></View>
+                    </View>
+                    <View style={styles.infoLine}>
+                        <Text style={styles.infoParams}>Species: </Text>
+                        <Text style={styles.infoText}>{character.species}</Text>
+                    </View>
+
+                    <Text style={styles.infoParams}>last known location: </Text>
+                    <Text style={styles.infoText}>{character.location.name}</Text>
+
+
+                </View>
+            </View>
+        </TouchableOpacity>
+
+    );
 };
 
-const styles = StyleSheet.create({
-  card: {
-    flexDirection: 'row',
-    backgroundColor:'#fff',
-    borderRadius: 16,
-    marginBottom: 10,
-    overflow: 'hidden',
-    elevation: 2,
-    width:"95%",
-    marginHorizontal:'auto',
-    marginBottom:20,
-  },
-  image: {
-    width: 175,
-    height: 175,
-  },
-  info: {
-    padding: 10,
-    flex: 1,
-    marginLeft:10
-    
-  },
-  name: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    marginBottom: 5,
-  }
-});
+
 
 export default CharacterCard;

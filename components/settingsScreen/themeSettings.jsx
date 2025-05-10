@@ -1,19 +1,19 @@
 import { View, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleTheme } from '../../store/slices/themeSlice';
+import { toggleTheme,setTheme } from '../../store/slices/themeSlice';
 import { Text } from 'react-native';
-
+import useThemeStyles from "../../hooks/useThemeStyles"
 import Sun from "./Sun"
 import Moon from "./Moon"
 export default function ThemeSettingsScreen() {
     const theme = useSelector((state) => state.theme.mode);
     const dispatch = useDispatch();
-
+    const styles=useThemeStyles();
     return (
         <View style={styles.container}>
-            <Text style={styles.promo}>Theme mode :</Text>
+            <Text style={styles.text}>Theme mode :</Text>
 
-            <View style={styles.imageView}>
+            <View style={{ marginBottom:10}}>
                 {theme == "light" ?
                     <Sun />
                     :
@@ -22,37 +22,16 @@ export default function ThemeSettingsScreen() {
             </View>
             <TouchableOpacity
                 style={styles.changeThemeBtn}
-                onPress={() => dispatch(toggleTheme())}
+                onPress={() => {
+                    dispatch(toggleTheme());
+
+                }
+                }
             >
-                <Text>Change theme</Text>
+                <Text style={styles.text}>Change theme</Text>
             </TouchableOpacity>
 
         </View>
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#8b8b9b',
-    },
-    promo: {
-        fontSize: 20,
-        fontWeight: 700,
-        color: "white",
-        marginBottom: 20
-    },
-    imageView:{
-        marginBottom:10
-    },
-    changeThemeBtn: {
-        backgroundColor: 'white',
-        paddingHorizontal: 50,
-        paddingVertical: 10,
-        borderRadius: 12,
-        borderWidth: 2,
-        borderColor: '#8b8b8b'
-    }
-});

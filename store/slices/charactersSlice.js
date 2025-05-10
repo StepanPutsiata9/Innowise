@@ -3,10 +3,11 @@ import axios from 'axios';
 
 const initialState = {
   characters: [],
+  selectedCharacter:{},
   currentPage: 1,
   totalPages: 0,
   loading: false,
-  error: null
+  error: null,
 };
 
 export const fetchCharacters = createAsyncThunk(
@@ -31,6 +32,9 @@ const charactersSlice = createSlice({
   reducers: {
     setCurrentPage: (state, action) => {
       state.currentPage = action.payload;
+    },
+    setSelectedCharacter:(state,action)=>{
+        state.selectedCharacter=action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -52,4 +56,5 @@ const charactersSlice = createSlice({
 });
 
 export const { setCurrentPage } = charactersSlice.actions;
+export const { setSelectedCharacter } = charactersSlice.actions;
 export default charactersSlice.reducer;

@@ -11,9 +11,11 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchCharacters, setCurrentPage } from '../../store/slices/charactersSlice';
 import CharacterCard from './Item';
+import useThemeStyles from '@/hooks/useThemeStyles';
 
 const Characters = () => {
   const dispatch = useDispatch();
+  const styles=useThemeStyles();
   const { 
     characters, 
     currentPage, 
@@ -94,7 +96,7 @@ const Characters = () => {
           onPress={() => goToPage(currentPage - 1)}
           disabled={currentPage === 1}
         >
-          <Text style={currentPage === 1 && styles.disabledText}>{"Prev"}</Text>
+          <Text style={[styles.prevNext,currentPage === 1 && styles.disabledText]}>{"Prev"}</Text>
         </TouchableOpacity>
         
         {pages}
@@ -104,7 +106,7 @@ const Characters = () => {
           onPress={() => goToPage(currentPage + 1)}
           disabled={currentPage === totalPages}
         >
-          <Text style={currentPage === totalPages && styles.disabledText}>{"Next"}</Text>
+          <Text style={[styles.prevNext,currentPage === totalPages && styles.disabledText]}>{"Next"}</Text>
         </TouchableOpacity>
       </ScrollView>
     );
@@ -125,7 +127,7 @@ const Characters = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.containerCharacters}>
       {loading && currentPage === 1 ? (
         <ActivityIndicator size="large" style={styles.loader} />
       ) : (
@@ -139,7 +141,7 @@ const Characters = () => {
               {loading && <ActivityIndicator size="small" />}
               {renderPagination()}
               <View style={styles.paginationInfo}>
-                <Text>
+                <Text style={styles.paginationInfoText}>
                   Page {currentPage} of {totalPages}
                 </Text>
               </View>
@@ -151,62 +153,6 @@ const Characters = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
-  listContent: {
-    padding: 5,
-  },
-  center: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  error: {
-    color: 'red',
-    marginBottom: 20,
-  },
-  loader: {
-    marginTop: 20,
-  },
-  retryButton: {
-    padding: 10,
-    backgroundColor: '#ddd',
-    borderRadius: 5,
-  },
-  paginationContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal:'auto',
-    marginVertical:10,
-  },
-  pageButton: {
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    marginHorizontal: 2,
-    borderRadius: 4,
-    backgroundColor: '#eee',
-  },
-  activePageButton: {
-    backgroundColor: '#007bff',
-  },
-  activePageText: {
-    color: '#fff',
-  },
-  navButton: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    marginHorizontal: 5,
-  },
-  disabledText: {
-    color: '#ccc',
-  },
-  paginationInfo: {
-    alignItems: 'center',
-    paddingBottom: 15,
-  },
-});
+
 
 export default Characters;
