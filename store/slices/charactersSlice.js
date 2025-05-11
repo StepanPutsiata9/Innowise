@@ -4,6 +4,8 @@ import axios from 'axios';
 const initialState = {
   characters: [],
   selectedCharacter:{},
+   filteredCharacters: [],
+    searchQuery: "",
   currentPage: 1,
   totalPages: 0,
   loading: false,
@@ -35,7 +37,17 @@ const charactersSlice = createSlice({
     },
     setSelectedCharacter:(state,action)=>{
         state.selectedCharacter=action.payload;
-    }
+    },
+     searchCharacter: (state, action) => {
+            state.searchQuery = action.payload;
+            if (action.payload) {
+                state.filteredCharacters = state.characters.filter(character => 
+                    character.name.toLowerCase().includes(action.payload.toLowerCase())
+                );
+            } else {
+                state.filteredCharacters = state.characters;
+            }
+        },
   },
   extraReducers: (builder) => {
     builder
@@ -45,6 +57,7 @@ const charactersSlice = createSlice({
       .addCase(fetchCharacters.fulfilled, (state, action) => {
         state.loading = false;
         state.characters = action.payload.results;
+        state.filteredCharacters = action.payload.results;
         state.currentPage = action.payload.requestedPage;
         state.totalPages = action.payload.info.pages;
       })
@@ -55,6 +68,5 @@ const charactersSlice = createSlice({
   }
 });
 
-export const { setCurrentPage } = charactersSlice.actions;
-export const { setSelectedCharacter } = charactersSlice.actions;
+export const { setCurrentPage ,setSelectedCharacter,searchCharacter} = charactersSlice.actions;
 export default charactersSlice.reducer;

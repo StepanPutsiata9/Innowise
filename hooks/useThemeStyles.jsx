@@ -50,7 +50,7 @@ export default function useThemeStyles() {
         containerCharacters: {
             flex: 1,
             backgroundColor: theme === 'dark' ? '#000' : '#fff',
-            paddingTop:10,
+            paddingTop: 10,
         },
         listContent: {
             padding: 5,
@@ -86,7 +86,7 @@ export default function useThemeStyles() {
             paddingVertical: 6,
             marginHorizontal: 2,
             borderRadius: 4,
-            backgroundColor: theme === 'dark' ? '#8b8b8b':'#eee',
+            backgroundColor: theme === 'dark' ? '#8b8b8b' : '#eee',
         },
         activePageButton: {
             backgroundColor: '#007bff',
@@ -115,7 +115,7 @@ export default function useThemeStyles() {
         // for Item.jsx
         card: {
             flexDirection: 'row',
-            backgroundColor: theme === 'dark' ? '#28292D':'#fff'  ,
+            backgroundColor: theme === 'dark' ? '#28292D' : '#fff',
             borderRadius: 16,
             marginBottom: 10,
             overflow: 'hidden',
@@ -123,12 +123,12 @@ export default function useThemeStyles() {
             width: "95%",
             marginHorizontal: 'auto',
             marginBottom: 20,
-            borderWidth:2,
-            borderColor:theme === 'dark' ? '#fff':'#28292D' 
+            borderWidth: 2,
+            borderColor: theme === 'dark' ? '#fff' : '#28292D'
         },
         image: {
             width: 175,
-            minHeight:175
+            minHeight: 175
         },
         info: {
             padding: 10,
@@ -136,102 +136,121 @@ export default function useThemeStyles() {
             marginLeft: 10
 
         },
-        infoLine:{
-            flexDirection:'row',
-            marginBottom:3,
-            alignItems:'center',
-            flexWrap:'wrap',
+        infoLine: {
+            flexDirection: 'row',
+            marginBottom: 3,
+            alignItems: 'center',
+            flexWrap: 'wrap',
 
         },
         name: {
             fontWeight: 'bold',
-            color:theme === 'dark' ? '#fff' : '#28292D',
+            color: theme === 'dark' ? '#fff' : '#28292D',
             fontSize: 20,
             marginBottom: 10,
         },
-        infoParams:{
-            color:theme === 'dark' ? '#8b8b8b':'#28292D',
-            fontWeight:500,
-            fontSize:16,
-            marginRight:3,
+        infoParams: {
+            color: theme === 'dark' ? '#8b8b8b' : '#28292D',
+            fontWeight: 500,
+            fontSize: 16,
+            marginRight: 3,
         },
-        infoText:{
-            color:theme === 'dark' ? '#fff':'#000',
-            fontWeight:700,
-            fontSize:16,
+        infoText: {
+            color: theme === 'dark' ? '#fff' : '#000',
+            fontWeight: 700,
+            fontSize: 16,
         },
-        dead:{
-            width:13,
-            height:13,
-            backgroundColor:'red',
-            marginLeft:5,
-            borderRadius:25,
+        dead: {
+            width: 13,
+            height: 13,
+            backgroundColor: 'red',
+            marginLeft: 5,
+            borderRadius: 25,
         },
-         alive:{
-            width:13,
-            height:13,
-            backgroundColor:'green',
-            marginLeft:5,
-            borderRadius:25,
+        alive: {
+            width: 13,
+            height: 13,
+            backgroundColor: 'green',
+            marginLeft: 5,
+            borderRadius: 25,
         },
-        unknown:{
-            width:13,
-            height:13,
-            backgroundColor:'grey',
-            marginLeft:5,
-            borderRadius:25,
+        unknown: {
+            width: 13,
+            height: 13,
+            backgroundColor: 'grey',
+            marginLeft: 5,
+            borderRadius: 25,
         },
         // for selectedCharacter
-        containerChatcterInfo:{
-            height:"100%",
-            width:'100%',
+        containerChatcterInfo: {
+            height: "100%",
+            width: '100%',
 
             // paddingHorizontal:20,
-            backgroundColor:theme === 'dark' ? '#000':'#fff',
+            backgroundColor: theme === 'dark' ? '#000' : '#fff',
         },
-        imageInfo:{
-            height:300,
-            width:300,
-            borderRadius:20,
-            borderColor:theme === 'dark' ? '#fff':'#000',
-            marginBottom:15,
-            borderWidth:1,
+        imageInfo: {
+            height: 300,
+            width: 300,
+            borderRadius: 20,
+            borderColor: theme === 'dark' ? '#fff' : '#000',
+            marginBottom: 15,
+            borderWidth: 1,
         },
-        nameOfSelectedCharacter:{
-            fontSize:28,
-            marginVertical:12,
-            color:theme === 'dark' ? '#fff':'#000',
-            marginLeft:20
+        nameOfSelectedCharacter: {
+            fontSize: 28,
+            marginVertical: 12,
+            color: theme === 'dark' ? '#fff' : '#000',
+            marginLeft: 20
 
         },
-        titleBlock:{
-            backgroundColor:theme === 'dark' ? '#000':'#fff',
-            alignItems:'center',
-            flexDirection:'row',
+        titleBlock: {
+            backgroundColor: theme === 'dark' ? '#000' : '#fff',
+            alignItems: 'center',
+            flexDirection: 'row',
             // justifyContent:"flex-start",
-            marginLeft:20
+            marginLeft: 20
         },
-        photoBlock:{
-            marginHorizontal:'auto',
-            backgroundColor:theme === 'dark' ? '#000':'#fff'
+        photoBlock: {
+            marginHorizontal: 'auto',
+            backgroundColor: theme === 'dark' ? '#000' : '#fff'
         },
-        infoBlock:{
-            backgroundColor:theme === 'dark' ? '#000':'#fff',
-            marginHorizontal:'auto',
+        infoBlock: {
+            backgroundColor: theme === 'dark' ? '#000' : '#fff',
+            marginHorizontal: 'auto',
 
         },
-        backLine:{
-            backgroundColor:theme === 'dark' ? '#000':'#fff',
-            flexDirection:'row',
-            alignItems:'center',
+        backLine: {
+            backgroundColor: theme === 'dark' ? '#000' : '#fff',
+            flexDirection: 'row',
+            alignItems: 'center',
         },
-        infoLineSelectedCharacter:{
-            backgroundColor:theme === 'dark' ? '#000':'#fff',
-            width:300,
-            flexDirection:'row',
-            marginBottom:10,
-            alignItems:'center',
-            flexWrap:'wrap',
-        }
+        infoLineSelectedCharacter: {
+            backgroundColor: theme === 'dark' ? '#000' : '#fff',
+            width: 300,
+            flexDirection: 'row',
+            marginBottom: 10,
+            alignItems: 'center',
+            flexWrap: 'wrap',
+        },
+
+
+        // for Search.jsx
+        searchView:{
+            backgroundColor: theme === 'dark' ? '#000' : '#fff',
+        },
+        input: {
+            height: 45,
+            width:'95%',
+            marginHorizontal:'auto',
+            borderWidth: 1,
+            borderColor: '#ccc',
+            borderRadius: 8,
+            paddingHorizontal: 15,
+            fontSize: 16,
+            color:theme === 'dark' ? '#fff' : '#000',
+            backgroundColor: theme === 'dark' ? '#28292D' : '#fff',
+            marginVertical: 10,
+        },
     });
 }

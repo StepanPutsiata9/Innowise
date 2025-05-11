@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,memo } from 'react';
 import { 
   FlatList, 
   View, 
@@ -19,11 +19,12 @@ const Characters = () => {
   const { 
     characters, 
     currentPage, 
+    filteredCharacters,
     totalPages, 
     loading, 
     error 
   } = useSelector(state => state.characters);
-
+  const MemoizedCharacterCard = memo(CharacterCard);
   useEffect(() => {
     dispatch(fetchCharacters(currentPage));
   }, [currentPage, dispatch]);
@@ -36,7 +37,7 @@ const Characters = () => {
   };
 
 
-  const renderItem = ({ item }) => <CharacterCard character={item} />;
+  const renderItem = ({ item }) => <MemoizedCharacterCard character={item} />;
 
   // Рендер пагинации
   const renderPagination = () => {
@@ -132,7 +133,7 @@ const Characters = () => {
         <ActivityIndicator size="large" style={styles.loader} />
       ) : (
         <FlatList
-          data={characters}
+          data={filteredCharacters}
           renderItem={renderItem}
           keyExtractor={item => item.id.toString()}
           contentContainerStyle={styles.listContent}
