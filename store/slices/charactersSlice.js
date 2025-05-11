@@ -3,24 +3,35 @@ import axios from 'axios';
 
 const initialState = {
   characters: [],
-  selectedCharacter:{},
-   filteredCharacters: [],
-    searchQuery: "",
-  currentPage: 1,
-  totalPages: 0,
+  selectedCharacter: {},
+  filteredCharacters: [],
   loading: false,
   error: null,
+  nextPage: 1,
+  hasMore: true,
+  filters: {
+    status: '',
+    species: ''
+  },
+  searchQuery: ''
 };
 
 export const fetchCharacters = createAsyncThunk(
   'characters/fetchCharacters',
-  async (page, { rejectWithValue }) => {
+  async (_, { getState, rejectWithValue }) => {
     try {
-      const response = await axios.get(`https://rickandmortyapi.com/api/character?page=${page}`);
+      const { nextPage, filters } = getState().characters;
+      
+      const params = new URLSearchParams();
+      params.append('page', nextPage);
+      if (filters.status) params.append('status', filters.status.toLowerCase());
+      if (filters.species) params.append('species', filters.species.toLowerCase());
+      
+      const response = await axios.get(`https://rickandmortyapi.com/api/character?${params.toString()}`);
       return {
-        results: response.data.results,
-        info: response.data.info,
-        requestedPage: page
+        characters: response.data.results,
+        hasMore: !!response.data.info.next,
+        isNewSearch: nextPage === 1
       };
     } catch (error) {
       return rejectWithValue(error.message);
@@ -32,22 +43,33 @@ const charactersSlice = createSlice({
   name: 'characters',
   initialState,
   reducers: {
-    setCurrentPage: (state, action) => {
-      state.currentPage = action.payload;
+    setSelectedCharacter: (state, action) => {
+      state.selectedCharacter = action.payload;
     },
-    setSelectedCharacter:(state,action)=>{
-        state.selectedCharacter=action.payload;
+    searchCharacter: (state, action) => {
+      state.searchQuery = action.payload;
+      state.filteredCharacters = state.characters.filter(c => 
+        c.name.toLowerCase().includes(action.payload.toLowerCase())
+      );
     },
-     searchCharacter: (state, action) => {
-            state.searchQuery = action.payload;
-            if (action.payload) {
-                state.filteredCharacters = state.characters.filter(character => 
-                    character.name.toLowerCase().includes(action.payload.toLowerCase())
-                );
-            } else {
-                state.filteredCharacters = state.characters;
-            }
-        },
+    setFilters: (state, action) => {
+      state.filters = action.payload;
+      state.nextPage = 1;
+      state.hasMore = true;
+
+    },
+    resetFilters: (state) => {
+      state.filters = initialState.filters;
+      state.searchQuery = '';
+      state.nextPage = 1;
+      state.hasMore = true;
+
+    },
+    // Добавляем новый reducer для принудительного сброса
+    clearCharacters: (state) => {
+      state.characters = [];
+      state.filteredCharacters = [];
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -56,10 +78,21 @@ const charactersSlice = createSlice({
       })
       .addCase(fetchCharacters.fulfilled, (state, action) => {
         state.loading = false;
-        state.characters = action.payload.results;
-        state.filteredCharacters = action.payload.results;
-        state.currentPage = action.payload.requestedPage;
-        state.totalPages = action.payload.info.pages;
+        
+        if (action.payload.isNewSearch) {
+          state.characters = action.payload.characters;
+        } else {
+          state.characters = [...state.characters, ...action.payload.characters];
+        }
+        
+        state.filteredCharacters = state.searchQuery
+          ? state.characters.filter(c => 
+              c.name.toLowerCase().includes(state.searchQuery.toLowerCase())
+            )
+          : state.characters;
+        
+        state.nextPage += 1;
+        state.hasMore = action.payload.hasMore;
       })
       .addCase(fetchCharacters.rejected, (state, action) => {
         state.loading = false;
@@ -68,5 +101,12 @@ const charactersSlice = createSlice({
   }
 });
 
-export const { setCurrentPage ,setSelectedCharacter,searchCharacter} = charactersSlice.actions;
+export const { 
+  setSelectedCharacter,
+  searchCharacter,
+  setFilters,
+  resetFilters,
+  clearCharacters
+} = charactersSlice.actions;
+
 export default charactersSlice.reducer;
