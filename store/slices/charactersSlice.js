@@ -21,12 +21,12 @@ export const fetchCharacters = createAsyncThunk(
   async (_, { getState, rejectWithValue }) => {
     try {
       const { nextPage, filters } = getState().characters;
-      
+
       const params = new URLSearchParams();
       params.append('page', nextPage);
       if (filters.status) params.append('status', filters.status.toLowerCase());
       if (filters.species) params.append('species', filters.species.toLowerCase());
-      
+
       const response = await axios.get(`https://rickandmortyapi.com/api/character?${params.toString()}`);
       return {
         characters: response.data.results,
@@ -48,15 +48,21 @@ const charactersSlice = createSlice({
     },
     searchCharacter: (state, action) => {
       state.searchQuery = action.payload;
-      state.filteredCharacters = state.characters.filter(c => 
-        c.name.toLowerCase().includes(action.payload.toLowerCase())
-      );
+      if (!action.payload) {
+        state.filteredCharacters = state.characters;
+        return;
+      }
+      const searchTerm = action.payload.toLowerCase();
+
+      state.filteredCharacters = state.characters.filter(character => {
+        const words = character.name.toLowerCase().split(' ');
+        return words.some(word => word.startsWith(searchTerm));
+      });
     },
     setFilters: (state, action) => {
       state.filters = action.payload;
       state.nextPage = 1;
       state.hasMore = true;
-
     },
     resetFilters: (state) => {
       state.filters = initialState.filters;
@@ -78,19 +84,24 @@ const charactersSlice = createSlice({
       })
       .addCase(fetchCharacters.fulfilled, (state, action) => {
         state.loading = false;
-        
+
         if (action.payload.isNewSearch) {
           state.characters = action.payload.characters;
         } else {
           state.characters = [...state.characters, ...action.payload.characters];
         }
-        
+
         state.filteredCharacters = state.searchQuery
-          ? state.characters.filter(c => 
-              c.name.toLowerCase().includes(state.searchQuery.toLowerCase())
-            )
+          ?
+          state.characters.filter(character => {
+            const searchTerm = state.searchQuery.toLowerCase();
+            const nameWords = character.name.toLowerCase().split(' ');
+            return nameWords.some(word =>
+              word.startsWith(searchTerm)
+            );
+          })
           : state.characters;
-        
+
         state.nextPage += 1;
         state.hasMore = action.payload.hasMore;
       })
@@ -101,7 +112,7 @@ const charactersSlice = createSlice({
   }
 });
 
-export const { 
+export const {
   setSelectedCharacter,
   searchCharacter,
   setFilters,

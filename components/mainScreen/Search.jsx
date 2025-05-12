@@ -5,8 +5,6 @@ import { useDispatch } from "react-redux";
 export default function Search() {
     const dispatch = useDispatch();
     const styles = useThemeStyle();
-
-    
     const handleTextChange = (inputText) => {
         dispatch(searchCharacter(inputText));
     };
