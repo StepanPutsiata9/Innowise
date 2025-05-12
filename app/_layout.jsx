@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { loadTheme } from '@/store/slices/themeSlice';
 import 'react-native-reanimated';
 import NetInfo from '@react-native-community/netinfo';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { View, Text, StyleSheet, } from 'react-native';
 import NoInternetScreen from "../components/errorsScreens/NoInternetScreen"
 export { ErrorBoundary } from 'expo-router';
@@ -48,53 +48,64 @@ export default function RootLayout() {
 
 
 function RootLayoutNav() {
+  return (
+    <Provider store={store}>
+      <AppNavigation />
+    </Provider>
+  );
+}
+
+
+
+
+// components/AppNavigation.js
+import { useDispatch } from 'react-redux';
+import { setOfflineMode } from '../store/slices/charactersSlice';
+
+function AppNavigation() {
+  const dispatch = useDispatch();
+  const {isOfflineMode} =useSelector((state)=>state.characters);
   const [isOnline, setIsOnline] = useState(null);
 
   const checkConnection = async () => {
     try {
       const state = await NetInfo.fetch();
       setIsOnline(state.isConnected);
+      if (state.isConnected) {
+        dispatch(setOfflineMode(false));
+      }
     } catch (error) {
       setIsOnline(false);
     }
   };
+
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
       setIsOnline(state.isConnected);
+      if (state.isConnected) {
+        dispatch(setOfflineMode(false));
+      }else{
+        dispatch(setOfflineMode(true));
+
+      }
     });
     checkConnection();
     return () => unsubscribe();
-  }, []);
-
+  }, [dispatch]);
   if (isOnline === null) {
-    return (
-      <View style={styles.loadingContainer}>
-        <Text>Checking the connection...</Text>
-      </View>
-    );
+    return <View style={styles.loadingContainer}><Text>Checking connection...</Text></View>;
   }
-
-  if (isOnline) {
-
-    return (
-      <Provider store={store}>
-        <NoInternetScreen onRetry={checkConnection} />
-      </Provider>
-
-    )
+  if (!isOnline&&!isOfflineMode) {
+    return <NoInternetScreen onRetry={checkConnection} />;
   }
-
-
+  
   return (
-    <Provider store={store}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="characterInfo" options={{ headerShown: false }} />
-      </Stack>
-    </Provider>
+    <Stack>
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="characterInfo" options={{ headerShown: false }} />
+    </Stack>
   );
 }
-
 const styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
@@ -102,3 +113,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+

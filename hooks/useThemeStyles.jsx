@@ -313,5 +313,18 @@ export default function useThemeStyles() {
       borderRadius: 5,
       flex: 1,
     },
+
+    // backToRetry
+
+    offlineBlockText:{
+    fontSize: 18,
+    color:theme === 'dark' ? '#fff' :'#000',
+    textAlign:'center',
+
+    },
+    offlineBlock:{
+        backgroundColor:theme === 'dark' ? '#000' : '#fff',
+        paddingVertical:20,
+    }
   });
 };

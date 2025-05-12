@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useCallback } from 'react';
-import { FlatList, ActivityIndicator } from 'react-native';
+import { FlatList, ActivityIndicator, TouchableOpacity, View, Text,StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCharacters } from '../../store/slices/charactersSlice';
+import { fetchCharacters, setOfflineMode } from '../../store/slices/charactersSlice';
 import CharacterCard from './Item';
 import useThemeStyles from '@/hooks/useThemeStyles';
 
@@ -10,46 +10,60 @@ const MemoizedCharacterCard = React.memo(CharacterCard);
 
 const Characters = () => {
   const dispatch = useDispatch();
-  const { filteredCharacters, loading, hasMore } = useSelector(state => state.characters);
+  const {
+    filteredCharacters,
+    offlineCharacters,
+    loading,
+    hasMore,
+    isOfflineMode // Добавляем флаг из хранилища
+  } = useSelector(state => state.characters);
+
   const styles = useThemeStyles();
 
-  // Мемоизированная функция рендеринга
+  // Выбираем данные в зависимости от режима
+  const displayData = isOfflineMode ? offlineCharacters : filteredCharacters;
+
   const renderItem = useCallback(
     ({ item }) => <MemoizedCharacterCard character={item} />,
     []
   );
 
-  // Оптимизация списка персонажей
   const uniqueCharacters = useMemo(() => {
     const seen = new Set();
-    return filteredCharacters.filter(char => {
+    return displayData.filter(char => {
       if (seen.has(char.id)) return false;
       seen.add(char.id);
       return true;
     });
-  }, [filteredCharacters]);
+  }, [displayData]); // Используем displayData вместо filteredCharacters
 
   useEffect(() => {
-    dispatch(fetchCharacters());
-  }, [dispatch]);
-
-  const handleLoadMore = useCallback(() => {
-    if (hasMore && !loading) {
+    if (!isOfflineMode) { // Загружаем данные только если не в оффлайн-режиме
       dispatch(fetchCharacters());
     }
-  }, [hasMore, loading, dispatch]);
+  }, [dispatch, isOfflineMode]);
+
+  const handleLoadMore = useCallback(() => {
+    if (hasMore && !loading && !isOfflineMode) { // Подгрузка только в онлайн-режиме
+      dispatch(fetchCharacters());
+    }
+  }, [hasMore, loading, dispatch, isOfflineMode]);
 
   return (
-    <FlatList
-      data={uniqueCharacters}
-      renderItem={renderItem}
-      keyExtractor={item => `${item.id}`}
-      onEndReached={handleLoadMore}
-      onEndReachedThreshold={0.5}
-      ListFooterComponent={loading ? <ActivityIndicator size="large" /> : null}
-      style={styles.containerCharacters}
-    />
+      <FlatList
+        data={uniqueCharacters}
+        renderItem={renderItem}
+        keyExtractor={item => `${item.id}`}
+        onEndReached={!isOfflineMode ? handleLoadMore : null} // Отключаем подгрузку в оффлайне
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={loading ? <ActivityIndicator size="large" /> : null}
+        style={styles.containerCharacters}
+      />
+    
+
+
   );
 };
 
-export default React.memo(Characters);
+export default Characters;
+

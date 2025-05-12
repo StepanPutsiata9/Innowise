@@ -6,6 +6,7 @@ const initialState = {
   characters: [],
   selectedCharacter: {},
   filteredCharacters: [],
+    isOfflineMode: false, // Добавляем флаг оффлайн-режима
   offlineCharacters: [],
   loading: false,
   error: null,
@@ -99,7 +100,10 @@ const charactersSlice = createSlice({
     clearCharacters: (state) => {
       state.characters = [];
       state.filteredCharacters = [];
-    }
+    },
+     setOfflineMode: (state, action) => {
+      state.isOfflineMode = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -146,7 +150,8 @@ export const {
   searchCharacter,
   setFilters,
   resetFilters,
-  clearCharacters
+  clearCharacters,
+  setOfflineMode
 } = charactersSlice.actions;
 
 export default charactersSlice.reducer;
