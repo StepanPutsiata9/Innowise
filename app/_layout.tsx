@@ -1,5 +1,4 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import {store} from "../store/index"
@@ -7,8 +6,6 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { loadTheme } from '@/store/slices/themeSlice';
 import 'react-native-reanimated';
-
-import { useColorScheme } from '@/components/useColorScheme';
 import { Provider } from 'react-redux';
 
 export {
@@ -52,15 +49,15 @@ useEffect(()=>{
 }
 
 function RootLayoutNav() {
-  // const colorScheme = useColorScheme();
+
   return (
-    // <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+
       <Provider store={store}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="characterInfo" options={{ headerShown: false }} />
       </Stack>
       </Provider>
-    // </ThemeProvider>
+
   );
 }

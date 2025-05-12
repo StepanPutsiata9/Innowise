@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { Platform, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Text } from 'react-native';
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { View } from '@/components/Themed';
+
+
 import { useRouter } from 'expo-router';
 import { useSelector } from 'react-redux';
 import useThemeStyles from '@/hooks/useThemeStyles';

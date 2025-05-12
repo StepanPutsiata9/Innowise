@@ -1,11 +1,6 @@
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable } from 'react-native';
-
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+import { Tabs } from 'expo-router';
 import { useSelector } from 'react-redux';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
@@ -14,14 +9,13 @@ function TabBarIcon(props ) {
 }
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
   const theme=useSelector((state)=>state.theme.mode);
   return (
     <Tabs
       screenOptions={{
          tabBarActiveTintColor: theme === "dark" ? "#fff" : "#000",
         tabBarInactiveTintColor: theme === "dark" ? "#888" : "#666",
-        headerShown: useClientOnlyValue(false, true),
+        headerShown:false,
         tabBarStyle: {
           height:55,
           backgroundColor: theme === "dark" ? "#000" : "#fff",
