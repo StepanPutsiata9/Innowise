@@ -5,7 +5,7 @@ import { fetchCharacters } from '../../store/slices/charactersSlice';
 import CharacterCard from './Item';
 import useThemeStyles from '@/hooks/useThemeStyles';
 
-// Оптимизированный компонент карточки
+
 const MemoizedCharacterCard = React.memo(CharacterCard);
 
 const Characters = () => {
@@ -13,13 +13,11 @@ const Characters = () => {
   const { filteredCharacters, loading, hasMore } = useSelector(state => state.characters);
   const styles = useThemeStyles();
 
-  // Мемоизированная функция рендеринга
+
   const renderItem = useCallback(
     ({ item }) => <MemoizedCharacterCard character={item} />,
     []
   );
-
-  // Оптимизация списка персонажей
   const uniqueCharacters = useMemo(() => {
     const seen = new Set();
     return filteredCharacters.filter(char => {

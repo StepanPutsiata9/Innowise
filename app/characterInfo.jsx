@@ -1,12 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { Platform, StyleSheet, TouchableOpacity, Image, View } from 'react-native';
+
 import { Text } from 'react-native';
 
 
 import { useRouter } from 'expo-router';
 import { useSelector } from 'react-redux';
 import useThemeStyles from '@/hooks/useThemeStyles';
-import Header from '@/components/mainScreen/Header';
+
 import Back from "../components/mainScreen/Back"
 export default function ModalScreen() {
   const router = useRouter();
@@ -14,7 +14,7 @@ export default function ModalScreen() {
   const theme = useSelector((state) => state.theme.mode)
   const character = useSelector((state) => state.characters.selectedCharacter);
   return (
-
+    
 
     <View style={styles.containerChatcterInfo}>
       <View style={styles.titleBlock} >
