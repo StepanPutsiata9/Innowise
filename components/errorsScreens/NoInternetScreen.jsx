@@ -1,6 +1,9 @@
 
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native"
+import { useDispatch, useSelector } from "react-redux";
+import {loadOfflineCharacters} from "../../store/slices/charactersSlice"
 export default function NoInternetScreen({ onRetry }) {
+    const dispatch=useDispatch();
     return (
         <View style={styles.noInternetContainer}>
             <Image
@@ -9,7 +12,7 @@ export default function NoInternetScreen({ onRetry }) {
             />
             <Text style={styles.noInternetTitle}>
                 No internet connection</Text>
-            <Text style={styles.noInternetText}>Please check your internet connection.</Text>
+            <Text style={styles.noInternetText}>Please check your internet connection</Text>
             <TouchableOpacity style={styles.retryButton} onPress={onRetry}>
                 <View>
                     <Text style={styles.retryButtonText}>Try again</Text>
@@ -18,7 +21,9 @@ export default function NoInternetScreen({ onRetry }) {
             </TouchableOpacity>
 
             <View style={styles.offlineMode}>
-                <TouchableOpacity style={styles.offlineButton} onPress={() => { }}>
+                <TouchableOpacity style={styles.offlineButton} onPress={() => { 
+                    dispatch(loadOfflineCharacters)
+                }}>
                     <View>
                         <Text style={styles.offlineButtonText}>Use offline mode</Text>
                     </View>
@@ -68,5 +73,8 @@ const styles = StyleSheet.create({
     offlineButtonText: {
         fontSize: 16,
         color:'white',
+    },
+    retryButtonText: {
+        fontSize: 16,
     },
 })

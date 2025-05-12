@@ -1,10 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
   characters: [],
   selectedCharacter: {},
   filteredCharacters: [],
+  offlineCharacters: [],
   loading: false,
   error: null,
   nextPage: 1,
@@ -15,6 +17,30 @@ const initialState = {
   },
   searchQuery: ''
 };
+
+
+
+
+const saveOfflineCharacters = async (characters) => {
+  try {
+    await AsyncStorage.setItem( "offlineData", JSON.stringify(characters));
+  } catch (error) {
+    console.error('Failed to save offline characters:', error);
+  }
+};
+
+
+export const loadOfflineCharacters = createAsyncThunk(
+  'characters/loadOffline',
+  async (_, { rejectWithValue }) => {
+    try {
+      const saved = await AsyncStorage.getItem("offlineData");
+      return saved ? JSON.parse(saved) : [];
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 export const fetchCharacters = createAsyncThunk(
   'characters/fetchCharacters',
@@ -69,9 +95,7 @@ const charactersSlice = createSlice({
       state.searchQuery = '';
       state.nextPage = 1;
       state.hasMore = true;
-
     },
-    // Добавляем новый reducer для принудительного сброса
     clearCharacters: (state) => {
       state.characters = [];
       state.filteredCharacters = [];
@@ -91,15 +115,17 @@ const charactersSlice = createSlice({
           state.characters = [...state.characters, ...action.payload.characters];
         }
 
+        // Сохраняем первые 10 персонажей
+        const firstTenCharacters = state.characters.slice(0, 10);
+        state.offlineCharacters = firstTenCharacters;
+        saveOfflineCharacters(firstTenCharacters);
+
         state.filteredCharacters = state.searchQuery
-          ?
-          state.characters.filter(character => {
-            const searchTerm = state.searchQuery.toLowerCase();
-            const nameWords = character.name.toLowerCase().split(' ');
-            return nameWords.some(word =>
-              word.startsWith(searchTerm)
-            );
-          })
+          ? state.characters.filter(character => {
+              const searchTerm = state.searchQuery.toLowerCase();
+              const nameWords = character.name.toLowerCase().split(' ');
+              return nameWords.some(word => word.startsWith(searchTerm));
+            })
           : state.characters;
 
         state.nextPage += 1;
@@ -108,11 +134,14 @@ const charactersSlice = createSlice({
       .addCase(fetchCharacters.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(loadOfflineCharacters.fulfilled, (state, action) => {
+        state.offlineCharacters = action.payload;
       });
   }
 });
 
-export const {
+export const { 
   setSelectedCharacter,
   searchCharacter,
   setFilters,
