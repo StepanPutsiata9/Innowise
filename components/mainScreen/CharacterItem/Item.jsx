@@ -2,13 +2,13 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'expo-router';
-import { setSelectedCharacter } from "../../store/slices/charactersSlice"
-import useThemeStyles from '@/hooks/useThemeStyles';
+import { setSelectedCharacter } from "../../../store/slices/charactersSlice"
+import useStyles from './useItemStyles';
 
 const CharacterCard = ({ character }) => {
     const router = useRouter();
     const dispatch = useDispatch();
-    const styles = useThemeStyles();
+    const styles = useStyles();
     return (
         <TouchableOpacity onPress={() => {
             dispatch(setSelectedCharacter(character));

@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo, useCallback } from 'react';
-import { FlatList, ActivityIndicator, TouchableOpacity, View, Text,StyleSheet } from 'react-native';
+import { FlatList, ActivityIndicator } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchCharacters, setOfflineMode } from '../../store/slices/charactersSlice';
-import CharacterCard from './Item';
-import useThemeStyles from '@/hooks/useThemeStyles';
+import { fetchCharacters } from '../../../store/slices/charactersSlice';
+import CharacterCard from '../CharacterItem/Item';
+import useStyles from './useCharactersStyles';
 
 
 const MemoizedCharacterCard = React.memo(CharacterCard);
@@ -18,7 +18,7 @@ const Characters = () => {
     isOfflineMode 
   } = useSelector(state => state.characters);
 
-  const styles = useThemeStyles();
+  const styles = useStyles();
 
   // Выбираем данные в зависимости от режима
   const displayData = isOfflineMode ? offlineCharacters : filteredCharacters;
@@ -50,16 +50,16 @@ const Characters = () => {
   }, [hasMore, loading, dispatch, isOfflineMode]);
 
   return (
+
       <FlatList
         data={uniqueCharacters}
         renderItem={renderItem}
         keyExtractor={item => `${item.id}`}
         onEndReached={!isOfflineMode ? handleLoadMore : null}
         onEndReachedThreshold={0.5}
-        ListFooterComponent={loading ? <ActivityIndicator size="large" /> : null}
+        ListFooterComponent={loading&&!isOfflineMode ? <ActivityIndicator size="large" /> : null}
         style={styles.containerCharacters}
       />
-    
 
 
   );

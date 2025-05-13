@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native';
-import Header from "../../components/mainScreen/Header"
-import Characters from "../../components/mainScreen/Characters"
-import Search from "../../components/mainScreen/Search"
-import Filter from "../../components/mainScreen/Filter"
+import Header from "../../components/mainScreen/Header/Header"
+import Characters from "../../components/mainScreen/Characters/Characters"
+import Search from "../../components/mainScreen/Search/Search"
+import Filter from "../../components/mainScreen/Filter/Filter"
 import { useSelector } from 'react-redux';
 import BackToRetry from "../../components/errorsScreens/BackToRetryPage"
 export default function TabOneScreen() {

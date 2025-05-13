@@ -6,7 +6,7 @@ const initialState = {
   characters: [],
   selectedCharacter: {},
   filteredCharacters: [],
-  isOfflineMode: false, // Добавляем флаг оффлайн-режима
+  isOfflineMode: false,
   offlineCharacters: [],
   loading: false,
   error: null,
@@ -80,12 +80,12 @@ const charactersSlice = createSlice({
         return;
       }
 
-      const searchTerms = action.payload.toLowerCase().trim().split(/\s+/); // Разбиваем запрос на отдельные слова
+      const searchTerms = action.payload.toLowerCase().trim().split(/\s+/);
       state.filteredCharacters = state.characters.filter(character => {
         const fullName = character.name.toLowerCase();
         const nameWords = fullName.split(' ');
 
-        // Проверяем, что каждое слово из поискового запроса совпадает с началом любого слова в имени
+        
         return searchTerms.every(term =>
           nameWords.some(word => word.startsWith(term))
         );
@@ -134,7 +134,7 @@ const charactersSlice = createSlice({
             character.name.toLowerCase();
             const nameWords = fullName.split(' ');
 
-            // Проверяем, что каждое слово из поискового запроса совпадает с началом любого слова в имени
+            
             return searchTerms.every(term =>
               nameWords.some(word => word.startsWith(term))
             )

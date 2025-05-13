@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { setFilters, resetFilters,clearCharacters,fetchCharacters } from '../../store/slices/charactersSlice';
+import { setFilters, resetFilters,clearCharacters,fetchCharacters } from '../../../store/slices/charactersSlice';
 import Modal from 'react-native-modal';
-import useThemeStyles from '../../hooks/useThemeStyles';
+import useStyles from './useFilterStyles';
 
 const Filters = () => {
    const dispatch = useDispatch();
   
  
-  const styles = useThemeStyles();
+  const styles = useStyles();
   const [visibleFilter, setVisibleFilter] = useState(null);
   const [selectedFilters, setSelectedFilters] = useState({
     status: '',

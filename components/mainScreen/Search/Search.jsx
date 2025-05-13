@@ -1,10 +1,10 @@
 import { View, TextInput } from "react-native";
-import useThemeStyle from "../../hooks/useThemeStyles";
-import { searchCharacter } from "../../store/slices/charactersSlice";
+import useStyles from "./useSearchStyles"
+import { searchCharacter } from "../../../store/slices/charactersSlice";
 import { useDispatch } from "react-redux";
 export default function Search() {
     const dispatch = useDispatch();
-    const styles = useThemeStyle();
+    const styles = useStyles();
     const handleTextChange = (inputText) => {
         dispatch(searchCharacter(inputText));
     };
