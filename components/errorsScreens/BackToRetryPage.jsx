@@ -9,7 +9,7 @@ export default function BackToRetry() {
     const styles = useThemeStyles();
     return (
         <TouchableOpacity style={styles.offlineBlock} onPress={() => { dispatch(setOfflineMode(false)) }}>
-            <Text style={styles.offlineBlockText}>Back to retry page</Text>
+            <Text style={styles.offlineBlockText}>Offline Mode. Back to Retry</Text>
         </TouchableOpacity>
     );
 }

@@ -5,7 +5,7 @@ import { fetchCharacters, setOfflineMode } from '../../store/slices/charactersSl
 import CharacterCard from './Item';
 import useThemeStyles from '@/hooks/useThemeStyles';
 
-// Оптимизированный компонент карточки
+
 const MemoizedCharacterCard = React.memo(CharacterCard);
 
 const Characters = () => {
@@ -15,7 +15,7 @@ const Characters = () => {
     offlineCharacters,
     loading,
     hasMore,
-    isOfflineMode // Добавляем флаг из хранилища
+    isOfflineMode 
   } = useSelector(state => state.characters);
 
   const styles = useThemeStyles();
@@ -35,7 +35,7 @@ const Characters = () => {
       seen.add(char.id);
       return true;
     });
-  }, [displayData]); // Используем displayData вместо filteredCharacters
+  }, [displayData]); 
 
   useEffect(() => {
     if (!isOfflineMode) { // Загружаем данные только если не в оффлайн-режиме
@@ -44,7 +44,7 @@ const Characters = () => {
   }, [dispatch, isOfflineMode]);
 
   const handleLoadMore = useCallback(() => {
-    if (hasMore && !loading && !isOfflineMode) { // Подгрузка только в онлайн-режиме
+    if (hasMore && !loading && !isOfflineMode) { 
       dispatch(fetchCharacters());
     }
   }, [hasMore, loading, dispatch, isOfflineMode]);
@@ -54,7 +54,7 @@ const Characters = () => {
         data={uniqueCharacters}
         renderItem={renderItem}
         keyExtractor={item => `${item.id}`}
-        onEndReached={!isOfflineMode ? handleLoadMore : null} // Отключаем подгрузку в оффлайне
+        onEndReached={!isOfflineMode ? handleLoadMore : null}
         onEndReachedThreshold={0.5}
         ListFooterComponent={loading ? <ActivityIndicator size="large" /> : null}
         style={styles.containerCharacters}

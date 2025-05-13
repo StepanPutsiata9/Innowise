@@ -6,7 +6,7 @@ const initialState = {
   characters: [],
   selectedCharacter: {},
   filteredCharacters: [],
-    isOfflineMode: false, // Добавляем флаг оффлайн-режима
+  isOfflineMode: false, // Добавляем флаг оффлайн-режима
   offlineCharacters: [],
   loading: false,
   error: null,
@@ -24,7 +24,7 @@ const initialState = {
 
 const saveOfflineCharacters = async (characters) => {
   try {
-    await AsyncStorage.setItem( "offlineData", JSON.stringify(characters));
+    await AsyncStorage.setItem("offlineData", JSON.stringify(characters));
   } catch (error) {
     console.error('Failed to save offline characters:', error);
   }
@@ -79,11 +79,16 @@ const charactersSlice = createSlice({
         state.filteredCharacters = state.characters;
         return;
       }
-      const searchTerm = action.payload.toLowerCase();
 
+      const searchTerms = action.payload.toLowerCase().trim().split(/\s+/); // Разбиваем запрос на отдельные слова
       state.filteredCharacters = state.characters.filter(character => {
-        const words = character.name.toLowerCase().split(' ');
-        return words.some(word => word.startsWith(searchTerm));
+        const fullName = character.name.toLowerCase();
+        const nameWords = fullName.split(' ');
+
+        // Проверяем, что каждое слово из поискового запроса совпадает с началом любого слова в имени
+        return searchTerms.every(term =>
+          nameWords.some(word => word.startsWith(term))
+        );
       });
     },
     setFilters: (state, action) => {
@@ -101,7 +106,7 @@ const charactersSlice = createSlice({
       state.characters = [];
       state.filteredCharacters = [];
     },
-     setOfflineMode: (state, action) => {
+    setOfflineMode: (state, action) => {
       state.isOfflineMode = action.payload;
     },
   },
@@ -126,12 +131,15 @@ const charactersSlice = createSlice({
 
         state.filteredCharacters = state.searchQuery
           ? state.characters.filter(character => {
-              const searchTerm = state.searchQuery.toLowerCase();
-              const nameWords = character.name.toLowerCase().split(' ');
-              return nameWords.some(word => word.startsWith(searchTerm));
-            })
-          : state.characters;
+            character.name.toLowerCase();
+            const nameWords = fullName.split(' ');
 
+            // Проверяем, что каждое слово из поискового запроса совпадает с началом любого слова в имени
+            return searchTerms.every(term =>
+              nameWords.some(word => word.startsWith(term))
+            )
+          })
+          : state.characters;
         state.nextPage += 1;
         state.hasMore = action.payload.hasMore;
       })
@@ -145,7 +153,7 @@ const charactersSlice = createSlice({
   }
 });
 
-export const { 
+export const {
   setSelectedCharacter,
   searchCharacter,
   setFilters,

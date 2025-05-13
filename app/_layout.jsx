@@ -84,10 +84,10 @@ function AppNavigation() {
       setIsOnline(state.isConnected);
       if (state.isConnected) {
         dispatch(setOfflineMode(false));
-      }else{
-        dispatch(setOfflineMode(true));
-
       }
+      // else{
+      //   dispatch(setOfflineMode(true));
+      // }
     });
     checkConnection();
     return () => unsubscribe();

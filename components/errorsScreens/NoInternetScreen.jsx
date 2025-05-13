@@ -76,14 +76,14 @@ const styles = StyleSheet.create({
         marginBottom:50,
     },
     offlineButton: {
-        backgroundColor: '#4C82FF',
-        paddingHorizontal: 90,
-        paddingVertical: 10,
-        borderRadius: 12,
+        // backgroundColor: '#4C82FF',
+        // paddingHorizontal: 90,
+        // paddingVertical: 10,
+        // borderRadius: 12,
     },
     offlineButtonText: {
         fontSize: 16,
-        color:'white',
+        color:'8b8b8b',
     },
     retryButtonText: {
         fontSize: 16,
