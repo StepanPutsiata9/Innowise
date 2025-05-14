@@ -9,31 +9,29 @@ export default function useStyles() {
         containerChatcterInfo: {
             height: "100%",
             width: '100%',
-
-            // paddingHorizontal:20,
             backgroundColor: theme === 'dark' ? '#000' : '#fff',
         },
         imageInfo: {
-            height: 300,
-            width: 300,
+            height: 350,
+            width: 350,
             borderRadius: 20,
             borderColor: theme === 'dark' ? '#fff' : '#000',
             marginBottom: 15,
             borderWidth: 1,
         },
         nameOfSelectedCharacter: {
-            fontSize: 28,
+            fontSize: 34,
             marginVertical: 12,
             color: theme === 'dark' ? '#fff' : '#000',
-            marginLeft: 20
+            marginLeft: 20,
+            fontWeight:500
 
         },
         titleBlock: {
             backgroundColor: theme === 'dark' ? '#000' : '#fff',
             alignItems: 'center',
             flexDirection: 'row',
-            // justifyContent:"flex-start",
-            marginLeft: 20
+            marginLeft: 25,
         },
         photoBlock: {
             marginHorizontal: 'auto',
@@ -42,7 +40,6 @@ export default function useStyles() {
         infoBlock: {
             backgroundColor: theme === 'dark' ? '#000' : '#fff',
             marginHorizontal: 'auto',
-
         },
         backLine: {
             backgroundColor: theme === 'dark' ? '#000' : '#fff',
@@ -51,12 +48,45 @@ export default function useStyles() {
         },
         infoLineSelectedCharacter: {
             backgroundColor: theme === 'dark' ? '#000' : '#fff',
-            width: 300,
+            width: 350,
             flexDirection: 'row',
             marginBottom: 10,
             alignItems: 'center',
             flexWrap: 'wrap',
+            // justifyContent:'center',
         },
+        infoParams: {
+            color: theme === 'dark' ? '#fff' : '#000',
+            fontSize: 20,
+            marginRight:5,
+            fontWeight:700,
+        },
+        infoText: {
+            color: theme === 'dark' ? '#fff' : '#000',
+            fontSize: 20,
+            fontWeight:500,
+        },
+        alive:{
+            backgroundColor:"green",
+            width:15,
+            height:15,
+            borderRadius:25,
+            marginLeft:5,
+        },
+        dead:{
+            backgroundColor:"red",
+            width:15,
+            height:15,
+            borderRadius:25,
+            marginLeft:5,
+        },
+          unknown:{   
+            backgroundColor:"grey",
+            width:15,
+            height:15,
+            borderRadius:25,
+            marginLeft:5,
+        }
 
-  });
+    });
 };
