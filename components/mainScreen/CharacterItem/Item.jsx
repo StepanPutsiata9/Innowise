@@ -1,11 +1,11 @@
-import React,{useState} from 'react';
+import React,{useState,memo} from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'expo-router';
 import { setSelectedCharacter } from "../../../store/slices/charactersSlice"
 import useStyles from './useItemStyles';
 
-const CharacterCard = ({ character }) => {
+const CharacterCard =({ character }) => {
     const router = useRouter();
     const dispatch = useDispatch();
     const styles = useStyles();
@@ -47,4 +47,4 @@ const CharacterCard = ({ character }) => {
     );
 };
 
-export default CharacterCard;
+export default memo(CharacterCard);
