@@ -14,9 +14,9 @@ const initialState = {
   hasMore: true,
   filters: {
     status: '',
-    species: ''
+    species: '',
   },
-  searchQuery: ''
+  searchQuery: '',
 };
 
 const saveOfflineCharacters = async (characters) => {
@@ -81,12 +81,12 @@ const charactersSlice = createSlice({
       state.filteredCharacters = state.characters.filter(character => {
         const fullName = character.name.toLowerCase();
         const nameWords = fullName.split(' ');
-
-        
         return searchTerms.every(term =>
           nameWords.some(word => word.startsWith(term))
         );
+
       });
+
     },
     setFilters: (state, action) => {
       state.filters = action.payload;
