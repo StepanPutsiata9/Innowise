@@ -56,15 +56,15 @@ export default function useStyles() {
             // justifyContent:'center',
         },
         infoParams: {
-            color: theme === 'dark' ? '#fff' : '#000',
+            color: theme === 'dark' ? '#fff' : '#8b8b8b',
             fontSize: 20,
             marginRight:5,
-            fontWeight:700,
+            fontWeight:500,
         },
         infoText: {
             color: theme === 'dark' ? '#fff' : '#000',
             fontSize: 20,
-            fontWeight:500,
+            fontWeight:700,
         },
         alive:{
             backgroundColor:"green",
