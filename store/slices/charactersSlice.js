@@ -19,9 +19,6 @@ const initialState = {
   searchQuery: ''
 };
 
-
-
-
 const saveOfflineCharacters = async (characters) => {
   try {
     await AsyncStorage.setItem("offlineData", JSON.stringify(characters));
