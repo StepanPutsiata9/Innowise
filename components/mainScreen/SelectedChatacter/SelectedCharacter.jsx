@@ -1,4 +1,4 @@
-import { TouchableOpacity, Image, View, ActivityIndicator } from 'react-native';
+import { TouchableOpacity, Image, View, ActivityIndicator, ScrollView } from 'react-native';
 
 import { Text } from 'react-native';
 
@@ -43,7 +43,7 @@ export default function SelectedCharacter() {
         </TouchableOpacity>
         <Text style={styles.nameOfSelectedCharacter}>{character.name || "Unknown"}</Text>
       </View>
-
+      <ScrollView>
       <View style={styles.photoBlock}>
         <Image
           source={{ uri: character.image }}
@@ -73,10 +73,12 @@ export default function SelectedCharacter() {
           <Text style={styles.infoParams}>Gender: </Text>
           <Text style={styles.infoText}>{character.gender}</Text>
         </View>
+        
         <View style={styles.infoLineSelectedCharacter}>
           <Text style={styles.infoParams}>Origin: </Text>
           <Text style={styles.infoText}>{character.origin.name}</Text>
         </View>
+
         {!isOfflineMode&&
           <View style={styles.infoLineSelectedCharacter}>
             <Text style={styles.infoParams}>First seen in: </Text>
@@ -84,6 +86,7 @@ export default function SelectedCharacter() {
           </View>
         }
       </View>
+      </ScrollView>
     </View>
   );
 }

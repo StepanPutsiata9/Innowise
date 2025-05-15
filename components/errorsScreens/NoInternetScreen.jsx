@@ -19,10 +19,6 @@ export default function NoInternetScreen({ onRetry,}) {
   };
     return (
         <View style={styles.noInternetContainer}>
-            <Image
-                source={require("../../assets/images/logo.png")}
-                style={styles.logo}
-            />
             <Text style={styles.noInternetTitle}>
                 No internet connection</Text>
             <Text style={styles.noInternetText}>Please check your internet connection</Text>
