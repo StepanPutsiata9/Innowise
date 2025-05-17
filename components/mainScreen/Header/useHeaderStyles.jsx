@@ -10,7 +10,7 @@ export default function useStyles() {
         header: {
             flexDirection: 'row',
             justifyContent: 'center',
-            paddingVertical: 5,
+            paddingVertical: 35,
             alignItems: 'center',
             backgroundColor: theme === 'dark' ? '#000' : '#fff',
             borderBottomWidth: 2,
