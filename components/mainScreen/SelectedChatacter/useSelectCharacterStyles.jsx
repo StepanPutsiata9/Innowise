@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
-
+import { Platform } from 'react-native';
 export default function useStyles() {
     const theme = useSelector((state) => state.theme.mode);
 
@@ -32,7 +32,7 @@ export default function useStyles() {
             alignItems: 'center',
             flexDirection: 'row',
             marginLeft: 25,
-            marginTop:30,
+            marginTop:Platform.OS === 'ios'?30:0,
         },
         photoBlock: {
             marginHorizontal: 'auto',

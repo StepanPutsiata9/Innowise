@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
+import { Platform } from 'react-native';
 
 export default function useStyles() {
     const theme = useSelector((state) => state.theme.mode);
@@ -10,7 +11,8 @@ export default function useStyles() {
         header: {
             flexDirection: 'row',
             justifyContent: 'center',
-            paddingVertical: 35,
+            paddingTop:Platform.OS === 'ios'?40:5,
+            paddingBottom:5,
             alignItems: 'center',
             backgroundColor: theme === 'dark' ? '#000' : '#fff',
             borderBottomWidth: 2,
