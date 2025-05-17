@@ -32,6 +32,7 @@ export default function useStyles() {
             alignItems: 'center',
             flexDirection: 'row',
             marginLeft: 25,
+            marginTop:30,
         },
         photoBlock: {
             marginHorizontal: 'auto',
