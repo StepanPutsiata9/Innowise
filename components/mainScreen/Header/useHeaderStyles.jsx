@@ -6,13 +6,12 @@ export default function useStyles() {
     const theme = useSelector((state) => state.theme.mode);
 
     return StyleSheet.create({
- 
+
         // for header.jsx
         header: {
             flexDirection: 'row',
             justifyContent: 'center',
-            paddingTop:Platform.OS === 'ios'?40:5,
-            paddingBottom:5,
+            paddingBottom: 5,
             alignItems: 'center',
             backgroundColor: theme === 'dark' ? '#000' : '#fff',
             borderBottomWidth: 2,
@@ -29,6 +28,6 @@ export default function useStyles() {
             height: 50,
         },
 
-    
-})
+
+    })
 };

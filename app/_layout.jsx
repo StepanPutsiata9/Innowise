@@ -10,6 +10,7 @@ import NetInfo from '@react-native-community/netinfo';
 import { Provider, useSelector } from 'react-redux';
 import { View, Text, StyleSheet, } from 'react-native';
 import NoInternetScreen from "../components/errorsScreens/NoInternetScreen"
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 export { ErrorBoundary } from 'expo-router';
 
 export const unstable_settings = {
@@ -50,7 +51,9 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <Provider store={store}>
-      <AppNavigation />
+      <SafeAreaProvider>
+        <AppNavigation />
+      </SafeAreaProvider>
     </Provider>
   );
 }
@@ -64,7 +67,7 @@ import { setOfflineMode } from '../store/slices/charactersSlice';
 
 function AppNavigation() {
   const dispatch = useDispatch();
-  const {isOfflineMode} =useSelector((state)=>state.characters);
+  const { isOfflineMode } = useSelector((state) => state.characters);
   const [isOnline, setIsOnline] = useState(null);
 
   const checkConnection = async () => {
@@ -95,10 +98,10 @@ function AppNavigation() {
   if (isOnline === null) {
     return <View style={styles.loadingContainer}><Text>Checking connection...</Text></View>;
   }
-  if (!isOnline&&!isOfflineMode) {
+  if (!isOnline && !isOfflineMode) {
     return <NoInternetScreen onRetry={checkConnection} />;
   }
-  
+
   return (
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

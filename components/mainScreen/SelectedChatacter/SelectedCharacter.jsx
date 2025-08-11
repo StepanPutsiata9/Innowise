@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import useStyles from './useSelectCharacterStyles';
 import axios from 'axios';
 import Back from "../../../components/mainScreen/Back"
-
+import {useSafeAreaInsets} from "react-native-safe-area-context"
 export default function SelectedCharacter() {
   const { isOfflineMode } = useSelector((state) => state.characters);
   const router = useRouter();
@@ -18,6 +18,8 @@ export default function SelectedCharacter() {
   const [episodeName, setEpisodeName] = useState(null);
   const [loading, setLoading] = useState(true);
   const [setError] = useState(null);
+
+  const insets = useSafeAreaInsets();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -36,7 +38,7 @@ export default function SelectedCharacter() {
   }
 
   return (
-    <View style={styles.containerChatcterInfo}>
+    <View style={[styles.containerChatcterInfo,{paddingTop:insets.top}]}>
       <View style={styles.titleBlock} >
         <TouchableOpacity onPress={() => router.back()}>
           <Back color={theme == "dark" ? "#fff" : "#000"} />
@@ -44,48 +46,48 @@ export default function SelectedCharacter() {
         <Text style={styles.nameOfSelectedCharacter}>{character.name || "Unknown"}</Text>
       </View>
       <ScrollView>
-      <View style={styles.photoBlock}>
-        <Image
-          source={{ uri: character.image }}
-          style={styles.imageInfo}
-        />
-      </View>
-
-      <View style={styles.infoBlock}>
-        <View style={styles.infoLineSelectedCharacter}>
-          <Text style={styles.infoParams}>Status: </Text>
-          <Text style={styles.infoText}>{character.status}</Text>
-          <View style={(character.status == "Alive" && styles.alive) ||
-            (character.status == "Dead" && styles.dead) ||
-            (character.status == "unknown" && styles.unknown)
-          }></View>
-        </View>
-        <View style={styles.infoLineSelectedCharacter}>
-          <Text style={styles.infoParams}>Species: </Text>
-          <Text style={styles.infoText}>{character.species}</Text>
-        </View>
-        <View style={styles.infoLineSelectedCharacter}>
-          <Text style={styles.infoParams}>last known location: </Text>
-          <Text style={styles.infoText}>{character.location.name}</Text>
+        <View style={styles.photoBlock}>
+          <Image
+            source={{ uri: character.image }}
+            style={styles.imageInfo}
+          />
         </View>
 
-        <View style={styles.infoLineSelectedCharacter}>
-          <Text style={styles.infoParams}>Gender: </Text>
-          <Text style={styles.infoText}>{character.gender}</Text>
-        </View>
-        
-        <View style={styles.infoLineSelectedCharacter}>
-          <Text style={styles.infoParams}>Origin: </Text>
-          <Text style={styles.infoText}>{character.origin.name}</Text>
-        </View>
-
-        {!isOfflineMode&&
+        <View style={styles.infoBlock}>
           <View style={styles.infoLineSelectedCharacter}>
-            <Text style={styles.infoParams}>First seen in: </Text>
-            <Text style={styles.infoText}>{episodeName}</Text>
+            <Text style={styles.infoParams}>Status: </Text>
+            <Text style={styles.infoText}>{character.status}</Text>
+            <View style={(character.status == "Alive" && styles.alive) ||
+              (character.status == "Dead" && styles.dead) ||
+              (character.status == "unknown" && styles.unknown)
+            }></View>
           </View>
-        }
-      </View>
+          <View style={styles.infoLineSelectedCharacter}>
+            <Text style={styles.infoParams}>Species: </Text>
+            <Text style={styles.infoText}>{character.species}</Text>
+          </View>
+          <View style={styles.infoLineSelectedCharacter}>
+            <Text style={styles.infoParams}>last known location: </Text>
+            <Text style={styles.infoText}>{character.location.name}</Text>
+          </View>
+
+          <View style={styles.infoLineSelectedCharacter}>
+            <Text style={styles.infoParams}>Gender: </Text>
+            <Text style={styles.infoText}>{character.gender}</Text>
+          </View>
+
+          <View style={styles.infoLineSelectedCharacter}>
+            <Text style={styles.infoParams}>Origin: </Text>
+            <Text style={styles.infoText}>{character.origin.name}</Text>
+          </View>
+
+          {!isOfflineMode &&
+            <View style={styles.infoLineSelectedCharacter}>
+              <Text style={styles.infoParams}>First seen in: </Text>
+              <Text style={styles.infoText}>{episodeName}</Text>
+            </View>
+          }
+        </View>
       </ScrollView>
     </View>
   );

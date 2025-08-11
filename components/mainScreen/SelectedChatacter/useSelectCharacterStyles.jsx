@@ -21,18 +21,16 @@ export default function useStyles() {
         },
         nameOfSelectedCharacter: {
             fontSize: 34,
-            marginVertical: 12,
             color: theme === 'dark' ? '#fff' : '#000',
             marginLeft: 20,
             fontWeight:500
-
         },
         titleBlock: {
             backgroundColor: theme === 'dark' ? '#000' : '#fff',
             alignItems: 'center',
             flexDirection: 'row',
             marginLeft: 25,
-            marginTop:Platform.OS === 'ios'?30:0,
+            marginBottom:10
         },
         photoBlock: {
             marginHorizontal: 'auto',
@@ -54,7 +52,6 @@ export default function useStyles() {
             marginBottom: 10,
             alignItems: 'center',
             flexWrap: 'wrap',
-            // justifyContent:'center',
         },
         infoParams: {
             color: theme === 'dark' ? '#fff' : '#8b8b8b',
