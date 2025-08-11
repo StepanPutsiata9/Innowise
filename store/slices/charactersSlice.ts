@@ -27,6 +27,12 @@ interface IFilters {
   species: string;
 }
 
+interface FetchCharactersResponse {
+  characters: Character[];
+  hasMore: boolean;
+  isNewSearch: boolean;
+}
+
 interface ICharactersState {
   characters: Character[] | null;
   selectedCharacter: Character | null;
@@ -39,6 +45,7 @@ interface ICharactersState {
   hasMore: boolean;
   filters: IFilters;
   searchQuery: string;
+  isSearching: boolean;
 }
 
 const initialState: ICharactersState = {
@@ -56,6 +63,7 @@ const initialState: ICharactersState = {
     species: '',
   },
   searchQuery: '',
+  isSearching: false,
 };
 
 const saveOfflineCharacters = async (characters: Character[]) => {
@@ -77,12 +85,6 @@ export const loadOfflineCharacters = createAsyncThunk(
     }
   }
 );
-
-interface FetchCharactersResponse {
-  characters: Character[];
-  hasMore: boolean;
-  isNewSearch: boolean;
-}
 
 export const fetchCharacters = createAsyncThunk<
   FetchCharactersResponse,
@@ -111,6 +113,36 @@ export const fetchCharacters = createAsyncThunk<
   }
 );
 
+export const searchCharactersAPI = createAsyncThunk<
+  FetchCharactersResponse,
+  string,
+  { state: { characters: ICharactersState } }
+>(
+  'characters/searchCharactersAPI',
+  async (query, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`https://rickandmortyapi.com/api/character/?name=${query}`);
+      return {
+        characters: response.data.results as Character[],
+        hasMore: !!response.data.info.next,
+        isNewSearch: true
+      };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 404) {
+          return {
+            characters: [],
+            hasMore: false,
+            isNewSearch: true
+          };
+        }
+        return rejectWithValue(error.message);
+      }
+      return rejectWithValue('Unknown error');
+    }
+  }
+);
+
 const charactersSlice = createSlice({
   name: 'characters',
   initialState,
@@ -120,21 +152,11 @@ const charactersSlice = createSlice({
     },
     searchCharacter: (state, action: PayloadAction<string>) => {
       state.searchQuery = action.payload;
+      state.isSearching = !!action.payload;
       
       if (!action.payload) {
         state.filteredCharacters = state.characters;
-        return;
-      }
-
-      const searchTerms = action.payload.toLowerCase().trim().split(/\s+/);
-      if (state.characters) {
-        state.filteredCharacters = state.characters.filter(character => {
-          const fullName = character.name.toLowerCase();
-          const nameWords = fullName.split(' ');
-          return searchTerms.every(term =>
-            nameWords.some(word => word.startsWith(term))
-          );
-        });
+        state.isSearching = false;
       }
     },
     setFilters: (state, action: PayloadAction<IFilters>) => {
@@ -147,6 +169,7 @@ const charactersSlice = createSlice({
       state.searchQuery = '';
       state.nextPage = 1;
       state.hasMore = true;
+      state.isSearching = false;
     },
     clearCharacters: (state) => {
       state.characters = [];
@@ -154,6 +177,11 @@ const charactersSlice = createSlice({
     },
     setOfflineMode: (state, action: PayloadAction<boolean>) => {
       state.isOfflineMode = action.payload;
+    },
+    resetSearch: (state) => {
+      state.searchQuery = '';
+      state.isSearching = false;
+      state.filteredCharacters = state.characters;
     },
   },
   extraReducers: (builder) => {
@@ -164,7 +192,6 @@ const charactersSlice = createSlice({
       })
       .addCase(fetchCharacters.fulfilled, (state, action: PayloadAction<FetchCharactersResponse>) => {
         state.loading = false;
-
         const { characters, hasMore, isNewSearch } = action.payload;
         
         state.characters = isNewSearch 
@@ -175,16 +202,7 @@ const charactersSlice = createSlice({
         state.offlineCharacters = firstTenCharacters;
         saveOfflineCharacters(firstTenCharacters);
 
-        if (state.searchQuery) {
-          const searchTerms = state.searchQuery.toLowerCase().trim().split(/\s+/);
-          state.filteredCharacters = state.characters?.filter(character => {
-            const fullName = character.name.toLowerCase();
-            const nameWords = fullName.split(' ');
-            return searchTerms.every(term =>
-              nameWords.some(word => word.startsWith(term))
-            );
-          }) || null;
-        } else {
+        if (!state.isSearching) {
           state.filteredCharacters = state.characters;
         }
 
@@ -194,6 +212,26 @@ const charactersSlice = createSlice({
       .addCase(fetchCharacters.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+      .addCase(searchCharactersAPI.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(searchCharactersAPI.fulfilled, (state, action: PayloadAction<FetchCharactersResponse>) => {
+        state.loading = false;
+        const { characters, hasMore } = action.payload;
+        
+        state.filteredCharacters = characters;
+        state.hasMore = hasMore;
+        
+        if (!state.isSearching) {
+          state.characters = characters;
+        }
+      })
+      .addCase(searchCharactersAPI.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+        state.filteredCharacters = [];
       })
       .addCase(loadOfflineCharacters.fulfilled, (state, action: PayloadAction<Character[]>) => {
         state.offlineCharacters = action.payload;
@@ -207,7 +245,8 @@ export const {
   setFilters,
   resetFilters,
   clearCharacters,
-  setOfflineMode
+  setOfflineMode,
+  resetSearch,
 } = charactersSlice.actions;
 
 export default charactersSlice.reducer;

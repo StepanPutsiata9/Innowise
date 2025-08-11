@@ -1,9 +1,4 @@
-import {
-  TouchableOpacity,
-  Image,
-  View,
-  ScrollView,
-} from "react-native";
+import { TouchableOpacity, Image, View, ScrollView } from "react-native";
 
 import { Text } from "react-native";
 

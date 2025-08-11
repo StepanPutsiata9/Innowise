@@ -9,10 +9,10 @@ import useStyles from "./useItemStyles";
 import { useAppDispatch } from "@/store/index";
 import { useTypedRouter } from "@/hooks/useRouter";
 
-interface ICharacterType{
-    character:Character
+interface ICharacterType {
+  character: Character;
 }
-const CharacterCard = ({character}: ICharacterType) => {
+const CharacterCard = ({ character }: ICharacterType) => {
   const router = useTypedRouter();
   const dispatch = useAppDispatch();
   const styles = useStyles();
@@ -53,7 +53,9 @@ const CharacterCard = ({character}: ICharacterType) => {
             <Text style={styles.infoText}>{character.species}</Text>
           </View>
           <Text style={styles.infoParams}>last known location: </Text>
-          <Text style={styles.infoText}>{character?.location?.name||"unknown"}</Text>
+          <Text style={styles.infoText}>
+            {character?.location?.name || "unknown"}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>

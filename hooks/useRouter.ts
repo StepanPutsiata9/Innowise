@@ -1,9 +1,9 @@
-import { useRouter as useExpoRouter } from 'expo-router';
+import { useRouter as useExpoRouter } from "expo-router";
 
 type AppRoutes = {
-  "index": undefined;
-  "characterInfo": undefined;
-  "settings": undefined;
+  index: undefined;
+  characterInfo: undefined;
+  settings: undefined;
 };
 type RouteName = keyof AppRoutes;
 
