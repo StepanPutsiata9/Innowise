@@ -17,11 +17,10 @@ export default function TabLayout() {
         tabBarInactiveTintColor: theme === "dark" ? "#888" : "#666",
         headerShown:false,
         tabBarStyle: {
-          height:55,
+          height:75,
           backgroundColor: theme === "dark" ? "#000" : "#fff",
           borderTopColor: theme === "dark" ? "#333" : "#ddd",
         },
-
       }}>
       <Tabs.Screen
         name="index"

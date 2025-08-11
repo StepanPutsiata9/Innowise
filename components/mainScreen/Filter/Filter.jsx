@@ -101,8 +101,9 @@ const Filters = () => {
           {selectedFilters.species || 'Species'}
         </Text>
       </TouchableOpacity>
-      
+
       {renderFilterModal()}
+      
     </View>
   );
 };

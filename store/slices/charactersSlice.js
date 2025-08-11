@@ -76,7 +76,6 @@ const charactersSlice = createSlice({
         state.filteredCharacters = state.characters;
         return;
       }
-
       const searchTerms = action.payload.toLowerCase().trim().split(/\s+/);
       state.filteredCharacters = state.characters.filter(character => {
         const fullName = character.name.toLowerCase();
