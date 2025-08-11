@@ -1,11 +1,11 @@
+import { RootState } from '@/store';
 import { StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 
 export default function useStyles() {
-    const theme = useSelector((state) => state.theme.mode);
+    const theme = useSelector((state:RootState) => state.theme.mode);
 
     return StyleSheet.create({
-        // backToRetry
         offlineBlockText: {
             fontSize: 18,
             color: theme === 'dark' ? '#fff' : '#000',

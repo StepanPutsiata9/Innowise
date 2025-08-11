@@ -5,8 +5,9 @@ import Search from "../../components/mainScreen/Search/Search"
 import Filter from "../../components/mainScreen/Filter/Filter"
 import { useSelector } from 'react-redux';
 import BackToRetry from "../../components/errorsScreens/BackToRetryPage"
+import { RootState } from '@/store';
 export default function TabOneScreen() {
-  const { isOfflineMode } = useSelector((state) => state.characters);
+  const { isOfflineMode } = useSelector((state:RootState) => state.characters);
 
   return (
     <>
@@ -24,7 +25,3 @@ export default function TabOneScreen() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-
-});

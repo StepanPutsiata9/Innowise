@@ -1,11 +1,10 @@
+import { RootState } from '@/store';
 import { StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
-import { Platform } from 'react-native';
 export default function useStyles() {
-    const theme = useSelector((state) => state.theme.mode);
+    const theme = useSelector((state:RootState) => state.theme.mode);
 
     return StyleSheet.create({
-        // for selectedCharacter
         containerChatcterInfo: {
             height: "100%",
             width: '100%',

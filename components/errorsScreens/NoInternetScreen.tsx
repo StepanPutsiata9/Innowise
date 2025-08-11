@@ -1,17 +1,17 @@
 
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native"
-import { useDispatch, useSelector } from "react-redux";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native"
+import {useAppDispatch} from "@/store/index"
 import {loadOfflineCharacters,setOfflineMode} from "../../store/slices/charactersSlice"
-import { useRouter } from "expo-router";
-export default function NoInternetScreen({ onRetry,}) {
-  const dispatch = useDispatch();
+
+interface INoInternetProps{
+    onRetry:()=>void
+}
+export default function NoInternetScreen({ onRetry}:INoInternetProps) {
+  const dispatch = useAppDispatch();
   const handleOfflineMode = async () => {
     try {
-      // Загружаем оффлайн-данные и включаем оффлайн-режим
       await dispatch(loadOfflineCharacters());
       dispatch(setOfflineMode(true));
-
-    //   router.replace("/(tabs)");
     } catch (error) {
       console.error('Failed to load offline characters:', error);
       alert('No offline data available');
@@ -29,7 +29,7 @@ export default function NoInternetScreen({ onRetry,}) {
                 </View>
             </TouchableOpacity>
 
-            <View style={styles.offlineMode}>
+            <View>
                 <TouchableOpacity style={styles.offlineButton} onPress={handleOfflineMode}>
                     <View>
                         <Text style={styles.offlineButtonText}>Use offline mode</Text>

@@ -1,13 +1,14 @@
 import { View, Button, StyleSheet, TouchableOpacity } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { toggleTheme,setTheme } from '../../store/slices/themeSlice';
 import { Text } from 'react-native';
 import useStyles from "./useSettingsStyles"
+import {RootState, useAppDispatch} from "@/store/index"
 import Sun from "./Sun"
 import Moon from "./Moon"
 export default function ThemeSettingsScreen() {
-    const theme = useSelector((state) => state.theme.mode);
-    const dispatch = useDispatch();
+    const theme = useSelector((state:RootState) => state.theme.mode);
+    const dispatch = useAppDispatch();
     const styles=useStyles();
     return (
         <View style={styles.container}>

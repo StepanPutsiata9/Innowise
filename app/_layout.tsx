@@ -1,7 +1,7 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
-import { store } from "../store/index"
+import { RootState, store } from "../store/index"
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
 import { loadTheme } from '@/store/slices/themeSlice';
@@ -67,8 +67,8 @@ import { setOfflineMode } from '../store/slices/charactersSlice';
 
 function AppNavigation() {
   const dispatch = useDispatch();
-  const { isOfflineMode } = useSelector((state) => state.characters);
-  const [isOnline, setIsOnline] = useState(null);
+  const { isOfflineMode } = useSelector((state:RootState) => state.characters);
+  const [isOnline, setIsOnline] = useState<boolean|null>(null);
 
   const checkConnection = async () => {
     try {
@@ -88,9 +88,6 @@ function AppNavigation() {
       if (state.isConnected) {
         dispatch(setOfflineMode(false));
       }
-      // else{
-      //   dispatch(setOfflineMode(true));
-      // }
     });
     checkConnection();
     return () => unsubscribe();

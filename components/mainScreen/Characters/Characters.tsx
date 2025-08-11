@@ -1,36 +1,37 @@
 import React, { useEffect, useMemo, useCallback } from 'react';
-import { FlatList, ActivityIndicator } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchCharacters } from '../../../store/slices/charactersSlice';
+import { FlatList, ActivityIndicator, ListRenderItem } from 'react-native';
+import { useSelector } from 'react-redux';
+import { Character, fetchCharacters } from '../../../store/slices/charactersSlice';
 import CharacterCard from '../CharacterItem/Item';
 import useStyles from './useCharactersStyles';
+import {RootState, useAppDispatch} from "@/store/index"
 
 
 const MemoizedCharacterCard = React.memo(CharacterCard);
 
 const Characters = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     filteredCharacters,
     offlineCharacters,
     loading,
     hasMore,
     isOfflineMode 
-  } = useSelector(state => state.characters);
+  } = useSelector((state:RootState) => state.characters);
 
   const styles = useStyles();
 
-  // Выбираем данные в зависимости от режима
+
   const displayData = isOfflineMode ? offlineCharacters : filteredCharacters;
 
-  const renderItem = useCallback(
+    const renderItem: ListRenderItem<Character> = useCallback(
     ({ item }) => <MemoizedCharacterCard character={item} />,
     []
   );
 
   const uniqueCharacters = useMemo(() => {
     const seen = new Set();
-    return displayData.filter(char => {
+    return displayData?.filter(char => {
       if (seen.has(char.id)) return false;
       seen.add(char.id);
       return true;
@@ -38,7 +39,7 @@ const Characters = () => {
   }, [displayData]); 
 
   useEffect(() => {
-    if (!isOfflineMode) { // Загружаем данные только если не в оффлайн-режиме
+    if (!isOfflineMode) { 
       dispatch(fetchCharacters());
     }
   }, [dispatch, isOfflineMode]);

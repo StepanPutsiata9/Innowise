@@ -1,8 +1,9 @@
+import { RootState } from '@/store';
 import { StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 
 export default function useThemeStyles() {
-    const theme = useSelector((state) => state.theme.mode);
+    const theme = useSelector((state:RootState) => state.theme.mode);
 
     return StyleSheet.create({
           
@@ -13,7 +14,6 @@ export default function useThemeStyles() {
             flexDirection: 'row',
             backgroundColor: theme === 'dark' ? '#28292D' : '#fff',
             borderRadius: 16,
-            marginBottom: 10,
             overflow: 'hidden',
             elevation: 2,
             width: "95%",
