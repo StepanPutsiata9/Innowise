@@ -4,7 +4,7 @@ import { Tabs } from "expo-router";
 import { useSelector } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { RootState } from "@/store";
-import { StyleProp, TextStyle, ViewStyle } from "react-native";
+import { StyleProp, TextStyle } from "react-native";
 
 type TabBarIconProps = {
   name: React.ComponentProps<typeof FontAwesome>["name"];

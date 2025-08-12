@@ -43,7 +43,11 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <>
+      <RootLayoutNav />
+    </>
+  );
 }
 
 function RootLayoutNav() {
@@ -98,10 +102,13 @@ function AppNavigation() {
   }
 
   return (
-    <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="characterInfo" options={{ headerShown: false }} />
-    </Stack>
+    <>
+    
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="characterInfo" options={{ headerShown: false }} />
+      </Stack>
+    </>
   );
 }
 const styles = StyleSheet.create({
