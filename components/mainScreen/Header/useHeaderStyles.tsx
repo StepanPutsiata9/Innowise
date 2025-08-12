@@ -7,7 +7,6 @@ export default function useStyles() {
   const theme = useSelector((state: RootState) => state.theme.mode);
 
   return StyleSheet.create({
-    // for header.jsx
     header: {
       flexDirection: "row",
       justifyContent: "center",

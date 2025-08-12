@@ -96,6 +96,5 @@ export default function useStyles() {
       borderRadius: 25,
       marginLeft: 5,
     },
-    
   });
 }

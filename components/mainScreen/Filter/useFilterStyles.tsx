@@ -6,7 +6,6 @@ export default function useStyles() {
   const theme = useSelector((state: RootState) => state.theme.mode);
 
   return StyleSheet.create({
-    // for Filter.jsx
     filterContainer: {
       flexDirection: "row",
       justifyContent: "space-around",

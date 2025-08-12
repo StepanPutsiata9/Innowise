@@ -6,7 +6,6 @@ export default function useThemeStyles() {
   const theme = useSelector((state: RootState) => state.theme.mode);
 
   return StyleSheet.create({
-    // for Item.jsx
     card: {
       flexDirection: "row",
       backgroundColor: theme === "dark" ? "#28292D" : "#fff",
