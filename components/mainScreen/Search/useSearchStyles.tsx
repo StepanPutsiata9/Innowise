@@ -6,7 +6,6 @@ export default function useStyles() {
   const theme = useSelector((state: RootState) => state.theme.mode);
 
   return StyleSheet.create({
-    // for Search.jsx
     searchView: {
       backgroundColor: theme === "dark" ? "#000" : "#fff",
     },

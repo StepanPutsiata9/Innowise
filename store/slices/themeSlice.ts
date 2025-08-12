@@ -6,6 +6,7 @@ import { AppDispatch } from '../index';
 interface IthemeState{
   mode:"light"|"dark"
 }
+
 const initialState:IthemeState = {
   mode: 'light', 
 };
