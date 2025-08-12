@@ -1,7 +1,11 @@
 import { View, TextInput } from "react-native";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import useStyles from "./useSearchStyles";
-import { searchCharacter, searchCharactersAPI } from "../../../store/slices/charactersSlice";
+import {
+  searchCharacter,
+  searchCharactersAPI,
+  endSearch,
+} from "../../../store/slices/charactersSlice";
 import { RootState, useAppDispatch } from "@/store/index";
 import { debounce } from "lodash";
 import { useSelector } from "react-redux";
@@ -9,25 +13,47 @@ import { useSelector } from "react-redux";
 export default function Search() {
   const dispatch = useAppDispatch();
   const styles = useStyles();
-  const searchQuery = useSelector((state:RootState) => state.characters.searchQuery);
-  const [localQuery, setLocalQuery] = useState("");
+  const searchQuery = useSelector(
+    (state: RootState) => state.characters.searchQuery
+  );
+  const isSearching = useSelector(
+    (state: RootState) => state.characters.isSearching
+  );
+  const [localQuery, setLocalQuery] = useState(searchQuery);
 
-  const debouncedSearch = debounce((query: string) => {
-    if (query.trim()) {
-      dispatch(searchCharactersAPI(query));
-    }
-  }, 500);
+  const debouncedSearch = useCallback(
+    debounce((query: string) => {
+      if (query.trim()) {
+        dispatch(searchCharactersAPI(query));
+      }
+    }, 500),
+    [dispatch]
+  );
 
-  const handleTextChange = (inputText: string) => {
-    setLocalQuery(inputText);
-    dispatch(searchCharacter(inputText));
-    
-    if (!inputText.trim()) {
-      dispatch(searchCharactersAPI(""));
-    } else {
-      debouncedSearch(inputText);
-    }
-  };
+  const handleTextChange = useCallback(
+    (inputText: string) => {
+      setLocalQuery(inputText);
+      dispatch(searchCharacter(inputText));
+
+      if (!inputText.trim()) {
+        dispatch(endSearch());
+        dispatch(searchCharactersAPI(""));
+      } else {
+        debouncedSearch(inputText);
+      }
+    },
+    [dispatch, debouncedSearch]
+  );
+
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+
+      if (isSearching) {
+        dispatch(endSearch());
+      }
+    };
+  }, [dispatch, debouncedSearch, isSearching]);
 
   useEffect(() => {
     setLocalQuery(searchQuery);
@@ -41,6 +67,8 @@ export default function Search() {
         placeholderTextColor="#999"
         onChangeText={handleTextChange}
         value={localQuery}
+        returnKeyType="search"
+        clearButtonMode="while-editing"
       />
     </View>
   );

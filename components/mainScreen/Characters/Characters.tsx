@@ -1,5 +1,10 @@
 import React, { useEffect, useMemo, useCallback } from "react";
-import { FlatList, ActivityIndicator, ListRenderItem } from "react-native";
+import {
+  FlatList,
+  ActivityIndicator,
+  ListRenderItem,
+  Text,
+} from "react-native";
 import { useSelector } from "react-redux";
 import {
   Character,
@@ -19,6 +24,8 @@ const Characters = () => {
     loading,
     hasMore,
     isOfflineMode,
+    isSearching,
+    searchQuery,
   } = useSelector((state: RootState) => state.characters);
 
   const styles = useStyles();
@@ -31,8 +38,9 @@ const Characters = () => {
   );
 
   const uniqueCharacters = useMemo(() => {
+    if (!displayData) return [];
     const seen = new Set();
-    return displayData?.filter((char) => {
+    return displayData.filter((char) => {
       if (seen.has(char.id)) return false;
       seen.add(char.id);
       return true;
@@ -40,30 +48,52 @@ const Characters = () => {
   }, [displayData]);
 
   useEffect(() => {
-    if (!isOfflineMode) {
+    if (!isOfflineMode && !isSearching && !searchQuery) {
       dispatch(fetchCharacters());
     }
-  }, [dispatch, isOfflineMode]);
+  }, [dispatch, isOfflineMode, isSearching, searchQuery]);
 
   const handleLoadMore = useCallback(() => {
-    if (hasMore && !loading && !isOfflineMode) {
+    if (hasMore && !loading && !isOfflineMode && !isSearching) {
       dispatch(fetchCharacters());
     }
-  }, [hasMore, loading, dispatch, isOfflineMode]);
+  }, [hasMore, loading, dispatch, isOfflineMode, isSearching]);
+
+  const listFooterComponent = useMemo(() => {
+    if (isOfflineMode) return null;
+    if (isSearching && !hasMore && searchQuery) {
+      return (
+        <Text style={styles.noResultsText}>
+          No more results for "{searchQuery}"
+        </Text>
+      );
+    }
+    return loading ? <ActivityIndicator size="large" /> : null;
+  }, [loading, isOfflineMode, isSearching, hasMore, searchQuery, styles]);
+
+  const renderEmptyComponent = useCallback(() => {
+    if (loading) return null;
+    return (
+      <Text style={styles.noResultsText}>
+        {isSearching
+          ? `No characters found for "${searchQuery}"`
+          : "No characters available"}
+      </Text>
+    );
+  }, [loading, isSearching, searchQuery, styles.noResultsText]);
 
   return (
     <FlatList
       data={uniqueCharacters}
       renderItem={renderItem}
       keyExtractor={(item) => `${item.id}`}
-      onEndReached={!isOfflineMode ? handleLoadMore : null}
+      onEndReached={handleLoadMore}
       onEndReachedThreshold={0.5}
-      ListFooterComponent={
-        loading && !isOfflineMode ? <ActivityIndicator size="large" /> : null
-      }
+      ListFooterComponent={listFooterComponent}
       style={styles.containerCharacters}
+      ListEmptyComponent={renderEmptyComponent}
     />
   );
 };
 
-export default Characters;
+export default React.memo(Characters);

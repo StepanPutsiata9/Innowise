@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface Location {
   name: string;
@@ -10,10 +10,10 @@ interface Location {
 export interface Character {
   id: number;
   name: string;
-  status: 'Alive' | 'Dead' | 'unknown';
+  status: "Alive" | "Dead" | "unknown";
   species: string;
   type: string;
-  gender: 'Male' | 'Female' | 'Genderless' | 'unknown';
+  gender: "Male" | "Female" | "Genderless" | "unknown";
   origin?: Location;
   location?: Location;
   image: string;
@@ -23,7 +23,7 @@ export interface Character {
 }
 
 interface IFilters {
-  status: 'Alive' | 'Dead' | 'unknown' | '';
+  status: "Alive" | "Dead" | "unknown" | "";
   species: string;
 }
 
@@ -59,10 +59,10 @@ const initialState: ICharactersState = {
   nextPage: 1,
   hasMore: true,
   filters: {
-    status: '',
-    species: '',
+    status: "",
+    species: "",
   },
-  searchQuery: '',
+  searchQuery: "",
   isSearching: false,
 };
 
@@ -70,18 +70,20 @@ const saveOfflineCharacters = async (characters: Character[]) => {
   try {
     await AsyncStorage.setItem("offlineData", JSON.stringify(characters));
   } catch (error) {
-    console.error('Failed to save offline characters:', error);
+    console.error("Failed to save offline characters:", error);
   }
 };
 
 export const loadOfflineCharacters = createAsyncThunk(
-  'characters/loadOffline',
+  "characters/loadOffline",
   async (_, { rejectWithValue }) => {
     try {
       const saved = await AsyncStorage.getItem("offlineData");
-      return saved ? JSON.parse(saved) as Character[] : [];
+      return saved ? (JSON.parse(saved) as Character[]) : [];
     } catch (error) {
-      return rejectWithValue(error instanceof Error ? error.message : 'Unknown error');
+      return rejectWithValue(
+        error instanceof Error ? error.message : "Unknown error"
+      );
     }
   }
 );
@@ -90,42 +92,54 @@ export const fetchCharacters = createAsyncThunk<
   FetchCharactersResponse,
   void,
   { state: { characters: ICharactersState } }
->(
-  'characters/fetchCharacters',
-  async (_, { getState, rejectWithValue }) => {
-    try {
-      const { nextPage, filters } = getState().characters;
+>("characters/fetchCharacters", async (_, { getState, rejectWithValue }) => {
+  try {
+    const { nextPage, filters } = getState().characters;
 
-      const params = new URLSearchParams();
-      params.append('page', nextPage.toString());
-      if (filters.status) params.append('status', filters.status.toLowerCase());
-      if (filters.species) params.append('species', filters.species.toLowerCase());
+    const params = new URLSearchParams();
+    params.append("page", nextPage.toString());
+    if (filters.status) params.append("status", filters.status.toLowerCase());
+    if (filters.species)
+      params.append("species", filters.species.toLowerCase());
 
-      const response = await axios.get(`https://rickandmortyapi.com/api/character?${params.toString()}`);
-      return {
-        characters: response.data.results as Character[],
-        hasMore: !!response.data.info.next,
-        isNewSearch: nextPage === 1
-      };
-    } catch (error) {
-      return rejectWithValue(error instanceof Error ? error.message : 'Unknown error');
-    }
+    const response = await axios.get(
+      `https://rickandmortyapi.com/api/character?${params.toString()}`
+    );
+    return {
+      characters: response.data.results as Character[],
+      hasMore: !!response.data.info.next,
+      isNewSearch: nextPage === 1,
+    };
+  } catch (error) {
+    return rejectWithValue(
+      error instanceof Error ? error.message : "Unknown error"
+    );
   }
-);
+});
 
 export const searchCharactersAPI = createAsyncThunk<
   FetchCharactersResponse,
   string,
   { state: { characters: ICharactersState } }
 >(
-  'characters/searchCharactersAPI',
-  async (query, { rejectWithValue }) => {
+  "characters/searchCharactersAPI",
+  async (query, { getState, rejectWithValue }) => {
     try {
-      const response = await axios.get(`https://rickandmortyapi.com/api/character/?name=${query}`);
+      const { filters } = getState().characters;
+      const params = new URLSearchParams();
+
+      params.append("name", query);
+      if (filters.status) params.append("status", filters.status.toLowerCase());
+      if (filters.species)
+        params.append("species", filters.species.toLowerCase());
+
+      const response = await axios.get(
+        `https://rickandmortyapi.com/api/character/?${params.toString()}`
+      );
       return {
         characters: response.data.results as Character[],
         hasMore: !!response.data.info.next,
-        isNewSearch: true
+        isNewSearch: true,
       };
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -133,18 +147,18 @@ export const searchCharactersAPI = createAsyncThunk<
           return {
             characters: [],
             hasMore: false,
-            isNewSearch: true
+            isNewSearch: true,
           };
         }
         return rejectWithValue(error.message);
       }
-      return rejectWithValue('Unknown error');
+      return rejectWithValue("Unknown error");
     }
   }
 );
 
 const charactersSlice = createSlice({
-  name: 'characters',
+  name: "characters",
   initialState,
   reducers: {
     setSelectedCharacter: (state, action: PayloadAction<Character | null>) => {
@@ -153,7 +167,7 @@ const charactersSlice = createSlice({
     searchCharacter: (state, action: PayloadAction<string>) => {
       state.searchQuery = action.payload;
       state.isSearching = !!action.payload;
-      
+      state.nextPage = 1;
       if (!action.payload) {
         state.filteredCharacters = state.characters;
         state.isSearching = false;
@@ -166,7 +180,7 @@ const charactersSlice = createSlice({
     },
     resetFilters: (state) => {
       state.filters = initialState.filters;
-      state.searchQuery = '';
+      state.searchQuery = "";
       state.nextPage = 1;
       state.hasMore = true;
       state.isSearching = false;
@@ -179,8 +193,14 @@ const charactersSlice = createSlice({
       state.isOfflineMode = action.payload;
     },
     resetSearch: (state) => {
-      state.searchQuery = '';
+      state.searchQuery = "";
       state.isSearching = false;
+      state.filteredCharacters = state.characters;
+    },
+
+    endSearch: (state) => {
+      state.isSearching = false;
+      state.searchQuery = "";
       state.filteredCharacters = state.characters;
     },
   },
@@ -190,53 +210,61 @@ const charactersSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchCharacters.fulfilled, (state, action: PayloadAction<FetchCharactersResponse>) => {
-        state.loading = false;
-        const { characters, hasMore, isNewSearch } = action.payload;
-        
-        state.characters = isNewSearch 
-          ? characters 
-          : [...(state.characters || []), ...characters];
+      .addCase(
+        fetchCharacters.fulfilled,
+        (state, action: PayloadAction<FetchCharactersResponse>) => {
+          state.loading = false;
+          const { characters, hasMore, isNewSearch } = action.payload;
 
-        const firstTenCharacters = state.characters?.slice(0, 10) || [];
-        state.offlineCharacters = firstTenCharacters;
-        saveOfflineCharacters(firstTenCharacters);
+          state.characters = isNewSearch
+            ? characters
+            : [...(state.characters || []), ...characters];
 
-        if (!state.isSearching) {
-          state.filteredCharacters = state.characters;
+          if (!state.isSearching) {
+            state.filteredCharacters = state.characters;
+          }
+
+          if (isNewSearch) {
+            const firstTenCharacters = characters.slice(0, 10);
+            state.offlineCharacters = firstTenCharacters;
+            saveOfflineCharacters(firstTenCharacters);
+          }
+
+          state.nextPage += 1;
+          state.hasMore = hasMore;
         }
-
-        state.nextPage += 1;
-        state.hasMore = hasMore;
-      })
-      .addCase(fetchCharacters.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      })
+      )
       .addCase(searchCharactersAPI.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(searchCharactersAPI.fulfilled, (state, action: PayloadAction<FetchCharactersResponse>) => {
-        state.loading = false;
-        const { characters, hasMore } = action.payload;
-        
-        state.filteredCharacters = characters;
-        state.hasMore = hasMore;
-        
-        if (!state.isSearching) {
-          state.characters = characters;
+
+      .addCase(
+        searchCharactersAPI.fulfilled,
+        (state, action: PayloadAction<FetchCharactersResponse>) => {
+          state.loading = false;
+          const { characters, hasMore } = action.payload;
+
+          state.filteredCharacters = characters;
+          state.hasMore = hasMore;
+
+          if (!state.isSearching) {
+            state.characters = characters;
+          }
         }
-      })
+      )
       .addCase(searchCharactersAPI.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
         state.filteredCharacters = [];
       })
-      .addCase(loadOfflineCharacters.fulfilled, (state, action: PayloadAction<Character[]>) => {
-        state.offlineCharacters = action.payload;
-      });
-  }
+      .addCase(
+        loadOfflineCharacters.fulfilled,
+        (state, action: PayloadAction<Character[]>) => {
+          state.offlineCharacters = action.payload;
+        }
+      );
+  },
 });
 
 export const {
@@ -247,6 +275,7 @@ export const {
   clearCharacters,
   setOfflineMode,
   resetSearch,
+  endSearch,
 } = charactersSlice.actions;
 
 export default charactersSlice.reducer;

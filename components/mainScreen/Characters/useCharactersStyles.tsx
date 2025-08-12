@@ -69,5 +69,11 @@ export default function useStyles() {
     paginationInfoText: {
       color: theme === "dark" ? "#fff" : "#28292D",
     },
+    noResultsText:{
+      textAlign:'center',
+      fontSize:18,
+      color: theme === "dark" ? "#fff" : "#28292D",
+      marginBottom:30,
+    },
   });
 }
