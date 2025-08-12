@@ -1,8 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AppDispatch } from '../index';
 
-const initialState = {
-  mode: 'light', // или 'dark'
+
+interface IthemeState{
+  mode:"light"|"dark"
+}
+const initialState:IthemeState = {
+  mode: 'light', 
 };
 
 const themeSlice = createSlice({
@@ -22,7 +27,7 @@ const themeSlice = createSlice({
 
 export const { setTheme, toggleTheme } = themeSlice.actions;
 
-export const loadTheme = () => async (dispatch) => {
+export const loadTheme = () => async (dispatch:AppDispatch) => {
   const savedTheme = await AsyncStorage.getItem('theme');
   if (savedTheme) {
     dispatch(setTheme(savedTheme));
