@@ -1,6 +1,5 @@
 import React, { useState, memo } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-// import { useRouter } from "expo-router";
 import {
   Character,
   setSelectedCharacter,

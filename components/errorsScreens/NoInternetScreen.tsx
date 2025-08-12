@@ -32,10 +32,7 @@ export default function NoInternetScreen({ onRetry }: INoInternetProps) {
       </TouchableOpacity>
 
       <View>
-        <TouchableOpacity
-          style={styles.offlineButton}
-          onPress={handleOfflineMode}
-        >
+        <TouchableOpacity onPress={handleOfflineMode}>
           <View>
             <Text style={styles.offlineButtonText}>Use offline mode</Text>
           </View>
@@ -75,12 +72,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginBottom: 50,
   },
-  offlineButton: {
-    // backgroundColor: '#4C82FF',
-    // paddingHorizontal: 90,
-    // paddingVertical: 10,
-    // borderRadius: 12,
-  },
+
   offlineButtonText: {
     fontSize: 16,
     color: "8b8b8b",

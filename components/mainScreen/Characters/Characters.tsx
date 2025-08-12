@@ -16,6 +16,7 @@ import { RootState, useAppDispatch } from "@/store/index";
 
 const MemoizedCharacterCard = React.memo(CharacterCard);
 
+
 const Characters = () => {
   const dispatch = useAppDispatch();
   const {
@@ -81,7 +82,7 @@ const Characters = () => {
       </Text>
     );
   }, [loading, isSearching, searchQuery, styles.noResultsText]);
-
+  
   return (
     <FlatList
       data={uniqueCharacters}
