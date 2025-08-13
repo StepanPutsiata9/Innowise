@@ -1,12 +1,9 @@
 import {
   View,
-  Button,
-  StyleSheet,
-  TouchableOpacity,
   Switch,
 } from "react-native";
 import { useSelector } from "react-redux";
-import { toggleTheme, setTheme } from "../../store/slices/themeSlice";
+import { toggleTheme } from "../../store/slices/themeSlice";
 import { Text } from "react-native";
 import useStyles from "./useSettingsStyles";
 import { RootState, useAppDispatch } from "@/store/index";
