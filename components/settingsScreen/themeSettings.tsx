@@ -1,7 +1,4 @@
-import {
-  View,
-  Switch,
-} from "react-native";
+import { View, Switch } from "react-native";
 import { useSelector } from "react-redux";
 import { toggleTheme } from "../../store/slices/themeSlice";
 import { Text } from "react-native";
@@ -21,7 +18,7 @@ export default function ThemeSettingsScreen() {
     <View style={styles.container}>
       <Text style={styles.text}>Theme mode :</Text>
 
-      <View style={{ marginBottom: 10 }}>
+      <View style={styles.logoView}>
         {theme == "light" ? <Sun /> : <Moon />}
       </View>
 

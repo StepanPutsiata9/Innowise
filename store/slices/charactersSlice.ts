@@ -66,7 +66,6 @@ const initialState: ICharactersState = {
   isSearching: false,
 };
 
-// Сохранение персонажей для оффлайн режима
 const saveOfflineCharacters = async (characters: Character[]) => {
   try {
     await AsyncStorage.setItem("offlineData", JSON.stringify(characters));
@@ -75,7 +74,6 @@ const saveOfflineCharacters = async (characters: Character[]) => {
   }
 };
 
-// Загрузка оффлайн данных
 export const loadOfflineCharacters = createAsyncThunk(
   "characters/loadOffline",
   async (_, { rejectWithValue }) => {
@@ -90,7 +88,7 @@ export const loadOfflineCharacters = createAsyncThunk(
   }
 );
 
-// Функция для применения фильтров
+
 const applyFilters = (characters: Character[], filters: IFilters): Character[] => {
   return characters.filter(character => {
     const matchesStatus = !filters.status || 
@@ -101,7 +99,6 @@ const applyFilters = (characters: Character[], filters: IFilters): Character[] =
   });
 };
 
-// Загрузка персонажей с учетом фильтров
 export const fetchCharacters = createAsyncThunk<
   FetchCharactersResponse,
   void,
@@ -131,7 +128,6 @@ export const fetchCharacters = createAsyncThunk<
   }
 });
 
-// Поиск персонажей с учетом фильтров
 export const searchCharactersAPI = createAsyncThunk<
   FetchCharactersResponse,
   string,
@@ -195,7 +191,6 @@ const charactersSlice = createSlice({
       state.nextPage = 1;
       state.hasMore = true;
       
-      // Применяем фильтры к текущим данным
       if (state.characters) {
         state.filteredCharacters = applyFilters(state.characters, state.filters);
       }
@@ -206,7 +201,6 @@ const charactersSlice = createSlice({
       state.nextPage = 1;
       state.hasMore = true;
       
-      // Сбрасываем фильтрацию
       state.filteredCharacters = state.characters;
     },
     
@@ -247,12 +241,10 @@ const charactersSlice = createSlice({
           state.loading = false;
           const { characters, hasMore, isNewSearch } = action.payload;
 
-          // Обновляем основной список
           state.characters = isNewSearch
             ? characters
             : [...(state.characters || []), ...characters];
 
-          // Применяем фильтры
           state.filteredCharacters = applyFilters(state.characters, state.filters);
 
           if (isNewSearch) {
@@ -275,7 +267,6 @@ const charactersSlice = createSlice({
           state.loading = false;
           const { characters, hasMore } = action.payload;
 
-          // Применяем фильтры к результатам поиска
           state.filteredCharacters = applyFilters(characters, state.filters);
           state.hasMore = hasMore;
         }
@@ -289,7 +280,6 @@ const charactersSlice = createSlice({
         loadOfflineCharacters.fulfilled,
         (state, action: PayloadAction<Character[]>) => {
           state.offlineCharacters = action.payload;
-          // Применяем фильтры к оффлайн данным
           if (state.isOfflineMode) {
             state.filteredCharacters = applyFilters(action.payload, state.filters);
           }

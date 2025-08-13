@@ -16,7 +16,6 @@ import { RootState, useAppDispatch } from "@/store/index";
 
 const MemoizedCharacterCard = React.memo(CharacterCard);
 
-
 const Characters = () => {
   const dispatch = useAppDispatch();
   const {
@@ -60,18 +59,6 @@ const Characters = () => {
     }
   }, [hasMore, loading, dispatch, isOfflineMode, isSearching]);
 
-  const listFooterComponent = useMemo(() => {
-    if (isOfflineMode) return null;
-    if (isSearching && !hasMore && searchQuery) {
-      return (
-        <Text style={styles.noResultsText}>
-          No more results for "{searchQuery}"
-        </Text>
-      );
-    }
-    return loading ? <ActivityIndicator size="large" /> : null;
-  }, [loading, isOfflineMode, isSearching, hasMore, searchQuery, styles]);
-
   const renderEmptyComponent = useCallback(() => {
     if (loading) return null;
     return (
@@ -82,7 +69,7 @@ const Characters = () => {
       </Text>
     );
   }, [loading, isSearching, searchQuery, styles.noResultsText]);
-  
+
   return (
     <FlatList
       data={uniqueCharacters}
@@ -90,7 +77,6 @@ const Characters = () => {
       keyExtractor={(item) => `${item.id}`}
       onEndReached={handleLoadMore}
       onEndReachedThreshold={0.5}
-      ListFooterComponent={listFooterComponent}
       style={styles.containerCharacters}
       ListEmptyComponent={renderEmptyComponent}
     />

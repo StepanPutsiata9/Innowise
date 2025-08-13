@@ -26,6 +26,8 @@ export default function useStyles() {
       borderWidth: 2,
       borderColor: theme === "dark" ? "#fff" : "#121212",
     },
-  
+    logoView: {
+      marginBottom: 20,
+    },
   });
 }

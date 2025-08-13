@@ -31,7 +31,7 @@ export default function useStyles() {
       backgroundColor: theme === "dark" ? "#000" : "#fff",
       alignItems: "center",
       flexDirection: "row",
-      marginLeft: 25,
+      marginHorizontal: 10,
       marginBottom: 10,
     },
 
