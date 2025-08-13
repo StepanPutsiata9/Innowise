@@ -16,6 +16,7 @@ import {
 import Modal from "react-native-modal";
 import useStyles from "./useFilterStyles";
 import { useAppDispatch } from "@/store/index";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type FilterType = "status" | "species";
 
@@ -30,6 +31,7 @@ const speciesOptions = ["", "Human", "Alien"] as const;
 const Filters: React.FC = () => {
   const dispatch = useAppDispatch();
   const styles = useStyles();
+  const insets = useSafeAreaInsets();
 
   const [visibleFilter, setVisibleFilter] = useState<FilterType | null>(null);
   const [selectedFilters, setSelectedFilters] = useState<FilterValues>({
@@ -69,25 +71,22 @@ const Filters: React.FC = () => {
       <Modal
         isVisible={!!visibleFilter}
         onBackdropPress={() => setVisibleFilter(null)}
-        style={styles.modal as StyleProp<ViewStyle>}
+        style={styles.modal}
       >
-        <View style={styles.modalContent as StyleProp<ViewStyle>}>
+        <View style={[styles.modalContent, { paddingBottom: insets.bottom }]}>
           {options.map((option) => (
             <TouchableOpacity
               key={option || "empty"}
               style={[
-                styles.filterOption as StyleProp<ViewStyle>,
-                currentValue === option &&
-                  (styles.selectedFilterOption as StyleProp<ViewStyle>),
+                styles.filterOption,
+                currentValue === option && styles.selectedFilterOption,
               ]}
               onPress={() => handleFilterSelect(visibleFilter, option)}
             >
-              <Text style={styles.filterOptionText as StyleProp<TextStyle>}>
-                {option || "All"}
-              </Text>
+              <Text style={styles.filterOptionText}>{option || "All"}</Text>
             </TouchableOpacity>
           ))}
-          <View style={styles.filterButtons as StyleProp<ViewStyle>}>
+          <View style={styles.filterButtons}>
             <TouchableOpacity
               style={
                 [
@@ -97,22 +96,13 @@ const Filters: React.FC = () => {
               }
               onPress={applyFilters}
             >
-              <Text style={styles.filterButtonText as StyleProp<TextStyle>}>
-                Set
-              </Text>
+              <Text style={styles.filterButtonText}>Set</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={
-                [
-                  styles.filterButton,
-                  styles.resetButton,
-                ] as StyleProp<ViewStyle>
-              }
+              style={[styles.filterButton, styles.resetButton]}
               onPress={resetAllFilters}
             >
-              <Text style={styles.filterButtonText as StyleProp<TextStyle>}>
-                Clear
-              </Text>
+              <Text style={styles.filterButtonText}>Clear</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -121,21 +111,21 @@ const Filters: React.FC = () => {
   };
 
   return (
-    <View style={styles.filterContainer as StyleProp<ViewStyle>}>
+    <View style={styles.filterContainer}>
       <TouchableOpacity
-        style={styles.filterButton as StyleProp<ViewStyle>}
+        style={styles.filterButton}
         onPress={() => setVisibleFilter("status")}
       >
-        <Text style={styles.filterButtonText as StyleProp<TextStyle>}>
+        <Text style={styles.filterButtonText}>
           {selectedFilters.status || "Status"}
         </Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={styles.filterButton as StyleProp<ViewStyle>}
+        style={styles.filterButton}
         onPress={() => setVisibleFilter("species")}
       >
-        <Text style={styles.filterButtonText as StyleProp<TextStyle>}>
+        <Text style={styles.filterButtonText}>
           {selectedFilters.species || "Species"}
         </Text>
       </TouchableOpacity>

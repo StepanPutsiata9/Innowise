@@ -88,6 +88,17 @@ export const loadOfflineCharacters = createAsyncThunk(
   }
 );
 
+
+const applyFilters = (characters: Character[], filters: IFilters): Character[] => {
+  return characters.filter(character => {
+    const matchesStatus = !filters.status || 
+      character.status.toLowerCase() === filters.status.toLowerCase();
+    const matchesSpecies = !filters.species || 
+      character.species.toLowerCase().includes(filters.species.toLowerCase());
+    return matchesStatus && matchesSpecies;
+  });
+};
+
 export const fetchCharacters = createAsyncThunk<
   FetchCharactersResponse,
   void,
@@ -95,16 +106,16 @@ export const fetchCharacters = createAsyncThunk<
 >("characters/fetchCharacters", async (_, { getState, rejectWithValue }) => {
   try {
     const { nextPage, filters } = getState().characters;
-
     const params = new URLSearchParams();
+    
     params.append("page", nextPage.toString());
     if (filters.status) params.append("status", filters.status.toLowerCase());
-    if (filters.species)
-      params.append("species", filters.species.toLowerCase());
+    if (filters.species) params.append("species", filters.species.toLowerCase());
 
     const response = await axios.get(
       `https://rickandmortyapi.com/api/character?${params.toString()}`
     );
+    
     return {
       characters: response.data.results as Character[],
       hasMore: !!response.data.info.next,
@@ -121,41 +132,38 @@ export const searchCharactersAPI = createAsyncThunk<
   FetchCharactersResponse,
   string,
   { state: { characters: ICharactersState } }
->(
-  "characters/searchCharactersAPI",
-  async (query, { getState, rejectWithValue }) => {
-    try {
-      const { filters } = getState().characters;
-      const params = new URLSearchParams();
+>("characters/searchCharactersAPI", async (query, { getState, rejectWithValue }) => {
+  try {
+    const { filters } = getState().characters;
+    const params = new URLSearchParams();
+    
+    params.append("name", query);
+    if (filters.status) params.append("status", filters.status.toLowerCase());
+    if (filters.species) params.append("species", filters.species.toLowerCase());
 
-      params.append("name", query);
-      if (filters.status) params.append("status", filters.status.toLowerCase());
-      if (filters.species)
-        params.append("species", filters.species.toLowerCase());
-
-      const response = await axios.get(
-        `https://rickandmortyapi.com/api/character/?${params.toString()}`
-      );
-      return {
-        characters: response.data.results as Character[],
-        hasMore: !!response.data.info.next,
-        isNewSearch: true,
-      };
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status === 404) {
-          return {
-            characters: [],
-            hasMore: false,
-            isNewSearch: true,
-          };
-        }
-        return rejectWithValue(error.message);
+    const response = await axios.get(
+      `https://rickandmortyapi.com/api/character/?${params.toString()}`
+    );
+    
+    return {
+      characters: response.data.results as Character[],
+      hasMore: !!response.data.info.next,
+      isNewSearch: true,
+    };
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 404) {
+        return {
+          characters: [],
+          hasMore: false,
+          isNewSearch: true,
+        };
       }
-      return rejectWithValue("Unknown error");
+      return rejectWithValue(error.message);
     }
+    return rejectWithValue("Unknown error");
   }
-);
+});
 
 const charactersSlice = createSlice({
   name: "characters",
@@ -164,44 +172,61 @@ const charactersSlice = createSlice({
     setSelectedCharacter: (state, action: PayloadAction<Character | null>) => {
       state.selectedCharacter = action.payload;
     },
+    
     searchCharacter: (state, action: PayloadAction<string>) => {
       state.searchQuery = action.payload;
       state.isSearching = !!action.payload;
       state.nextPage = 1;
+      
       if (!action.payload) {
-        state.filteredCharacters = state.characters;
+        state.filteredCharacters = state.characters 
+          ? applyFilters(state.characters, state.filters)
+          : null;
         state.isSearching = false;
       }
     },
+    
     setFilters: (state, action: PayloadAction<IFilters>) => {
       state.filters = { ...state.filters, ...action.payload };
       state.nextPage = 1;
       state.hasMore = true;
+      
+      if (state.characters) {
+        state.filteredCharacters = applyFilters(state.characters, state.filters);
+      }
     },
+    
     resetFilters: (state) => {
       state.filters = initialState.filters;
-      state.searchQuery = "";
       state.nextPage = 1;
       state.hasMore = true;
-      state.isSearching = false;
+      
+      state.filteredCharacters = state.characters;
     },
+    
     clearCharacters: (state) => {
       state.characters = [];
       state.filteredCharacters = [];
     },
+    
     setOfflineMode: (state, action: PayloadAction<boolean>) => {
       state.isOfflineMode = action.payload;
     },
+    
     resetSearch: (state) => {
       state.searchQuery = "";
       state.isSearching = false;
-      state.filteredCharacters = state.characters;
+      state.filteredCharacters = state.characters 
+        ? applyFilters(state.characters, state.filters)
+        : null;
     },
-
+    
     endSearch: (state) => {
       state.isSearching = false;
       state.searchQuery = "";
-      state.filteredCharacters = state.characters;
+      state.filteredCharacters = state.characters 
+        ? applyFilters(state.characters, state.filters)
+        : null;
     },
   },
   extraReducers: (builder) => {
@@ -220,9 +245,7 @@ const charactersSlice = createSlice({
             ? characters
             : [...(state.characters || []), ...characters];
 
-          if (!state.isSearching) {
-            state.filteredCharacters = state.characters;
-          }
+          state.filteredCharacters = applyFilters(state.characters, state.filters);
 
           if (isNewSearch) {
             const firstTenCharacters = characters.slice(0, 10);
@@ -238,19 +261,14 @@ const charactersSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-
       .addCase(
         searchCharactersAPI.fulfilled,
         (state, action: PayloadAction<FetchCharactersResponse>) => {
           state.loading = false;
           const { characters, hasMore } = action.payload;
 
-          state.filteredCharacters = characters;
+          state.filteredCharacters = applyFilters(characters, state.filters);
           state.hasMore = hasMore;
-
-          if (!state.isSearching) {
-            state.characters = characters;
-          }
         }
       )
       .addCase(searchCharactersAPI.rejected, (state, action) => {
@@ -262,6 +280,9 @@ const charactersSlice = createSlice({
         loadOfflineCharacters.fulfilled,
         (state, action: PayloadAction<Character[]>) => {
           state.offlineCharacters = action.payload;
+          if (state.isOfflineMode) {
+            state.filteredCharacters = applyFilters(action.payload, state.filters);
+          }
         }
       );
   },

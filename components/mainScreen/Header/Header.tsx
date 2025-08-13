@@ -7,10 +7,6 @@ export default function Header() {
   const insets = useSafeAreaInsets();
   return (
     <View style={[styles.header, { paddingTop: insets.top }]}>
-      <Image
-        source={require("../../../assets/images/logo2.png")}
-        style={styles.logo}
-      />
       <Text style={styles.headerText}>The Rick and Morty App</Text>
     </View>
   );

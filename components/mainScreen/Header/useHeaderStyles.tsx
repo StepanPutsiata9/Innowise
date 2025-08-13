@@ -18,12 +18,7 @@ export default function useStyles() {
     headerText: {
       fontSize: 20,
       fontWeight: 700,
-      marginLeft: 10,
       color: theme === "dark" ? "#fff" : "#28292D",
-    },
-    logo: {
-      width: 50,
-      height: 50,
     },
   });
 }
