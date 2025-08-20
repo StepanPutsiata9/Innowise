@@ -1,12 +1,10 @@
 import { TouchableOpacity, Image, View, ScrollView } from "react-native";
-
 import { Text } from "react-native";
-
 import React from "react";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
 import useStyles from "./useSelectCharacterStyles";
-import Back from "../Back";
+import Back from "../../SVGComponents/Back";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { RootState } from "@/store";
 export default function SelectedCharacter() {

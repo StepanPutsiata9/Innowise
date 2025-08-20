@@ -4,8 +4,8 @@ import { toggleTheme } from "../../store/slices/themeSlice";
 import { Text } from "react-native";
 import useStyles from "./useSettingsStyles";
 import { RootState, useAppDispatch } from "@/store/index";
-import Sun from "./Sun";
-import Moon from "./Moon";
+import Sun from "../SVGComponents/Sun";
+import Moon from "../SVGComponents/Moon";
 import { useState } from "react";
 export default function ThemeSettingsScreen() {
   const theme = useSelector((state: RootState) => state.theme.mode);
