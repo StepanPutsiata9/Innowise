@@ -105,7 +105,7 @@ function AppNavigation() {
     <>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="characterInfo" options={{ headerShown: false }} />
+        <Stack.Screen name="(character)" options={{ headerShown: false }} />
       </Stack>
     </>
   );
