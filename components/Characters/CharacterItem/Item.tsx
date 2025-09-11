@@ -1,7 +1,6 @@
 import React, { useState, memo } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import {
-  Character,
   setSelectedCharacter,
 } from "../../../store/slices/charactersSlice";
 import useStyles from "./useItemStyles";
