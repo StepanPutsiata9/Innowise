@@ -12,7 +12,7 @@ import {
   resetFilters,
   clearCharacters,
   fetchCharacters,
-} from "../../../store/slices/charactersSlice";
+} from "../../store/slices/charactersSlice";
 import Modal from "react-native-modal";
 import useStyles from "./useFilterStyles";
 import { useAppDispatch } from "@/store/index";

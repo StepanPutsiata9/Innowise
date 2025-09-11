@@ -9,7 +9,7 @@ import "react-native-reanimated";
 import NetInfo from "@react-native-community/netinfo";
 import { Provider, useSelector } from "react-redux";
 import { View, Text, StyleSheet } from "react-native";
-import NoInternetScreen from "../components/errorsScreens/NoInternetScreen";
+import NoInternetScreen from "../components/NoInternetScreen/NoInternetScreen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 export { ErrorBoundary } from "expo-router";
 

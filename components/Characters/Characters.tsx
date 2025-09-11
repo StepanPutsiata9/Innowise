@@ -9,8 +9,8 @@ import { useSelector } from "react-redux";
 import {
   Character,
   fetchCharacters,
-} from "../../../store/slices/charactersSlice";
-import CharacterCard from "../CharacterItem/Item";
+} from "../../store/slices/charactersSlice";
+import CharacterCard from "./CharacterItem/Item";
 import useStyles from "./useCharactersStyles";
 import { RootState, useAppDispatch } from "@/store/index";
 
@@ -72,6 +72,7 @@ const Characters = () => {
 
   return (
     <FlatList
+      showsVerticalScrollIndicator={false}
       data={uniqueCharacters}
       renderItem={renderItem}
       keyExtractor={(item) => `${item.id}`}

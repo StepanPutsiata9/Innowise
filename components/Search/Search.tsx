@@ -5,7 +5,7 @@ import {
   searchCharacter,
   searchCharactersAPI,
   endSearch,
-} from "../../../store/slices/charactersSlice";
+} from "../../store/slices/charactersSlice";
 import { RootState, useAppDispatch } from "@/store/index";
 import { debounce } from "lodash";
 import { useSelector } from "react-redux";

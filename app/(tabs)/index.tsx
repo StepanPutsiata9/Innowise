@@ -1,12 +1,12 @@
-import Header from "../../components/mainScreen/Header/Header";
-import Characters from "../../components/mainScreen/Characters/Characters";
-import Search from "../../components/mainScreen/Search/Search";
-import Filter from "../../components/mainScreen/Filter/Filter";
+import Header from "../../components/Header/Header";
+import Characters from "../../components/Characters/Characters";
+import Search from "../../components/Search/Search";
+import Filter from "../../components/Filter/Filter";
 import { useSelector } from "react-redux";
-import BackToRetry from "../../components/errorsScreens/BackToRetryPage";
+import BackToRetry from "../../components/BackToRetryPage/BackToRetryPage";
 import { RootState } from "@/store";
 import { StatusBar } from "expo-status-bar";
-export default function TabOneScreen() {
+export default function HomeScreen() {
   const { isOfflineMode } = useSelector((state: RootState) => state.characters);
   const theme = useSelector((state: RootState) => state.theme.mode);
   return (

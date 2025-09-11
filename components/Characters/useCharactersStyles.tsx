@@ -64,7 +64,6 @@ export default function useStyles() {
     paginationInfo: {
       alignItems: "center",
       paddingBottom: 20,
-      // marginBottom:150,
     },
     paginationInfoText: {
       color: theme === "dark" ? "#fff" : "#28292D",
