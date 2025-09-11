@@ -3,9 +3,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AppDispatch } from '../index';
 
 
-interface IthemeState{
-  mode:"light"|"dark"
-}
 
 const initialState:IthemeState = {
   mode: 'light', 

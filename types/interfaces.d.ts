@@ -44,9 +44,13 @@ interface ICharactersState {
   isSearching: boolean;
 }
 
-
-
-
 interface IthemeState{
   mode:"light"|"dark"
+}
+
+type FilterType = "status" | "species";
+
+interface FilterValues {
+  status: "Alive" | "Dead" | "unknown" | "";
+  species: string;
 }

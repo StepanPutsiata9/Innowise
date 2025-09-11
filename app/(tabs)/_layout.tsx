@@ -16,7 +16,7 @@ function TabBarIcon({ ...props }: TabBarIconProps) {
   return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
 }
 
-type TabIconProps = {
+interface TabIconProps {
   color: string;
   focused: boolean;
   size: number;

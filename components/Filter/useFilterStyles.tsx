@@ -26,6 +26,9 @@ export default function useStyles() {
       color: theme === "dark" ? "#fff" : "#333",
     },
     modal: {
+      flex: 1,
+      // justifyContent: 'center',
+      // alignItems: 'center',
       justifyContent: "flex-end",
       margin: 0,
     },

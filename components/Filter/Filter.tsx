@@ -18,12 +18,7 @@ import useStyles from "./useFilterStyles";
 import { useAppDispatch } from "@/store/index";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-type FilterType = "status" | "species";
 
-interface FilterValues {
-  status: "Alive" | "Dead" | "unknown" | "";
-  species: string;
-}
 
 const statusOptions = ["", "Alive", "Dead", "unknown"] as const;
 const speciesOptions = ["", "Human", "Alien"] as const;
@@ -71,9 +66,10 @@ const Filters: React.FC = () => {
       <Modal
         isVisible={!!visibleFilter}
         onBackdropPress={() => setVisibleFilter(null)}
-        style={styles.modal}
+        style={[styles.modal,{marginTop:-insets.top }]}
+        statusBarTranslucent={true}
       >
-        <View style={[styles.modalContent, { paddingBottom: insets.bottom }]}>
+        <View style={[styles.modalContent, { paddingBottom: insets.bottom}]}>
           {options.map((option) => (
             <TouchableOpacity
               key={option || "empty"}

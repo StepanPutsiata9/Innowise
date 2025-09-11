@@ -1,13 +1,12 @@
 import React, { useEffect, useMemo, useCallback } from "react";
 import {
   FlatList,
-  ActivityIndicator,
   ListRenderItem,
   Text,
 } from "react-native";
 import { useSelector } from "react-redux";
 import {
-  Character,
+
   fetchCharacters,
 } from "../../store/slices/charactersSlice";
 import CharacterCard from "./CharacterItem/Item";
