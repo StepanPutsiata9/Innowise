@@ -27,7 +27,7 @@ const Characters = () => {
 
   const renderItem: ListRenderItem<Character> = useCallback(
     ({ item }) => <MemoizedCharacterCard character={item} />,
-    []
+    [],
   );
 
   const uniqueCharacters = useMemo(() => {

@@ -9,7 +9,7 @@ import { Text } from "react-native";
 import React from "react";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
-import Back from "../../features/shared/components/SVGComponents/Back";
+import Back from "../../features/shared/utils/SVGComponents/Back";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { RootState } from "@/store/store";
 export default function SelectedCharacter() {
@@ -17,7 +17,7 @@ export default function SelectedCharacter() {
   const styles = useStyles();
   const theme = useSelector((state: RootState) => state.theme.mode);
   const character = useSelector(
-    (state: RootState) => state.characters.selectedCharacter
+    (state: RootState) => state.characters.selectedCharacter,
   );
   const insets = useSafeAreaInsets();
 

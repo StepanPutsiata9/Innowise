@@ -3,15 +3,18 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-, "app/(tabs)/index.tsx", "app/(character)/characterInfo.tsx", "app/(tabs)/_layout.tsx", "app/_layout.sx"  ]
+    "expo-env.d.ts",
+    "app/(tabs)/index.tsx",
+    "app/(character)/characterInfo.tsx",
+    "app/(tabs)/_layout.tsx",
+    "app/_layout.sx",
+    "eslint.config.js"
+  ]
 }

@@ -3,14 +3,14 @@ import Header from "../../features/shared/components/Header/Header";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "@/store/store";
 import { toggleTheme } from "@/features/theme/store/themeSlice";
-import Sun from "@/features/shared/components/SVGComponents/Sun";
-import Moon from "@/features/shared/components/SVGComponents/Moon";
+import Sun from "@/features/shared/utils/SVGComponents/Sun";
+import Moon from "@/features/shared/utils/SVGComponents/Moon";
 import { useState } from "react";
 export default function SettingsScreen() {
   const theme = useSelector((state: RootState) => state.theme.mode);
   const dispatch = useAppDispatch();
   const [isEnabled, setIsEnabled] = useState<boolean>(
-    theme === "light" ? true : false
+    theme === "light" ? true : false,
   );
   const styles = useStyles();
   return (

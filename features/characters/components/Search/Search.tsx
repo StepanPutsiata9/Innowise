@@ -14,10 +14,10 @@ export default function Search() {
   const dispatch = useAppDispatch();
   const styles = useStyles();
   const searchQuery = useSelector(
-    (state: RootState) => state.characters.searchQuery
+    (state: RootState) => state.characters.searchQuery,
   );
   const isSearching = useSelector(
-    (state: RootState) => state.characters.isSearching
+    (state: RootState) => state.characters.isSearching,
   );
   const [localQuery, setLocalQuery] = useState(searchQuery);
 
@@ -27,7 +27,7 @@ export default function Search() {
         dispatch(searchCharactersAPI(query));
       }
     }, 500),
-    [dispatch]
+    [dispatch],
   );
 
   const handleTextChange = useCallback(
@@ -42,7 +42,7 @@ export default function Search() {
         debouncedSearch(inputText);
       }
     },
-    [dispatch, debouncedSearch]
+    [dispatch, debouncedSearch],
   );
 
   useEffect(() => {
