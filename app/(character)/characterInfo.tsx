@@ -1,11 +1,17 @@
-import { TouchableOpacity, Image, View, ScrollView,StyleSheet } from "react-native";
+import {
+  TouchableOpacity,
+  Image,
+  View,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
 import { Text } from "react-native";
 import React from "react";
 import { useRouter } from "expo-router";
 import { useSelector } from "react-redux";
-import Back from '../../components/SVGComponents/Back';
+import Back from "../../features/shared/components/SVGComponents/Back";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { RootState } from "@/store";
+import { RootState } from "@/store/store";
 export default function SelectedCharacter() {
   const router = useRouter();
   const styles = useStyles();
@@ -43,9 +49,9 @@ export default function SelectedCharacter() {
             <Text style={styles.infoText}>{character!.status}</Text>
             <View
               style={
-                (character!.status == "Alive" && styles.alive) ||
-                (character!.status == "Dead" && styles.dead) ||
-                (character!.status == "unknown" && styles.unknown)
+                (character?.status == "Alive" && styles.alive) ||
+                (character?.status == "Dead" && styles.dead) ||
+                (character?.status == "unknown" && styles.unknown)
               }
             ></View>
           </View>
@@ -81,10 +87,7 @@ export default function SelectedCharacter() {
   );
 }
 
-
-
-
- function useStyles() {
+function useStyles() {
   const theme = useSelector((state: RootState) => state.theme.mode);
 
   return StyleSheet.create({

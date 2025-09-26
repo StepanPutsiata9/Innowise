@@ -1,9 +1,9 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { useAppDispatch } from "@/store/index";
+import { useAppDispatch } from "@/store/store";
 import {
   loadOfflineCharacters,
   setOfflineMode,
-} from "../../store/slices/charactersSlice";
+} from "@/features/characters/store/charactersSlice";
 
 interface INoInternetProps {
   onRetry: () => void;

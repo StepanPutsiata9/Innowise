@@ -1,10 +1,10 @@
 import { StyleSheet, Switch, View, Text } from "react-native";
-import Header from "../../components/Header/Header";
+import Header from "../../features/shared/components/Header/Header";
 import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "@/store";
-import { toggleTheme } from "@/store/slices/themeSlice";
-import Sun from "@/components/SVGComponents/Sun";
-import Moon from "@/components/SVGComponents/Moon";
+import { RootState, useAppDispatch } from "@/store/store";
+import { toggleTheme } from "@/features/theme/store/themeSlice";
+import Sun from "@/features/shared/components/SVGComponents/Sun";
+import Moon from "@/features/shared/components/SVGComponents/Moon";
 import { useState } from "react";
 export default function SettingsScreen() {
   const theme = useSelector((state: RootState) => state.theme.mode);

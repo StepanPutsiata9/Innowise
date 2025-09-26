@@ -1,17 +1,10 @@
 import React, { useEffect, useMemo, useCallback } from "react";
-import {
-  FlatList,
-  ListRenderItem,
-  Text,
-} from "react-native";
+import { FlatList, ListRenderItem, Text } from "react-native";
 import { useSelector } from "react-redux";
-import {
-
-  fetchCharacters,
-} from "../../store/slices/charactersSlice";
+import { fetchCharacters } from "@/features/characters/store/charactersSlice";
 import CharacterCard from "./CharacterItem/Item";
 import useStyles from "./useCharactersStyles";
-import { RootState, useAppDispatch } from "@/store/index";
+import { RootState, useAppDispatch } from "@/store/store";
 
 const MemoizedCharacterCard = React.memo(CharacterCard);
 

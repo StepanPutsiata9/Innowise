@@ -5,8 +5,8 @@ import {
   searchCharacter,
   searchCharactersAPI,
   endSearch,
-} from "../../store/slices/charactersSlice";
-import { RootState, useAppDispatch } from "@/store/index";
+} from "@/features/characters/store/charactersSlice";
+import { RootState, useAppDispatch } from "@/store/store";
 import { debounce } from "lodash";
 import { useSelector } from "react-redux";
 

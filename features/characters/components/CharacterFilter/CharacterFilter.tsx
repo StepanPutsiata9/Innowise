@@ -12,13 +12,11 @@ import {
   resetFilters,
   clearCharacters,
   fetchCharacters,
-} from "../../store/slices/charactersSlice";
+} from "@/features/characters/store/charactersSlice";
 import Modal from "react-native-modal";
 import useStyles from "./useFilterStyles";
-import { useAppDispatch } from "@/store/index";
+import { useAppDispatch } from "@/store/store";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-
 
 const statusOptions = ["", "Alive", "Dead", "unknown"] as const;
 const speciesOptions = ["", "Human", "Alien"] as const;
@@ -66,10 +64,10 @@ const Filters: React.FC = () => {
       <Modal
         isVisible={!!visibleFilter}
         onBackdropPress={() => setVisibleFilter(null)}
-        style={[styles.modal,{marginTop:-insets.top }]}
+        style={[styles.modal, { marginTop: -insets.top }]}
         statusBarTranslucent={true}
       >
-        <View style={[styles.modalContent, { paddingBottom: insets.bottom}]}>
+        <View style={[styles.modalContent, { paddingBottom: insets.bottom }]}>
           {options.map((option) => (
             <TouchableOpacity
               key={option || "empty"}

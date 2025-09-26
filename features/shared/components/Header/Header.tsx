@@ -1,4 +1,3 @@
-import { StyleSheet } from "react-native";
 import { View, Text, Image } from "react-native";
 import useStyles from "./useHeaderStyles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";

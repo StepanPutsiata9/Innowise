@@ -1,7 +1,7 @@
-import { configureStore } from '@reduxjs/toolkit';
-import themeReducer from "./slices/themeSlice";
-import charactersSlice from "./slices/charactersSlice";
-import { useDispatch } from 'react-redux';
+import { configureStore } from "@reduxjs/toolkit";
+import themeReducer from "@/features/theme/store/themeSlice";
+import charactersSlice from "@/features/characters/store/charactersSlice";
+import { useDispatch } from "react-redux";
 
 export const store = configureStore({
   reducer: {

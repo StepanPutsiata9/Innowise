@@ -1,15 +1,15 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
-import { RootState, store } from "../store/index";
+import { RootState, store } from "../store/store";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
-import { loadTheme } from "@/store/slices/themeSlice";
+import { loadTheme } from "@/features/theme/store/themeSlice";
 import "react-native-reanimated";
 import NetInfo from "@react-native-community/netinfo";
 import { Provider, useSelector } from "react-redux";
 import { View, Text, StyleSheet } from "react-native";
-import NoInternetScreen from "../components/NoInternetScreen/NoInternetScreen";
+import NoInternetScreen from "@/features/shared/components/NoInternetScreen/NoInternetScreen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 export { ErrorBoundary } from "expo-router";
 
@@ -61,7 +61,7 @@ function RootLayoutNav() {
 }
 
 import { useDispatch } from "react-redux";
-import { setOfflineMode } from "../store/slices/charactersSlice";
+import { setOfflineMode } from "../features/characters/store/charactersSlice";
 
 function AppNavigation() {
   const dispatch = useDispatch();

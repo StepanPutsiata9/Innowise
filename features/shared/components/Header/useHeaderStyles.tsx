@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
-import { RootState } from "@/store";
+import { RootState } from "@/store/store";
 
 export default function useStyles() {
   const theme = useSelector((state: RootState) => state.theme.mode);

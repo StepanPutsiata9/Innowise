@@ -1,8 +1,8 @@
 import { TouchableOpacity, Text } from "react-native";
 
-import { useAppDispatch } from "@/store/index";
+import { useAppDispatch } from "@/store/store";
 import useStyles from "./useBackToRetryStyles";
-import { setOfflineMode } from "../../store/slices/charactersSlice";
+import { setOfflineMode } from "@/features/characters/store/charactersSlice";
 export default function BackToRetry() {
   const dispatch = useAppDispatch();
   const styles = useStyles();

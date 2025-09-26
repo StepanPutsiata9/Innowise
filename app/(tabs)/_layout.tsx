@@ -3,7 +3,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 import { useSelector } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { RootState } from "@/store";
+import { RootState } from "@/store/store";
 import { StyleProp, TextStyle } from "react-native";
 
 type TabBarIconProps = {
@@ -20,7 +20,7 @@ interface TabIconProps {
   color: string;
   focused: boolean;
   size: number;
-};
+}
 
 export default function TabLayout() {
   const theme = useSelector((state: RootState) => state.theme.mode);

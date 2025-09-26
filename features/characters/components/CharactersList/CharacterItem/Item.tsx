@@ -1,17 +1,15 @@
 import React, { useState, memo } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import {
-  setSelectedCharacter,
-} from "../../../store/slices/charactersSlice";
+import { setSelectedCharacter } from "@/features/characters/store/charactersSlice";
 import useStyles from "./useItemStyles";
-import { useAppDispatch } from "@/store/index";
+import { useAppDispatch } from "@/store/store";
 import { useRouter } from "expo-router";
 
 interface ICharacterType {
   character: Character;
 }
 const CharacterCard = ({ character }: ICharacterType) => {
-  const router=useRouter()
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const styles = useStyles();
   const [imageError, setImageError] = useState(false);
@@ -28,7 +26,7 @@ const CharacterCard = ({ character }: ICharacterType) => {
           source={{
             uri: !imageError
               ? character.image
-              : require("../../../assets/images/logo2.png"),
+              : require("@/assets/images/logo2.png"),
           }}
           style={styles.image}
           onError={() => setImageError(true)}

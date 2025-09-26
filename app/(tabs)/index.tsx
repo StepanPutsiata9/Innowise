@@ -1,10 +1,10 @@
-import Header from "../../components/Header/Header";
-import Characters from "../../components/Characters/Characters";
-import Search from "../../components/Search/Search";
-import Filter from "../../components/Filter/Filter";
+import Header from "../../features/shared/components/Header/Header";
+import Characters from "@/features/characters/components/CharactersList/Characters";
+import Search from "@/features/characters/components/Search/Search";
+import Filter from "@/features/characters/components/CharacterFilter/CharacterFilter";
 import { useSelector } from "react-redux";
-import BackToRetry from "../../components/BackToRetryPage/BackToRetryPage";
-import { RootState } from "@/store";
+import BackToRetry from "@/features/shared/components/BackToRetryPage/BackToRetryPage";
+import { RootState } from "@/store/store";
 import { StatusBar } from "expo-status-bar";
 export default function HomeScreen() {
   const { isOfflineMode } = useSelector((state: RootState) => state.characters);
