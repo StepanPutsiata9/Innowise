@@ -5,6 +5,7 @@ import { fetchCharacters } from "@/features/characters/store/charactersSlice";
 import CharacterCard from "./CharacterItem/Item";
 import useStyles from "./useCharactersStyles";
 import { RootState, useAppDispatch } from "@/store/store";
+import { Character } from "../../types/character.interfaces";
 
 const MemoizedCharacterCard = React.memo(CharacterCard);
 
@@ -32,7 +33,7 @@ const Characters = () => {
   const uniqueCharacters = useMemo(() => {
     if (!displayData) return [];
     const seen = new Set();
-    return displayData.filter((char) => {
+    return displayData.filter((char: { id: string }) => {
       if (seen.has(char.id)) return false;
       seen.add(char.id);
       return true;

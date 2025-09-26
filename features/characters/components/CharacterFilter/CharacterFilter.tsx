@@ -17,6 +17,7 @@ import Modal from "react-native-modal";
 import useStyles from "./useFilterStyles";
 import { useAppDispatch } from "@/store/store";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { FilterType, FilterValues } from "../../types/character.interfaces";
 
 const statusOptions = ["", "Alive", "Dead", "unknown"] as const;
 const speciesOptions = ["", "Human", "Alien"] as const;

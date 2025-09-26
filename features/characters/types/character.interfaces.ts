@@ -1,9 +1,9 @@
- interface Location {
+export interface Location {
   name: string;
   url: string;
 }
 
- interface Character {
+export interface Character {
   id: number;
   name: string;
   status: "Alive" | "Dead" | "unknown";
@@ -18,18 +18,18 @@
   created?: string;
 }
 
-interface IFilters {
+export interface IFilters {
   status: "Alive" | "Dead" | "unknown" | "";
   species: string;
 }
 
-interface FetchCharactersResponse {
+export interface FetchCharactersResponse {
   characters: Character[];
   hasMore: boolean;
   isNewSearch: boolean;
 }
 
-interface ICharactersState {
+export interface ICharactersState {
   characters: Character[] | null;
   selectedCharacter: Character | null;
   filteredCharacters: Character[] | null;
@@ -44,13 +44,9 @@ interface ICharactersState {
   isSearching: boolean;
 }
 
-interface IthemeState{
-  mode:"light"|"dark"
-}
+export type FilterType = "status" | "species";
 
-type FilterType = "status" | "species";
-
-interface FilterValues {
+export interface FilterValues {
   status: "Alive" | "Dead" | "unknown" | "";
   species: string;
 }

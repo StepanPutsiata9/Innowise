@@ -4,6 +4,7 @@ import { setSelectedCharacter } from "@/features/characters/store/charactersSlic
 import useStyles from "./useItemStyles";
 import { useAppDispatch } from "@/store/store";
 import { useRouter } from "expo-router";
+import { Character } from "@/features/characters/types/character.interfaces";
 
 interface ICharacterType {
   character: Character;
