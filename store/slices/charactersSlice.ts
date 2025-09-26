@@ -2,51 +2,6 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-interface Location {
-  name: string;
-  url: string;
-}
-
-export interface Character {
-  id: number;
-  name: string;
-  status: "Alive" | "Dead" | "unknown";
-  species: string;
-  type: string;
-  gender: "Male" | "Female" | "Genderless" | "unknown";
-  origin?: Location;
-  location?: Location;
-  image: string;
-  episode?: string[];
-  url?: string;
-  created?: string;
-}
-
-interface IFilters {
-  status: "Alive" | "Dead" | "unknown" | "";
-  species: string;
-}
-
-interface FetchCharactersResponse {
-  characters: Character[];
-  hasMore: boolean;
-  isNewSearch: boolean;
-}
-
-interface ICharactersState {
-  characters: Character[] | null;
-  selectedCharacter: Character | null;
-  filteredCharacters: Character[] | null;
-  isOfflineMode: boolean;
-  offlineCharacters: Character[] | null;
-  loading: boolean;
-  error: string | null;
-  nextPage: number;
-  hasMore: boolean;
-  filters: IFilters;
-  searchQuery: string;
-  isSearching: boolean;
-}
 
 const initialState: ICharactersState = {
   characters: null,

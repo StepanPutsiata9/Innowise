@@ -1,18 +1,17 @@
 import React, { useState, memo } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import {
-  Character,
   setSelectedCharacter,
 } from "../../../store/slices/charactersSlice";
 import useStyles from "./useItemStyles";
 import { useAppDispatch } from "@/store/index";
-import { useTypedRouter } from "@/hooks/useRouter";
+import { useRouter } from "expo-router";
 
 interface ICharacterType {
   character: Character;
 }
 const CharacterCard = ({ character }: ICharacterType) => {
-  const router = useTypedRouter();
+  const router=useRouter()
   const dispatch = useAppDispatch();
   const styles = useStyles();
   const [imageError, setImageError] = useState(false);
@@ -21,7 +20,7 @@ const CharacterCard = ({ character }: ICharacterType) => {
     <TouchableOpacity
       onPress={() => {
         dispatch(setSelectedCharacter(character));
-        router.push("characterInfo");
+        router.push("/(character)/characterInfo");
       }}
     >
       <View style={styles.card}>
