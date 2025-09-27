@@ -1,44 +1,75 @@
-import React, { useEffect, useMemo, useCallback } from "react";
+// import React, { useCallback } from "react";
+// import { FlatList, ListRenderItem, Text } from "react-native";
+// import CharacterCard from "./CharacterItem/Item";
+// import useStyles from "./useCharactersStyles";
+// import { Character } from "../../types/character.interfaces";
+// import { useCharacters } from "../../hooks/useCharacter";
+
+// const MemoizedCharacterCard = React.memo(CharacterCard);
+
+// const Characters = () => {
+//   const styles = useStyles();
+//   const { characters, emptyText, loadMoreCharacters } = useCharacters();
+
+//   const renderItem: ListRenderItem<Character> = useCallback(
+//     ({ item }) => <MemoizedCharacterCard character={item} />,
+//     []
+//   );
+
+//   const renderEmptyComponent = useCallback(() => {
+//     if (!emptyText) return null;
+//     return <Text style={styles.noResultsText}>{emptyText}</Text>;
+//   }, [emptyText, styles.noResultsText]);
+
+//   return (
+//     <FlatList
+//       showsVerticalScrollIndicator={false}
+//       data={characters}
+//       renderItem={renderItem}
+//       keyExtractor={(item) => `${item.id}`}
+//       onEndReached={loadMoreCharacters}
+//       onEndReachedThreshold={0.5}
+//       style={styles.containerCharacters}
+//       ListEmptyComponent={renderEmptyComponent}
+//     />
+//   );
+// };
+
+// export default React.memo(Characters);
+
+import React, { useEffect, useCallback } from "react";
 import { FlatList, ListRenderItem, Text } from "react-native";
-import { useSelector } from "react-redux";
+import { useAppDispatch } from "@/store/store";
 import { fetchCharacters } from "@/features/characters/store/charactersSlice";
 import CharacterCard from "./CharacterItem/Item";
 import useStyles from "./useCharactersStyles";
-import { RootState, useAppDispatch } from "@/store/store";
 import { Character } from "../../types/character.interfaces";
+import { useCharacters } from "../../hooks/useCharacter";
 
 const MemoizedCharacterCard = React.memo(CharacterCard);
 
-const Characters = () => {
+const Characters: React.FC = () => {
   const dispatch = useAppDispatch();
+  const styles = useStyles();
+
   const {
-    filteredCharacters,
-    offlineCharacters,
-    loading,
-    hasMore,
+    characters,
+    handleLoadMore,
+    emptyText,
     isOfflineMode,
     isSearching,
     searchQuery,
-  } = useSelector((state: RootState) => state.characters);
-
-  const styles = useStyles();
-
-  const displayData = isOfflineMode ? offlineCharacters : filteredCharacters;
+  } = useCharacters();
 
   const renderItem: ListRenderItem<Character> = useCallback(
     ({ item }) => <MemoizedCharacterCard character={item} />,
-    [],
+    []
   );
 
-  const uniqueCharacters = useMemo(() => {
-    if (!displayData) return [];
-    const seen = new Set();
-    return displayData.filter((char: { id: string }) => {
-      if (seen.has(char.id)) return false;
-      seen.add(char.id);
-      return true;
-    });
-  }, [displayData]);
+  const renderEmptyComponent = useCallback(() => {
+    if (!emptyText) return null;
+    return <Text style={styles.noResultsText}>{emptyText}</Text>;
+  }, [emptyText, styles.noResultsText]);
 
   useEffect(() => {
     if (!isOfflineMode && !isSearching && !searchQuery) {
@@ -46,27 +77,10 @@ const Characters = () => {
     }
   }, [dispatch, isOfflineMode, isSearching, searchQuery]);
 
-  const handleLoadMore = useCallback(() => {
-    if (hasMore && !loading && !isOfflineMode && !isSearching) {
-      dispatch(fetchCharacters());
-    }
-  }, [hasMore, loading, dispatch, isOfflineMode, isSearching]);
-
-  const renderEmptyComponent = useCallback(() => {
-    if (loading) return null;
-    return (
-      <Text style={styles.noResultsText}>
-        {isSearching
-          ? `No characters found for "${searchQuery}"`
-          : "No characters available"}
-      </Text>
-    );
-  }, [loading, isSearching, searchQuery, styles.noResultsText]);
-
   return (
     <FlatList
       showsVerticalScrollIndicator={false}
-      data={uniqueCharacters}
+      data={characters}
       renderItem={renderItem}
       keyExtractor={(item) => `${item.id}`}
       onEndReached={handleLoadMore}

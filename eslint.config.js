@@ -6,6 +6,22 @@ export default [
   js.configs.recommended,
   ...reactNative,
   {
+    ignores: [
+      "node_modules/",
+      "android/",
+      "ios/",
+      "build/",
+      "dist/",
+      "*.min.js",
+      "coverage/",
+      "*.log",
+      ".expo/",
+      "assets/",
+      "metro.config.js",
+      "babel.config.js",
+    ],
+  },
+  {
     files: ["**/*.ts", "**/*.tsx"],
     plugins: {
       "@typescript-eslint": typescript,

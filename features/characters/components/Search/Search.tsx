@@ -1,3 +1,28 @@
+// import React from "react";
+// import { View, TextInput } from "react-native";
+// import useStyles from "./useSearchStyles";
+// import { useSearch } from "../../hooks/useSearch";
+
+// const Search = () => {
+//   const styles = useStyles();
+//   const { localQuery, handleTextChange, placeholder } = useSearch();
+//   return (
+//     <View style={styles.searchView}>
+//       <TextInput
+//         style={styles.input}
+//         placeholder={placeholder}
+//         placeholderTextColor="#999"
+//         onChangeText={handleTextChange}
+//         value={localQuery}
+//         returnKeyType="search"
+//         clearButtonMode="while-editing"
+//       />
+//     </View>
+//   );
+// };
+
+// export default React.memo(Search);
+
 import { View, TextInput } from "react-native";
 import { useEffect, useState, useCallback } from "react";
 import useStyles from "./useSearchStyles";
@@ -5,7 +30,7 @@ import {
   searchCharacter,
   searchCharactersAPI,
   endSearch,
-} from "@/features/characters/store/charactersSlice";
+} from "../../store/charactersSlice";
 import { RootState, useAppDispatch } from "@/store/store";
 import { debounce } from "lodash";
 import { useSelector } from "react-redux";
@@ -14,10 +39,10 @@ export default function Search() {
   const dispatch = useAppDispatch();
   const styles = useStyles();
   const searchQuery = useSelector(
-    (state: RootState) => state.characters.searchQuery,
+    (state: RootState) => state.characters.searchQuery
   );
   const isSearching = useSelector(
-    (state: RootState) => state.characters.isSearching,
+    (state: RootState) => state.characters.isSearching
   );
   const [localQuery, setLocalQuery] = useState(searchQuery);
 
@@ -27,7 +52,7 @@ export default function Search() {
         dispatch(searchCharactersAPI(query));
       }
     }, 500),
-    [dispatch],
+    [dispatch]
   );
 
   const handleTextChange = useCallback(
@@ -42,7 +67,7 @@ export default function Search() {
         debouncedSearch(inputText);
       }
     },
-    [dispatch, debouncedSearch],
+    [dispatch, debouncedSearch]
   );
 
   useEffect(() => {

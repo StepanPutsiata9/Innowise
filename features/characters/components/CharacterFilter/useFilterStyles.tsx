@@ -27,8 +27,6 @@ export default function useStyles() {
     },
     modal: {
       flex: 1,
-      // justifyContent: 'center',
-      // alignItems: 'center',
       justifyContent: "flex-end",
       margin: 0,
     },
