@@ -61,6 +61,6 @@ export const useSearch = () => {
   return {
     localQuery,
     handleTextChange,
-    placeholder: "Search character in API by name",
+    placeholder: "Search character...",
   };
 };
