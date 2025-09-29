@@ -24,7 +24,7 @@ export const useFilter = () => {
         [filterType]: value,
       }));
     },
-    []
+    [],
   );
 
   const applyFilters = useCallback(() => {
