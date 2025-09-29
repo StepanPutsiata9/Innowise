@@ -21,4 +21,4 @@ const Search = () => {
   );
 };
 
-export default React.memo(Search);
+export const CharacterSearch = React.memo(Search);

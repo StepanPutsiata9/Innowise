@@ -1,6 +1,6 @@
 import * as React from "react";
 import Svg, { Path, SvgProps } from "react-native-svg";
-const Moon = (props: SvgProps) => (
+export const Moon = (props: SvgProps) => (
   <Svg width={169} height={171} fill="none" {...props}>
     <Path
       fill="#fff"
@@ -8,4 +8,3 @@ const Moon = (props: SvgProps) => (
     />
   </Svg>
 );
-export default Moon;

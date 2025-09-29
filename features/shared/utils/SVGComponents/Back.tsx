@@ -1,6 +1,6 @@
 import * as React from "react";
 import Svg, { Path, SvgProps } from "react-native-svg";
-const Back = ({ color }: SvgProps) => (
+export const Back = ({ color }: SvgProps) => (
   <Svg width={18} height={30} fill="none">
     <Path
       fill={color}
@@ -8,4 +8,3 @@ const Back = ({ color }: SvgProps) => (
     />
   </Svg>
 );
-export default Back;

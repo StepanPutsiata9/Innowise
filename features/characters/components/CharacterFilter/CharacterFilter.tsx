@@ -101,4 +101,4 @@ const Filters: React.FC = () => {
   );
 };
 
-export default React.memo(Filters);
+export const CharacterFilter = React.memo(Filters);

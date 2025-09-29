@@ -8,7 +8,7 @@ import {
 interface INoInternetProps {
   onRetry: () => void;
 }
-export default function NoInternetScreen({ onRetry }: INoInternetProps) {
+export const NoInternetScreen = ({ onRetry }: INoInternetProps) => {
   const dispatch = useAppDispatch();
   const handleOfflineMode = async () => {
     try {
@@ -40,7 +40,7 @@ export default function NoInternetScreen({ onRetry }: INoInternetProps) {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   noInternetContainer: {

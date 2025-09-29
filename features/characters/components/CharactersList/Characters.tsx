@@ -37,4 +37,4 @@ const Characters = () => {
   );
 };
 
-export default React.memo(Characters);
+export const CharactersList = React.memo(Characters);

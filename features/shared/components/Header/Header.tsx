@@ -1,7 +1,7 @@
-import { View, Text, Image } from "react-native";
+import { View, Text } from "react-native";
 import useStyles from "./useHeaderStyles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-export default function Header() {
+export const Header = () => {
   const styles = useStyles();
   const insets = useSafeAreaInsets();
   return (
@@ -9,4 +9,4 @@ export default function Header() {
       <Text style={styles.headerText}>The Rick and Morty App</Text>
     </View>
   );
-}
+};
