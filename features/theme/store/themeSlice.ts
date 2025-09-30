@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AppDispatch } from "@/store/store";
-import { IthemeState } from "../types/theme.interfaces";
+import { IThemeState } from "../types/theme.interfaces";
 
-const initialState: IthemeState = {
+const initialState: IThemeState = {
   mode: "light",
 };
 

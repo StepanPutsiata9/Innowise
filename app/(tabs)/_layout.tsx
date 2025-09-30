@@ -35,7 +35,6 @@ export default function TabLayout() {
         tabBarStyle: {
           height: 55 + insets.bottom,
           backgroundColor: theme === "dark" ? "#000" : "#fff",
-          borderTopColor: theme === "dark" ? "#333" : "#ddd",
         },
       }}
     >
