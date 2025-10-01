@@ -1,11 +1,10 @@
-import { StyleSheet, Switch, View, Text } from "react-native";
-import { Header, Sun, Moon } from "@/features/shared";
-import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "@/store/store";
+import { Switch, View, Text } from "react-native";
+import { Sun, Moon } from "@/features/shared";
+import { useAppDispatch } from "@/store/store";
 import { toggleTheme } from "@/features/theme/store/themeSlice";
 import { useState } from "react";
 import { useStyles } from "./useToggleThemeStyles";
-import { IThemeColors, IThemeState } from "../../types/theme.interfaces";
+import { IThemeColors } from "../../types/theme.interfaces";
 
 interface IToggleThemeProps {
   themeColors: IThemeColors;
@@ -14,7 +13,7 @@ interface IToggleThemeProps {
 export function ToggleTheme({ themeColors, mode }: IToggleThemeProps) {
   const dispatch = useAppDispatch();
   const [isEnabled, setIsEnabled] = useState<boolean>(
-    mode === "light" ? true : false,
+    mode === "light" ? true : false
   );
   const styles = useStyles(themeColors);
   return (

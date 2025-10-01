@@ -3,7 +3,7 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import { RootState, store } from "../store/store";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { loadTheme } from "@/features/theme/store/themeSlice";
 import "react-native-reanimated";
 import NetInfo from "@react-native-community/netinfo";
@@ -68,17 +68,17 @@ function AppNavigation() {
   const { isOfflineMode } = useSelector((state: RootState) => state.characters);
   const [isOnline, setIsOnline] = useState<boolean | null>(null);
 
-  const checkConnection = async () => {
+  const checkConnection = useCallback(async () => {
     try {
       const state = await NetInfo.fetch();
       setIsOnline(state.isConnected);
       if (state.isConnected) {
         dispatch(setOfflineMode(false));
       }
-    } catch (error) {
+    } catch {
       setIsOnline(false);
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
@@ -89,7 +89,7 @@ function AppNavigation() {
     });
     checkConnection();
     return () => unsubscribe();
-  }, [dispatch]);
+  }, [checkConnection, dispatch]);
   if (isOnline === null) {
     return (
       <View style={styles.loadingContainer}>

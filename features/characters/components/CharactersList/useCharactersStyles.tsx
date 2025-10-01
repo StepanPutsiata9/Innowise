@@ -1,7 +1,5 @@
 import { IThemeColors } from "@/features/theme/types/theme.interfaces";
-import { RootState } from "@/store/store";
 import { StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
 
 export default function useStyles(themeColors: IThemeColors) {
   return StyleSheet.create({

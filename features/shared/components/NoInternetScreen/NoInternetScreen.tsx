@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { useAppDispatch } from "@/store/store";
 import {
   loadOfflineCharacters,

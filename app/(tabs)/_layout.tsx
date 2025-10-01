@@ -1,9 +1,7 @@
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
-import { useSelector } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { RootState } from "@/store/store";
 import { StyleProp, TextStyle } from "react-native";
 import { useTheme } from "@/features/theme";
 
