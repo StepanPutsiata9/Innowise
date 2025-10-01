@@ -1,24 +1,20 @@
+import { IThemeColors } from "@/features/theme/types/theme.interfaces";
 import { StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
-
-export default function useStyles() {
-  const theme = useSelector((state: RootState) => state.theme.mode);
-
+export default function useStyles(themeColors: IThemeColors) {
   return StyleSheet.create({
     header: {
       flexDirection: "row",
       justifyContent: "center",
       paddingBottom: 5,
       alignItems: "center",
-      backgroundColor: theme === "dark" ? "#000" : "#fff",
+      backgroundColor: themeColors.backgroundColor,
       borderBottomWidth: 2,
-      borderBottomColor: theme === "dark" ? "#fff" : "#121212",
+      borderBottomColor: themeColors.borderColor,
     },
     headerText: {
       fontSize: 20,
       fontWeight: 700,
-      color: theme === "dark" ? "#fff" : "#28292D",
+      color: themeColors.textColor,
     },
   });
 }

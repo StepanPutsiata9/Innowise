@@ -10,6 +10,7 @@ export interface IThemeColors {
   filterBackgroundColor: string;
   prevTextColor: string;
   tabActiveColor: string;
-  tabDisactiveColor: string;
+  tabInactiveColor: string;
   searchBackgroundColor: string;
+  selectedFilter: string;
 }

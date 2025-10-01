@@ -7,22 +7,23 @@ import { BackToRetry, Header } from "@/features/shared";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { StatusBar } from "expo-status-bar";
+import { useTheme } from "@/features/theme";
 export default function HomeScreen() {
   const { isOfflineMode } = useSelector((state: RootState) => state.characters);
-  const theme = useSelector((state: RootState) => state.theme.mode);
+  const { mode, colors } = useTheme();
   return (
     <>
-      <StatusBar style={theme === "light" ? "dark" : "light"} />
-      <Header />
+      <StatusBar style={mode === "light" ? "dark" : "light"} />
+      <Header themeColors={colors} />
       {!isOfflineMode ? (
         <>
-          <Search />
-          <Filter />
+          <Search themeColors={colors} />
+          <Filter themeColors={colors} />
         </>
       ) : (
-        <BackToRetry />
+        <BackToRetry themeColors={colors} />
       )}
-      <Characters />
+      <Characters themeColors={colors} />
     </>
   );
 }

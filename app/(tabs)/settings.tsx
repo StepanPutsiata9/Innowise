@@ -1,11 +1,12 @@
 import { Header } from "@/features/shared";
-import { ToggleTheme } from "@/features/theme";
+import { ToggleTheme, useTheme } from "@/features/theme";
 
 export default function SettingsScreen() {
+  const { colors, mode } = useTheme();
   return (
     <>
-      <Header />
-      <ToggleTheme />
+      <Header themeColors={colors} />
+      <ToggleTheme themeColors={colors} mode={mode} />
     </>
   );
 }

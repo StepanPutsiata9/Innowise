@@ -8,8 +8,9 @@ export const lightColors: IThemeColors = {
   filterBackgroundColor: "#f0f0f0",
   prevTextColor: "#8b8b8b",
   tabActiveColor: "#000",
-  tabDisactiveColor: "#888",
+  tabInactiveColor: "#888",
   searchBackgroundColor: "#fff",
+  selectedFilter: "#e3f2fd",
 };
 
 export const darkColors: IThemeColors = {
@@ -20,8 +21,9 @@ export const darkColors: IThemeColors = {
   filterBackgroundColor: "#28292D",
   prevTextColor: "#28292D",
   tabActiveColor: "#fff",
-  tabDisactiveColor: "#666",
+  tabInactiveColor: "#666",
   searchBackgroundColor: "#28292D",
+  selectedFilter: "#28292D",
 };
 
 export const allColors = {

@@ -61,7 +61,7 @@ function RootLayoutNav() {
 }
 
 import { useDispatch } from "react-redux";
-import { setOfflineMode } from "../features/characters/store/charactersSlice";
+import { setOfflineMode } from "@/features/characters/store/charactersSlice";
 
 function AppNavigation() {
   const dispatch = useDispatch();

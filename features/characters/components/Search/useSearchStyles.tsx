@@ -1,13 +1,9 @@
-import { RootState } from "@/store/store";
+import { IThemeColors } from "@/features/theme/types/theme.interfaces";
 import { StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
-
-export default function useStyles() {
-  const theme = useSelector((state: RootState) => state.theme.mode);
-
+export default function useStyles(themeColors: IThemeColors) {
   return StyleSheet.create({
     searchView: {
-      backgroundColor: theme === "dark" ? "#000" : "#fff",
+      backgroundColor: themeColors.backgroundColor,
     },
     input: {
       height: 45,
@@ -18,8 +14,8 @@ export default function useStyles() {
       borderRadius: 8,
       paddingHorizontal: 15,
       fontSize: 16,
-      color: theme === "dark" ? "#fff" : "#000",
-      backgroundColor: theme === "dark" ? "#28292D" : "#fff",
+      color: themeColors.textColor,
+      backgroundColor: themeColors.searchBackgroundColor,
       marginVertical: 10,
     },
   });

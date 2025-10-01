@@ -1,29 +1,26 @@
-import { RootState } from "@/store/store";
+import { IThemeColors } from "@/features/theme/types/theme.interfaces";
 import { StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
 
-export default function useStyles() {
-  const theme = useSelector((state: RootState) => state.theme.mode);
-
+export default function useStyles(themeColors: IThemeColors) {
   return StyleSheet.create({
     filterContainer: {
       flexDirection: "row",
       justifyContent: "space-around",
       padding: 10,
-      backgroundColor: theme === "dark" ? "#000" : "#fff",
+      backgroundColor: themeColors.backgroundColor,
       borderBottomWidth: 1,
       borderBottomColor: "#eee",
     },
     filterButton: {
       padding: 10,
       borderRadius: 20,
-      backgroundColor: theme === "dark" ? "#28292D" : "#f0f0f0",
+      backgroundColor: themeColors.filterBackgroundColor,
       minWidth: 100,
       alignItems: "center",
     },
     filterButtonText: {
       fontSize: 14,
-      color: theme === "dark" ? "#fff" : "#333",
+      color: themeColors.textColor,
     },
     modal: {
       flex: 1,
@@ -31,7 +28,7 @@ export default function useStyles() {
       margin: 0,
     },
     modalContent: {
-      backgroundColor: theme === "dark" ? "#000" : "#fff",
+      backgroundColor: themeColors.backgroundColor,
       padding: 20,
       borderTopLeftRadius: 10,
       borderTopRightRadius: 10,
@@ -39,14 +36,14 @@ export default function useStyles() {
     filterOption: {
       padding: 15,
       borderBottomWidth: 1,
-      borderBottomColor: theme === "dark" ? "#fff" : "#eee",
+      borderBottomColor: themeColors.borderColor,
     },
     selectedFilterOption: {
-      backgroundColor: theme === "dark" ? "#28292D" : "#e3f2fd",
+      backgroundColor: themeColors.selectedFilter,
     },
     filterOptionText: {
       fontSize: 16,
-      color: theme === "dark" ? "#fff" : "#000",
+      color: themeColors.textColor,
     },
     filterButtons: {
       flexDirection: "row",

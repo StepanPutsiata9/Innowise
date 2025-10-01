@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { RootState } from "@/store/store";
 import { StyleProp, TextStyle } from "react-native";
+import { useTheme } from "@/features/theme";
 
 type TabBarIconProps = {
   name: React.ComponentProps<typeof FontAwesome>["name"];
@@ -23,18 +24,17 @@ interface TabIconProps {
 }
 
 export default function TabLayout() {
-  const theme = useSelector((state: RootState) => state.theme.mode);
   const insets = useSafeAreaInsets();
-
+  const { colors } = useTheme();
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: theme === "dark" ? "#fff" : "#000",
-        tabBarInactiveTintColor: theme === "dark" ? "#888" : "#666",
+        tabBarActiveTintColor: colors.tabActiveColor,
+        tabBarInactiveTintColor: colors.tabInactiveColor,
         headerShown: false,
         tabBarStyle: {
           height: 55 + insets.bottom,
-          backgroundColor: theme === "dark" ? "#000" : "#fff",
+          backgroundColor: colors.backgroundColor,
         },
       }}
     >

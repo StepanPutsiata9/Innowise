@@ -12,10 +12,12 @@ import { useSelector } from "react-redux";
 import { Back } from "@/features/shared";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { RootState } from "@/store/store";
+import { useTheme } from "@/features/theme";
+import { IThemeColors } from "@/features/theme/types/theme.interfaces";
 export default function SelectedCharacter() {
   const router = useRouter();
-  const styles = useStyles();
-  const theme = useSelector((state: RootState) => state.theme.mode);
+  const { colors, mode } = useTheme();
+  const styles = useStyles(colors);
   const character = useSelector(
     (state: RootState) => state.characters.selectedCharacter,
   );
@@ -26,7 +28,7 @@ export default function SelectedCharacter() {
     <View style={[styles.containerChatcterInfo, { paddingTop: insets.top }]}>
       <View style={styles.titleBlock}>
         <TouchableOpacity onPress={() => router.back()}>
-          <Back color={theme == "dark" ? "#fff" : "#000"} />
+          <Back color={mode === "dark" ? "#fff" : "#000"} />
         </TouchableOpacity>
         <Text style={styles.nameOfSelectedCharacter}>
           {character?.name || "Unknown"}
@@ -88,34 +90,31 @@ export default function SelectedCharacter() {
   );
 }
 
-function useStyles() {
-  const theme = useSelector((state: RootState) => state.theme.mode);
-
+function useStyles(themeColors: IThemeColors) {
   return StyleSheet.create({
     containerChatcterInfo: {
       height: "100%",
       width: "100%",
-      backgroundColor: theme === "dark" ? "#000" : "#fff",
+      backgroundColor: themeColors.backgroundColor,
     },
 
     imageInfo: {
       height: 350,
       width: 350,
       borderRadius: 20,
-      borderColor: theme === "dark" ? "#fff" : "#000",
+      borderColor: themeColors.borderColor,
       marginBottom: 15,
       borderWidth: 1,
     },
 
     nameOfSelectedCharacter: {
       fontSize: 34,
-      color: theme === "dark" ? "#fff" : "#000",
+      color: themeColors.textColor,
       marginLeft: 20,
       fontWeight: 500,
     },
 
     titleBlock: {
-      backgroundColor: theme === "dark" ? "#000" : "#fff",
       alignItems: "center",
       flexDirection: "row",
       marginHorizontal: 10,
@@ -124,22 +123,18 @@ function useStyles() {
 
     photoBlock: {
       marginHorizontal: "auto",
-      backgroundColor: theme === "dark" ? "#000" : "#fff",
     },
 
     infoBlock: {
-      backgroundColor: theme === "dark" ? "#000" : "#fff",
       marginHorizontal: "auto",
     },
 
     backLine: {
-      backgroundColor: theme === "dark" ? "#000" : "#fff",
       flexDirection: "row",
       alignItems: "center",
     },
 
     infoLineSelectedCharacter: {
-      backgroundColor: theme === "dark" ? "#000" : "#fff",
       width: 350,
       flexDirection: "row",
       marginBottom: 10,
@@ -148,14 +143,14 @@ function useStyles() {
     },
 
     infoParams: {
-      color: theme === "dark" ? "#fff" : "#8b8b8b",
+      color: "#8b8b8b",
       fontSize: 20,
       marginRight: 5,
       fontWeight: 500,
     },
 
     infoText: {
-      color: theme === "dark" ? "#fff" : "#000",
+      color: themeColors.textColor,
       fontSize: 20,
       fontWeight: 700,
     },

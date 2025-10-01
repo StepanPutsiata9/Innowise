@@ -4,16 +4,22 @@ import CharacterCard from "./CharacterItem/Item";
 import useStyles from "./useCharactersStyles";
 import { Character } from "../../types/character.interfaces";
 import { useCharacters } from "../../hooks/useCharacters";
+import { IThemeColors } from "@/features/theme/types/theme.interfaces";
 
 const MemoizedCharacterCard = React.memo(CharacterCard);
 
-const Characters = () => {
-  const styles = useStyles();
+interface ICharacterListProps {
+  themeColors: IThemeColors;
+}
+const Characters = ({ themeColors }: ICharacterListProps) => {
+  const styles = useStyles(themeColors);
   const { characters, handleLoadMore, emptyText } = useCharacters();
 
   const renderItem: ListRenderItem<Character> = useCallback(
-    ({ item }) => <MemoizedCharacterCard character={item} />,
-    [],
+    ({ item }) => (
+      <MemoizedCharacterCard themeColors={themeColors} character={item} />
+    ),
+    [themeColors],
   );
 
   const renderEmptyComponent = useCallback(() => {

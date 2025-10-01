@@ -1,14 +1,10 @@
-import { RootState } from "@/store/store";
+import { IThemeColors } from "@/features/theme/types/theme.interfaces";
 import { StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
-
-export default function useThemeStyles() {
-  const theme = useSelector((state: RootState) => state.theme.mode);
-
+export default function useThemeStyles(themeColors: IThemeColors) {
   return StyleSheet.create({
     card: {
       flexDirection: "row",
-      backgroundColor: theme === "dark" ? "#28292D" : "#fff",
+      backgroundColor: themeColors.cardBackgroundColor,
       borderRadius: 16,
       overflow: "hidden",
       elevation: 2,
@@ -16,7 +12,7 @@ export default function useThemeStyles() {
       marginHorizontal: "auto",
       marginBottom: 20,
       borderWidth: 2,
-      borderColor: theme === "dark" ? "#fff" : "#28292D",
+      borderColor: themeColors.borderColor,
     },
     image: {
       width: 175,
@@ -35,18 +31,18 @@ export default function useThemeStyles() {
     },
     name: {
       fontWeight: "bold",
-      color: theme === "dark" ? "#fff" : "#28292D",
+      color: themeColors.textColor,
       fontSize: 20,
       marginBottom: 10,
     },
     infoParams: {
-      color: theme === "dark" ? "#8b8b8b" : "#28292D",
+      color: "#8b8b8b",
       fontWeight: 500,
       fontSize: 16,
       marginRight: 3,
     },
     infoText: {
-      color: theme === "dark" ? "#fff" : "#000",
+      color: themeColors.textColor,
       fontWeight: 700,
       fontSize: 16,
     },

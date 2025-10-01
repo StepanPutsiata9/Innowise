@@ -1,18 +1,14 @@
-import { RootState } from "@/store/store";
+import { IThemeColors } from "@/features/theme/types/theme.interfaces";
 import { StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
-
-export default function useStyles() {
-  const theme = useSelector((state: RootState) => state.theme.mode);
-
+export default function useStyles(themeColors: IThemeColors) {
   return StyleSheet.create({
     offlineBlockText: {
       fontSize: 18,
-      color: theme === "dark" ? "#fff" : "#000",
+      color: themeColors.textColor,
       textAlign: "center",
     },
     offlineBlock: {
-      backgroundColor: theme === "dark" ? "#000" : "#fff",
+      backgroundColor: themeColors.backgroundColor,
       paddingVertical: 20,
     },
   });

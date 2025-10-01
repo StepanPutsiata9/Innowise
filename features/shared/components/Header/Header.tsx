@@ -1,8 +1,13 @@
 import { View, Text } from "react-native";
-import useStyles from "./useHeaderStyles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-export const Header = () => {
-  const styles = useStyles();
+import { IThemeColors } from "@/features/theme/types/theme.interfaces";
+import useStyles from "./useHeaderStyles";
+
+interface IHeaderProps {
+  themeColors: IThemeColors;
+}
+export const Header = ({ themeColors }: IHeaderProps) => {
+  const styles = useStyles(themeColors);
   const insets = useSafeAreaInsets();
   return (
     <View style={[styles.header, { paddingTop: insets.top }]}>

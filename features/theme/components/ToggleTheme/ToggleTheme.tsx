@@ -4,19 +4,25 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "@/store/store";
 import { toggleTheme } from "@/features/theme/store/themeSlice";
 import { useState } from "react";
-export function ToggleTheme() {
-  const theme = useSelector((state: RootState) => state.theme.mode);
+import { useStyles } from "./useToggleThemeStyles";
+import { IThemeColors, IThemeState } from "../../types/theme.interfaces";
+
+interface IToggleThemeProps {
+  themeColors: IThemeColors;
+  mode: "light" | "dark";
+}
+export function ToggleTheme({ themeColors, mode }: IToggleThemeProps) {
   const dispatch = useAppDispatch();
   const [isEnabled, setIsEnabled] = useState<boolean>(
-    theme === "light" ? true : false
+    mode === "light" ? true : false,
   );
-  const styles = useStyles();
+  const styles = useStyles(themeColors);
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Theme mode :</Text>
 
       <View style={styles.logoView}>
-        {theme == "light" ? <Sun /> : <Moon />}
+        {mode === "light" ? <Sun /> : <Moon />}
       </View>
 
       <Switch
@@ -32,32 +38,4 @@ export function ToggleTheme() {
       />
     </View>
   );
-}
-
-function useStyles() {
-  const theme = useSelector((state: RootState) => state.theme.mode);
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: theme === "dark" ? "#000" : "#fff",
-    },
-
-    text: {
-      color: theme === "dark" ? "#fff" : "#000",
-      fontSize: 18,
-    },
-    changeThemeBtn: {
-      backgroundColor: theme === "dark" ? "#1F2023" : "#fff",
-      paddingHorizontal: 50,
-      paddingVertical: 10,
-      borderRadius: 12,
-      borderWidth: 2,
-      borderColor: theme === "dark" ? "#fff" : "#121212",
-    },
-    logoView: {
-      marginBottom: 20,
-    },
-  });
 }

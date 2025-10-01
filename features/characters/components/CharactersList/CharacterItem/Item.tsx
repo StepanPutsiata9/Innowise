@@ -5,14 +5,16 @@ import useStyles from "./useItemStyles";
 import { useAppDispatch } from "@/store/store";
 import { useRouter } from "expo-router";
 import { Character } from "@/features/characters/types/character.interfaces";
+import { IThemeColors } from "@/features/theme/types/theme.interfaces";
 
 interface ICharacterType {
   character: Character;
+  themeColors: IThemeColors;
 }
-const CharacterCard = ({ character }: ICharacterType) => {
+const CharacterCard = ({ character, themeColors }: ICharacterType) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const styles = useStyles();
+  const styles = useStyles(themeColors);
   const [imageError, setImageError] = useState(false);
 
   return (

@@ -1,11 +1,15 @@
 import { TouchableOpacity, Text } from "react-native";
-
 import { useAppDispatch } from "@/store/store";
-import useStyles from "./useBackToRetryStyles";
 import { setOfflineMode } from "@/features/characters/store/charactersSlice";
-export const BackToRetry = () => {
+import { IThemeColors } from "@/features/theme/types/theme.interfaces";
+import useStyles from "./useBackToRetryStyles";
+
+interface IBackToRetryProps {
+  themeColors: IThemeColors;
+}
+export const BackToRetry = ({ themeColors }: IBackToRetryProps) => {
   const dispatch = useAppDispatch();
-  const styles = useStyles();
+  const styles = useStyles(themeColors);
   return (
     <TouchableOpacity
       style={styles.offlineBlock}

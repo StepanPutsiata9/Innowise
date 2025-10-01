@@ -1,10 +1,15 @@
 import React from "react";
 import { View, TextInput } from "react-native";
-import useStyles from "./useSearchStyles";
 import { useSearch } from "../../hooks/useSearch";
+import { IThemeColors } from "@/features/theme/types/theme.interfaces";
+import useStyles from "./useSearchStyles";
 
-const Search = () => {
-  const styles = useStyles();
+interface ISearchProps {
+  themeColors: IThemeColors;
+}
+
+const Search = ({ themeColors }: ISearchProps) => {
+  const styles = useStyles(themeColors);
   const { localQuery, handleTextChange, placeholder } = useSearch();
   return (
     <View style={styles.searchView}>

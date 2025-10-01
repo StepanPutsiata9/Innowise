@@ -10,12 +10,16 @@ import Modal from "react-native-modal";
 import useStyles from "./useFilterStyles";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useFilter } from "../../hooks/useFilter";
+import { IThemeColors } from "@/features/theme/types/theme.interfaces";
 
 const statusOptions = ["", "Alive", "Dead", "unknown"] as const;
 const speciesOptions = ["", "Human", "Alien"] as const;
 
-const Filters: React.FC = () => {
-  const styles = useStyles();
+interface IFilterProps {
+  themeColors: IThemeColors;
+}
+const Filters = ({ themeColors }: IFilterProps) => {
+  const styles = useStyles(themeColors);
   const insets = useSafeAreaInsets();
   const {
     visibleFilter,

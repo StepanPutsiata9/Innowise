@@ -19,7 +19,5 @@ export const useTheme = () => {
     colors,
     isDark,
     isLight,
-    currentTheme: themeMode,
-    theme: colors,
   };
 };
