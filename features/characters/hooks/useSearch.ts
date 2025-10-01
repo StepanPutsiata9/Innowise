@@ -1,12 +1,12 @@
-import { useState, useCallback, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { debounce } from "lodash";
-import { RootState, useAppDispatch } from "@/store/store";
+import { useState, useCallback, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { debounce } from 'lodash';
+import { RootState, useAppDispatch } from '@/store/store';
 import {
   searchCharacter,
   searchCharactersAPI,
   endSearch,
-} from "@/features/characters/store/charactersSlice";
+} from '@/features/characters/store/charactersSlice';
 
 export const useSearch = () => {
   const dispatch = useAppDispatch();
@@ -38,7 +38,7 @@ export const useSearch = () => {
 
       if (!inputText.trim()) {
         dispatch(endSearch());
-        dispatch(searchCharactersAPI(""));
+        dispatch(searchCharactersAPI(''));
       } else {
         debouncedSearch(inputText);
       }
@@ -62,6 +62,6 @@ export const useSearch = () => {
   return {
     localQuery,
     handleTextChange,
-    placeholder: "Search character...",
+    placeholder: 'Search character...',
   };
 };

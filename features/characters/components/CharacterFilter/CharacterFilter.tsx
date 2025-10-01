@@ -1,19 +1,19 @@
-import React from "react";
+import React from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   StyleProp,
   ViewStyle,
-} from "react-native";
-import Modal from "react-native-modal";
-import useStyles from "./useFilterStyles";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useFilter } from "../../hooks/useFilter";
-import { IThemeColors } from "@/features/theme/types/theme.interfaces";
+} from 'react-native';
+import Modal from 'react-native-modal';
+import useStyles from './useFilterStyles';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useFilter } from '../../hooks/useFilter';
+import { IThemeColors } from '@/features/theme/types/theme.interfaces';
 
-const statusOptions = ["", "Alive", "Dead", "unknown"] as const;
-const speciesOptions = ["", "Human", "Alien"] as const;
+const statusOptions = ['', 'Alive', 'Dead', 'unknown'] as const;
+const speciesOptions = ['', 'Human', 'Alien'] as const;
 
 interface IFilterProps {
   themeColors: IThemeColors;
@@ -33,7 +33,7 @@ const Filters = ({ themeColors }: IFilterProps) => {
   const renderFilterModal = () => {
     if (!visibleFilter) return null;
 
-    const options = visibleFilter === "status" ? statusOptions : speciesOptions;
+    const options = visibleFilter === 'status' ? statusOptions : speciesOptions;
     const currentValue = selectedFilters[visibleFilter];
 
     return (
@@ -44,16 +44,16 @@ const Filters = ({ themeColors }: IFilterProps) => {
         statusBarTranslucent={true}
       >
         <View style={[styles.modalContent, { paddingBottom: insets.bottom }]}>
-          {options.map((option) => (
+          {options.map(option => (
             <TouchableOpacity
-              key={option || "empty"}
+              key={option || 'empty'}
               style={[
                 styles.filterOption,
                 currentValue === option && styles.selectedFilterOption,
               ]}
               onPress={() => handleFilterSelect(visibleFilter, option)}
             >
-              <Text style={styles.filterOptionText}>{option || "All"}</Text>
+              <Text style={styles.filterOptionText}>{option || 'All'}</Text>
             </TouchableOpacity>
           ))}
           <View style={styles.filterButtons}>
@@ -84,19 +84,19 @@ const Filters = ({ themeColors }: IFilterProps) => {
     <View style={styles.filterContainer}>
       <TouchableOpacity
         style={styles.filterButton}
-        onPress={() => setVisibleFilter("status")}
+        onPress={() => setVisibleFilter('status')}
       >
         <Text style={styles.filterButtonText}>
-          {selectedFilters.status || "Status"}
+          {selectedFilters.status || 'Status'}
         </Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.filterButton}
-        onPress={() => setVisibleFilter("species")}
+        onPress={() => setVisibleFilter('species')}
       >
         <Text style={styles.filterButtonText}>
-          {selectedFilters.species || "Species"}
+          {selectedFilters.species || 'Species'}
         </Text>
       </TouchableOpacity>
 

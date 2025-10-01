@@ -1,5 +1,5 @@
 export interface IThemeState {
-  mode: "light" | "dark";
+  mode: 'light' | 'dark';
 }
 
 export interface IThemeColors {

@@ -1,10 +1,10 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import { useAppDispatch } from "@/store/store";
+import { View, Text, TouchableOpacity } from 'react-native';
+import { useAppDispatch } from '@/store/store';
 import {
   loadOfflineCharacters,
   setOfflineMode,
-} from "@/features/characters/store/charactersSlice";
-import { styles } from "./useNoInternetStyles";
+} from '@/features/characters/store/charactersSlice';
+import { styles } from './useNoInternetStyles';
 
 interface INoInternetProps {
   onRetry: () => void;
@@ -16,8 +16,8 @@ export const NoInternetScreen = ({ onRetry }: INoInternetProps) => {
       await dispatch(loadOfflineCharacters());
       dispatch(setOfflineMode(true));
     } catch (error) {
-      console.error("Failed to load offline characters:", error);
-      alert("No offline data available");
+      console.error('Failed to load offline characters:', error);
+      alert('No offline data available');
     }
   };
   return (

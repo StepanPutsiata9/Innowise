@@ -1,8 +1,8 @@
-import { TouchableOpacity, Text } from "react-native";
-import { useAppDispatch } from "@/store/store";
-import { setOfflineMode } from "@/features/characters/store/charactersSlice";
-import { IThemeColors } from "@/features/theme/types/theme.interfaces";
-import useStyles from "./useBackToRetryStyles";
+import { TouchableOpacity, Text } from 'react-native';
+import { useAppDispatch } from '@/store/store';
+import { setOfflineMode } from '@/features/characters/store/charactersSlice';
+import { IThemeColors } from '@/features/theme/types/theme.interfaces';
+import useStyles from './useBackToRetryStyles';
 
 interface IBackToRetryProps {
   themeColors: IThemeColors;

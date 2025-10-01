@@ -1,5 +1,5 @@
-import * as React from "react";
-import Svg, { Path, SvgProps } from "react-native-svg";
+import * as React from 'react';
+import Svg, { Path, SvgProps } from 'react-native-svg';
 export const Back = ({ color }: SvgProps) => (
   <Svg width={18} height={30} fill="none">
     <Path

@@ -1,12 +1,12 @@
-import { IThemeColors } from "@/features/theme/types/theme.interfaces";
-import { StyleSheet } from "react-native";
+import { IThemeColors } from '@/features/theme/types/theme.interfaces';
+import { StyleSheet } from 'react-native';
 export default function useStyles(themeColors: IThemeColors) {
   return StyleSheet.create({
     header: {
-      flexDirection: "row",
-      justifyContent: "center",
+      flexDirection: 'row',
+      justifyContent: 'center',
       paddingBottom: 5,
-      alignItems: "center",
+      alignItems: 'center',
       backgroundColor: themeColors.backgroundColor,
       borderBottomWidth: 2,
       borderBottomColor: themeColors.borderColor,

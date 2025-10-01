@@ -1,11 +1,11 @@
-import React, { useState, memo } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import { setSelectedCharacter } from "@/features/characters/store/charactersSlice";
-import useStyles from "./useItemStyles";
-import { useAppDispatch } from "@/store/store";
-import { useRouter } from "expo-router";
-import { Character } from "@/features/characters/types/character.interfaces";
-import { IThemeColors } from "@/features/theme/types/theme.interfaces";
+import React, { useState, memo } from 'react';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { setSelectedCharacter } from '@/features/characters/store/charactersSlice';
+import useStyles from './useItemStyles';
+import { useAppDispatch } from '@/store/store';
+import { useRouter } from 'expo-router';
+import { Character } from '@/features/characters/types/character.interfaces';
+import { IThemeColors } from '@/features/theme/types/theme.interfaces';
 
 interface ICharacterType {
   character: Character;
@@ -21,7 +21,7 @@ const CharacterCard = ({ character, themeColors }: ICharacterType) => {
     <TouchableOpacity
       onPress={() => {
         dispatch(setSelectedCharacter(character));
-        router.push("/(character)/characterInfo");
+        router.push('/(character)/characterInfo');
       }}
     >
       <View style={styles.card}>
@@ -29,7 +29,7 @@ const CharacterCard = ({ character, themeColors }: ICharacterType) => {
           source={{
             uri: !imageError
               ? character.image
-              : require("@/assets/images/logo2.png"),
+              : require('@/assets/images/logo2.png'),
           }}
           style={styles.image}
           onError={() => setImageError(true)}
@@ -41,9 +41,9 @@ const CharacterCard = ({ character, themeColors }: ICharacterType) => {
             <Text style={styles.infoText}>{character.status}</Text>
             <View
               style={
-                (character.status == "Alive" && styles.alive) ||
-                (character.status == "Dead" && styles.dead) ||
-                (character.status == "unknown" && styles.unknown)
+                (character.status == 'Alive' && styles.alive) ||
+                (character.status == 'Dead' && styles.dead) ||
+                (character.status == 'unknown' && styles.unknown)
               }
             ></View>
           </View>
@@ -53,7 +53,7 @@ const CharacterCard = ({ character, themeColors }: ICharacterType) => {
           </View>
           <Text style={styles.infoParams}>last known location: </Text>
           <Text style={styles.infoText}>
-            {character?.location?.name || "unknown"}
+            {character?.location?.name || 'unknown'}
           </Text>
         </View>
       </View>

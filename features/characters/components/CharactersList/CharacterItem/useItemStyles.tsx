@@ -1,15 +1,15 @@
-import { IThemeColors } from "@/features/theme/types/theme.interfaces";
-import { StyleSheet } from "react-native";
+import { IThemeColors } from '@/features/theme/types/theme.interfaces';
+import { StyleSheet } from 'react-native';
 export default function useThemeStyles(themeColors: IThemeColors) {
   return StyleSheet.create({
     card: {
-      flexDirection: "row",
+      flexDirection: 'row',
       backgroundColor: themeColors.cardBackgroundColor,
       borderRadius: 16,
-      overflow: "hidden",
+      overflow: 'hidden',
       elevation: 2,
-      width: "95%",
-      marginHorizontal: "auto",
+      width: '95%',
+      marginHorizontal: 'auto',
       marginBottom: 20,
       borderWidth: 2,
       borderColor: themeColors.borderColor,
@@ -24,19 +24,19 @@ export default function useThemeStyles(themeColors: IThemeColors) {
       marginLeft: 10,
     },
     infoLine: {
-      flexDirection: "row",
+      flexDirection: 'row',
       marginBottom: 3,
-      alignItems: "center",
-      flexWrap: "wrap",
+      alignItems: 'center',
+      flexWrap: 'wrap',
     },
     name: {
-      fontWeight: "bold",
+      fontWeight: 'bold',
       color: themeColors.textColor,
       fontSize: 20,
       marginBottom: 10,
     },
     infoParams: {
-      color: "#8b8b8b",
+      color: '#8b8b8b',
       fontWeight: 500,
       fontSize: 16,
       marginRight: 3,
@@ -49,21 +49,21 @@ export default function useThemeStyles(themeColors: IThemeColors) {
     dead: {
       width: 13,
       height: 13,
-      backgroundColor: "red",
+      backgroundColor: 'red',
       marginLeft: 5,
       borderRadius: 25,
     },
     alive: {
       width: 13,
       height: 13,
-      backgroundColor: "green",
+      backgroundColor: 'green',
       marginLeft: 5,
       borderRadius: 25,
     },
     unknown: {
       width: 13,
       height: 13,
-      backgroundColor: "grey",
+      backgroundColor: 'grey',
       marginLeft: 5,
       borderRadius: 25,
     },

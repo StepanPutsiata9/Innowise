@@ -1,12 +1,12 @@
-import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   Character,
   FetchCharactersResponse,
   ICharactersState,
   IFilters,
-} from "../types/character.interfaces";
+} from '../types/character.interfaces';
 
 const initialState: ICharactersState = {
   characters: null,
@@ -19,40 +19,40 @@ const initialState: ICharactersState = {
   nextPage: 1,
   hasMore: true,
   filters: {
-    status: "",
-    species: "",
+    status: '',
+    species: '',
   },
-  searchQuery: "",
+  searchQuery: '',
   isSearching: false,
 };
 
 const saveOfflineCharacters = async (characters: Character[]) => {
   try {
-    await AsyncStorage.setItem("offlineData", JSON.stringify(characters));
+    await AsyncStorage.setItem('offlineData', JSON.stringify(characters));
   } catch (error) {
-    console.error("Failed to save offline characters:", error);
+    console.error('Failed to save offline characters:', error);
   }
 };
 
 export const loadOfflineCharacters = createAsyncThunk(
-  "characters/loadOffline",
+  'characters/loadOffline',
   async (_, { rejectWithValue }) => {
     try {
-      const saved = await AsyncStorage.getItem("offlineData");
+      const saved = await AsyncStorage.getItem('offlineData');
       return saved ? (JSON.parse(saved) as Character[]) : [];
     } catch (error) {
       return rejectWithValue(
-        error instanceof Error ? error.message : "Unknown error",
+        error instanceof Error ? error.message : 'Unknown error'
       );
     }
-  },
+  }
 );
 
 const applyFilters = (
   characters: Character[],
-  filters: IFilters,
+  filters: IFilters
 ): Character[] => {
-  return characters.filter((character) => {
+  return characters.filter(character => {
     const matchesStatus =
       !filters.status ||
       character.status.toLowerCase() === filters.status.toLowerCase();
@@ -67,18 +67,18 @@ export const fetchCharacters = createAsyncThunk<
   FetchCharactersResponse,
   void,
   { state: { characters: ICharactersState } }
->("characters/fetchCharacters", async (_, { getState, rejectWithValue }) => {
+>('characters/fetchCharacters', async (_, { getState, rejectWithValue }) => {
   try {
     const { nextPage, filters } = getState().characters;
     const params = new URLSearchParams();
 
-    params.append("page", nextPage.toString());
-    if (filters.status) params.append("status", filters.status.toLowerCase());
+    params.append('page', nextPage.toString());
+    if (filters.status) params.append('status', filters.status.toLowerCase());
     if (filters.species)
-      params.append("species", filters.species.toLowerCase());
+      params.append('species', filters.species.toLowerCase());
 
     const response = await axios.get(
-      `https://rickandmortyapi.com/api/character?${params.toString()}`,
+      `https://rickandmortyapi.com/api/character?${params.toString()}`
     );
 
     return {
@@ -88,7 +88,7 @@ export const fetchCharacters = createAsyncThunk<
     };
   } catch (error) {
     return rejectWithValue(
-      error instanceof Error ? error.message : "Unknown error",
+      error instanceof Error ? error.message : 'Unknown error'
     );
   }
 });
@@ -98,19 +98,19 @@ export const searchCharactersAPI = createAsyncThunk<
   string,
   { state: { characters: ICharactersState } }
 >(
-  "characters/searchCharactersAPI",
+  'characters/searchCharactersAPI',
   async (query, { getState, rejectWithValue }) => {
     try {
       const { filters } = getState().characters;
       const params = new URLSearchParams();
 
-      params.append("name", query);
-      if (filters.status) params.append("status", filters.status.toLowerCase());
+      params.append('name', query);
+      if (filters.status) params.append('status', filters.status.toLowerCase());
       if (filters.species)
-        params.append("species", filters.species.toLowerCase());
+        params.append('species', filters.species.toLowerCase());
 
       const response = await axios.get(
-        `https://rickandmortyapi.com/api/character/?${params.toString()}`,
+        `https://rickandmortyapi.com/api/character/?${params.toString()}`
       );
 
       return {
@@ -129,13 +129,13 @@ export const searchCharactersAPI = createAsyncThunk<
         }
         return rejectWithValue(error.message);
       }
-      return rejectWithValue("Unknown error");
+      return rejectWithValue('Unknown error');
     }
-  },
+  }
 );
 
 const charactersSlice = createSlice({
-  name: "characters",
+  name: 'characters',
   initialState,
   reducers: {
     setSelectedCharacter: (state, action: PayloadAction<Character | null>) => {
@@ -163,12 +163,12 @@ const charactersSlice = createSlice({
       if (state.characters) {
         state.filteredCharacters = applyFilters(
           state.characters,
-          state.filters,
+          state.filters
         );
       }
     },
 
-    resetFilters: (state) => {
+    resetFilters: state => {
       state.filters = initialState.filters;
       state.nextPage = 1;
       state.hasMore = true;
@@ -176,7 +176,7 @@ const charactersSlice = createSlice({
       state.filteredCharacters = state.characters;
     },
 
-    clearCharacters: (state) => {
+    clearCharacters: state => {
       state.characters = [];
       state.filteredCharacters = [];
     },
@@ -185,25 +185,25 @@ const charactersSlice = createSlice({
       state.isOfflineMode = action.payload;
     },
 
-    resetSearch: (state) => {
-      state.searchQuery = "";
+    resetSearch: state => {
+      state.searchQuery = '';
       state.isSearching = false;
       state.filteredCharacters = state.characters
         ? applyFilters(state.characters, state.filters)
         : null;
     },
 
-    endSearch: (state) => {
+    endSearch: state => {
       state.isSearching = false;
-      state.searchQuery = "";
+      state.searchQuery = '';
       state.filteredCharacters = state.characters
         ? applyFilters(state.characters, state.filters)
         : null;
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(fetchCharacters.pending, (state) => {
+      .addCase(fetchCharacters.pending, state => {
         state.loading = true;
         state.error = null;
       })
@@ -219,7 +219,7 @@ const charactersSlice = createSlice({
 
           state.filteredCharacters = applyFilters(
             state.characters,
-            state.filters,
+            state.filters
           );
 
           if (isNewSearch) {
@@ -230,9 +230,9 @@ const charactersSlice = createSlice({
 
           state.nextPage += 1;
           state.hasMore = hasMore;
-        },
+        }
       )
-      .addCase(searchCharactersAPI.pending, (state) => {
+      .addCase(searchCharactersAPI.pending, state => {
         state.loading = true;
         state.error = null;
       })
@@ -244,7 +244,7 @@ const charactersSlice = createSlice({
 
           state.filteredCharacters = applyFilters(characters, state.filters);
           state.hasMore = hasMore;
-        },
+        }
       )
       .addCase(searchCharactersAPI.rejected, (state, action) => {
         state.loading = false;
@@ -258,10 +258,10 @@ const charactersSlice = createSlice({
           if (state.isOfflineMode) {
             state.filteredCharacters = applyFilters(
               action.payload,
-              state.filters,
+              state.filters
             );
           }
-        },
+        }
       );
   },
 });

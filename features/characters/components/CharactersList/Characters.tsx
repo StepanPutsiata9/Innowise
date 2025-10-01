@@ -1,10 +1,10 @@
-import React, { useCallback } from "react";
-import { FlatList, ListRenderItem, Text } from "react-native";
-import CharacterCard from "./CharacterItem/Item";
-import useStyles from "./useCharactersStyles";
-import { Character } from "../../types/character.interfaces";
-import { useCharacters } from "../../hooks/useCharacters";
-import { IThemeColors } from "@/features/theme/types/theme.interfaces";
+import React, { useCallback } from 'react';
+import { FlatList, ListRenderItem, Text } from 'react-native';
+import CharacterCard from './CharacterItem/Item';
+import useStyles from './useCharactersStyles';
+import { Character } from '../../types/character.interfaces';
+import { useCharacters } from '../../hooks/useCharacters';
+import { IThemeColors } from '@/features/theme/types/theme.interfaces';
 
 const MemoizedCharacterCard = React.memo(CharacterCard);
 
@@ -19,7 +19,7 @@ const Characters = ({ themeColors }: ICharacterListProps) => {
     ({ item }) => (
       <MemoizedCharacterCard themeColors={themeColors} character={item} />
     ),
-    [themeColors],
+    [themeColors]
   );
 
   const renderEmptyComponent = useCallback(() => {

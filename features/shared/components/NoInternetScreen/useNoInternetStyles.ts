@@ -1,29 +1,29 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   noInternetContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
-    backgroundColor: "#eee",
+    backgroundColor: '#eee',
   },
   noInternetTitle: {
     fontSize: 22,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 10,
     marginTop: 10,
-    color: "#333",
+    color: '#333',
   },
   noInternetText: {
     fontSize: 16,
-    textAlign: "center",
+    textAlign: 'center',
     marginBottom: 20,
-    color: "#666",
+    color: '#666',
   },
   retryButton: {
-    backgroundColor: "#fff",
-    borderColor: "#4C82FF",
+    backgroundColor: '#fff',
+    borderColor: '#4C82FF',
     borderWidth: 1,
     paddingHorizontal: 90,
     paddingVertical: 10,
@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
 
   offlineButtonText: {
     fontSize: 16,
-    color: "8b8b8b",
+    color: '8b8b8b',
   },
   retryButtonText: {
     fontSize: 16,

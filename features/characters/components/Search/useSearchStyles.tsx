@@ -1,5 +1,5 @@
-import { IThemeColors } from "@/features/theme/types/theme.interfaces";
-import { StyleSheet } from "react-native";
+import { IThemeColors } from '@/features/theme/types/theme.interfaces';
+import { StyleSheet } from 'react-native';
 export default function useStyles(themeColors: IThemeColors) {
   return StyleSheet.create({
     searchView: {
@@ -7,10 +7,10 @@ export default function useStyles(themeColors: IThemeColors) {
     },
     input: {
       height: 45,
-      width: "95%",
-      marginHorizontal: "auto",
+      width: '95%',
+      marginHorizontal: 'auto',
       borderWidth: 1,
-      borderColor: "#ccc",
+      borderColor: '#ccc',
       borderRadius: 8,
       paddingHorizontal: 15,
       fontSize: 16,

@@ -1,8 +1,8 @@
-import React from "react";
-import { View, TextInput } from "react-native";
-import { useSearch } from "../../hooks/useSearch";
-import { IThemeColors } from "@/features/theme/types/theme.interfaces";
-import useStyles from "./useSearchStyles";
+import React from 'react';
+import { View, TextInput } from 'react-native';
+import { useSearch } from '../../hooks/useSearch';
+import { IThemeColors } from '@/features/theme/types/theme.interfaces';
+import useStyles from './useSearchStyles';
 
 interface ISearchProps {
   themeColors: IThemeColors;

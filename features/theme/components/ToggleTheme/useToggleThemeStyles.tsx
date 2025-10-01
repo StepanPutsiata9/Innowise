@@ -1,11 +1,11 @@
-import { StyleSheet } from "react-native";
-import { IThemeColors } from "../../types/theme.interfaces";
+import { StyleSheet } from 'react-native';
+import { IThemeColors } from '../../types/theme.interfaces';
 export function useStyles(themeColors: IThemeColors) {
   return StyleSheet.create({
     container: {
       flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
+      justifyContent: 'center',
+      alignItems: 'center',
       backgroundColor: themeColors.backgroundColor,
     },
 

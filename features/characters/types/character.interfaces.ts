@@ -6,10 +6,10 @@ export interface Location {
 export interface Character {
   id: number;
   name: string;
-  status: "Alive" | "Dead" | "unknown";
+  status: 'Alive' | 'Dead' | 'unknown';
   species: string;
   type: string;
-  gender: "Male" | "Female" | "Genderless" | "unknown";
+  gender: 'Male' | 'Female' | 'Genderless' | 'unknown';
   origin?: Location;
   location?: Location;
   image: string;
@@ -19,7 +19,7 @@ export interface Character {
 }
 
 export interface IFilters {
-  status: "Alive" | "Dead" | "unknown" | "";
+  status: 'Alive' | 'Dead' | 'unknown' | '';
   species: string;
 }
 
@@ -44,9 +44,9 @@ export interface ICharactersState {
   isSearching: boolean;
 }
 
-export type FilterType = "status" | "species";
+export type FilterType = 'status' | 'species';
 
 export interface FilterValues {
-  status: "Alive" | "Dead" | "unknown" | "";
+  status: 'Alive' | 'Dead' | 'unknown' | '';
   species: string;
 }

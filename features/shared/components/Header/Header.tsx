@@ -1,7 +1,7 @@
-import { View, Text } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { IThemeColors } from "@/features/theme/types/theme.interfaces";
-import useStyles from "./useHeaderStyles";
+import { View, Text } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { IThemeColors } from '@/features/theme/types/theme.interfaces';
+import useStyles from './useHeaderStyles';
 
 interface IHeaderProps {
   themeColors: IThemeColors;

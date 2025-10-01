@@ -1,5 +1,5 @@
-import * as React from "react";
-import Svg, { Path, SvgProps } from "react-native-svg";
+import * as React from 'react';
+import Svg, { Path, SvgProps } from 'react-native-svg';
 export const Moon = (props: SvgProps) => (
   <Svg width={169} height={171} fill="none" {...props}>
     <Path

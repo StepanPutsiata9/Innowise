@@ -1,7 +1,7 @@
-import { useCallback, useMemo, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "@/store/store";
-import { fetchCharacters } from "@/features/characters/store/charactersSlice";
+import { useCallback, useMemo, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from '@/store/store';
+import { fetchCharacters } from '@/features/characters/store/charactersSlice';
 
 export const useCharacters = () => {
   const dispatch = useAppDispatch();
@@ -21,7 +21,7 @@ export const useCharacters = () => {
   const characters = useMemo(() => {
     if (!displayData) return [];
     const seen = new Set();
-    return displayData.filter((char) => {
+    return displayData.filter(char => {
       if (seen.has(char.id)) return false;
       seen.add(char.id);
       return true;
@@ -38,7 +38,7 @@ export const useCharacters = () => {
     if (loading) return null;
     return isSearching
       ? `No characters found for "${searchQuery}"`
-      : "No characters available";
+      : 'No characters available';
   }, [loading, isSearching, searchQuery]);
 
   useEffect(() => {

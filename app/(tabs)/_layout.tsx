@@ -1,12 +1,12 @@
-import React from "react";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Tabs } from "expo-router";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { StyleProp, TextStyle } from "react-native";
-import { useTheme } from "@/features/theme";
+import React from 'react';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { Tabs } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { StyleProp, TextStyle } from 'react-native';
+import { useTheme } from '@/features/theme';
 
 type TabBarIconProps = {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
+  name: React.ComponentProps<typeof FontAwesome>['name'];
   color: string;
   style?: StyleProp<TextStyle>;
 };
@@ -39,7 +39,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Main",
+          title: 'Main',
           headerShown: false,
           tabBarIcon: ({ color }: TabIconProps) => (
             <TabBarIcon name="home" color={color} />
@@ -50,7 +50,7 @@ export default function TabLayout() {
         name="settings"
         options={{
           headerShown: false,
-          title: "Settings",
+          title: 'Settings',
           tabBarIcon: ({ color }: TabIconProps) => (
             <TabBarIcon name="gear" color={color} />
           ),
